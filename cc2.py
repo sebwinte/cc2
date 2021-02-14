@@ -70,3 +70,7 @@ if __name__ == "__main__":
     finally:
         observer.stop()
         observer.join()
+
+
+# def fileAdded()
+    #File Added call -> Controller.process
