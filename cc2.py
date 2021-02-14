@@ -9,7 +9,7 @@ from watchdog.events import LoggingEventHandler
 class Watchdog: 
     
     '''
-        cc2 Watchdog
+        cc2 Watchdog .
     '''
 
     path = "/Users/tom/Downloads/"
