@@ -4,6 +4,9 @@ import subprocess
 
 
 class Converter:
+    
+    def __init__(self):
+        pass
 
     def convert_mp4_webm(self,path,input_filename, output_filename,videoCompression,audioCompression):
         try:

@@ -8,13 +8,13 @@ class Controller:
     valid_arguments_typ = ["mp4", "webm", "ogv"]
 
     
-
+    def __init__(self):
+        pass
 
     def run(self):
         #Start Watchdog Eventhandler
         return 0
     
-
 
     def process(self,file_name,arguments):
         v_arguments = self.verify_arguments(arguments)        
