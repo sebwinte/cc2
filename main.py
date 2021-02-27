@@ -1,9 +1,9 @@
 import time 
 import sys
-from controller import Controller
+from watcher import Watcher
 
 
 if __name__ == '__main__': 
 
-    c = Controller()
-    c.run()
+    w = Watcher()
+    w.run()

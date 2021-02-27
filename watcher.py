@@ -5,14 +5,16 @@ import logging
 import re
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
+from controller import Controller
         
-class Watchdog: 
+class Watcher: 
     
     '''
         cc2 Watchdog .
     '''
 
-    path = "/Users/tom/Downloads/"
+    path = "testordner/"
+
   
     def __init__(self): 
         self.observer = Observer() 
@@ -38,6 +40,10 @@ class Event(LoggingEventHandler):
     '''
         cc2 Eventhandler
     '''
+
+    def __init__(self): 
+        self.c = Controller() 
+        self.counter= 0
     
     #basic logger
     #logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
@@ -50,22 +56,27 @@ class Event(LoggingEventHandler):
         
     def on_created(self, event):        
         # print(event.src_path)
+        marker = "--"
+        
+
         head, tail = os.path.split(event.src_path)
         extension = os.path.splitext(tail)[1]
         file_name = os.path.splitext(tail)[0]
-        
-        marker = "--"
-        
-        data = re.split(marker, file_name)
-        print(data)
+        arguments = re.split(marker, file_name)
+
+        if(self.counter==0):
+            self.c.process(arguments[0],arguments,event.src_path,file_name+extension)
+            self.counter=1
+
+        print("on_created")
        
-        # controller.file_added(data)
+        
         
     def on_moved(self, event):
         print("verschoben") #umbennen
         
         
         
-if __name__ == '__main__': 
-    watch = Watchdog() 
-    watch.run() 
+#if __name__ == '__main__': 
+    #watch = Watchdog() 
+    #watch.run() 
