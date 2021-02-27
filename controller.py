@@ -9,6 +9,7 @@ class Controller:
 
     valid_arguments_compression = ["low", "medium", "high"]
     valid_arguments_typ = ["mp4", "webm", "ogv"]
+    verified_arguments = []
 
     
     #Make Global only declare once
@@ -20,48 +21,60 @@ class Controller:
 
     
 
-    def process(self,file_name,arguments,original_file_path,original_file_name):
-        valid_arguments = self.verify_arguments(arguments)        
-        directory = self.create_directory(file_name)
+    def process(self,file_name,arguments,original_file_path,original_file_name,original_filetyp):
+        verified_arguments_compression = self.verify_arguments_compression(arguments)
+        verified_arguments_typ = self.verify_arguments_typ(arguments)
 
         
         self.dir.make_dir(self.exportPath,file_name,0o777)
 
         time.sleep(5)
-        #def move_files(self,originalPath,path, file_name):
+        #self.convert_videos(verified_arguments_compression,verified_arguments_typ, original_filetyp)
+        #
+
         self.dir.move_files(original_file_path,file_name,file_name)
-        self.conv.convert_mp4_webm(self.exportPath+file_name+original_file_name,file_name,file_name,10,10)
+
+        time.sleep(2)
+
+        self.conv.convert_mp4_webm(self.exportPath+file_name+original_file_name,file_name,file_name,1,1)
             
-        #Check Params and call the coresponding functions
-        #Check Array for Params
+
         
 
-    
-    #To do 
-    #Make Valid params an array to store multiple valid arguments
 
-    def verify_arguments(self,arguments):
+
+    def verify_arguments_compression(self,arguments):
         # Only except valid arguments
+        valid_arguments = []
         try:
+            # Check Compression Arguments
             for param in arguments:
-                print(param)
                 if param in Controller.valid_arguments_compression:
-                    print("Valid Compression Argument ")
-                    self.verified_arguments.compression = param
+                    print("Valid Compression Argument")
+                    valid_arguments.append(param)
                 else:
                     print('Invalid Argument')
-
-            # Only except valid arguments
-            for param in arguments:
-                if param in Controller.valid_arguments_typ:
-                    print("Valid File Typ Argument")
-                    self.verified_arguments.typ = param
-                else:
-                    print('Invalid Argument') 
-
-            return self.valid_arguments
+            return valid_arguments
         except:
             return 0    
+
+
+
+    def verify_arguments_typ(self,arguments):
+        # Only except valid arguments
+        valid_arguments = []
+        try:
+            # Check Compression Arguments
+            for param in arguments:
+                if param in Controller.valid_arguments_typ:
+                    print("Valid Typ Argument")
+                    valid_arguments.append(param)
+                else:
+                    print('Invalid Argument')
+            return valid_arguments
+        except:
+            return 0    
+
 
 
     def create_directory(self,directory_name):
@@ -77,8 +90,16 @@ class Controller:
          return 0
     
 
-
-
     def create_log(self,status,file_name,directory):
         #Create File in directory and write status 
          return 0
+
+
+    def convert_videos(self, verified_arguments_compression , verified_arguments_typ , original_filetyp):
+
+        try:
+            for typ in verified_arguments_typ:
+                self.conv.convert_+'mp4_webm'+(self.exportPath+file_name+original_file_name,file_name,file_name,10,10)
+
+        except:
+            print("ERROR")

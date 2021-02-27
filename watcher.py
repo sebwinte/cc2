@@ -65,7 +65,7 @@ class Event(LoggingEventHandler):
         arguments = re.split(marker, file_name)
 
         if(self.counter==0):
-            self.c.process(arguments[0],arguments,event.src_path,file_name+extension)
+            self.c.process(arguments[0],arguments,event.src_path,file_name+extension,file_name)
             self.counter=1
 
         print("on_created")
