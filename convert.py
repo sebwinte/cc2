@@ -12,8 +12,10 @@ class Converter:
     def convert_mp4_webm(self,path,input_filename, output_filename,videoCompression,audioCompression):
         try:
             print('Start convert')
-            command = 'ffmpeg -i testordner/Bucky/Bucky--low.mp4 -lossless 1  testordner/Bucky/output.webm' 
-            #command = 'ffmpeg -i '+ path + input_file +' -c:v libvpx-vp9 -crf '+ videoCompression + ' -b:v 0 -b:a 128k -c:a libopus '+ path + 'tester.webm'
+            
+            command = 'ffmpeg -i '+ str(path) +' -c:v libvpx-vp9 -crf '+ str(videoCompression) + ' -b:v 0 -b:a 128k -c:a libopus '+ str(path) + ' tester.webm'
+
+            print(command)
             subprocess.run(command)
             print('WINISH convert')
         except:
