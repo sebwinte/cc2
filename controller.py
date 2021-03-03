@@ -10,10 +10,6 @@ class Controller:
 
     verified_arguments = []
 
-    
-    #Make Global only declare once
-    exportPath =  "testordner/"
-
     def __init__(self):
         self.dir = Directory()
         self.conv = Converter()
@@ -25,7 +21,7 @@ class Controller:
         verified_arguments_typ = self.verify_arguments_typ(arguments)
 
         
-        self.dir.make_dir(self.exportPath,file_name,0o777)
+        self.dir.make_dir(settings.path,file_name,0o777)
 
         time.sleep(5)
         #self.convert_videos(verified_arguments_compression,verified_arguments_typ, original_filetyp)
@@ -35,7 +31,7 @@ class Controller:
 
         time.sleep(2)
 
-        self.conv.convert_mp4_webm(self.exportPath+file_name+original_file_name,file_name,file_name,1,1)
+        self.conv.convert_mp4_webm(settings.path+file_name+original_file_name,file_name,file_name,1,1)
             
 
         
@@ -98,7 +94,7 @@ class Controller:
 
         try:
             for typ in verified_arguments_typ:
-                self.conv.convert_+'mp4_webm'+(self.exportPath+file_name+original_file_name,file_name,file_name,10,10)
+                self.conv.convert_+'mp4_webm'+(settings.path+file_name+original_file_name,file_name,file_name,10,10)
 
         except:
             print("ERROR")

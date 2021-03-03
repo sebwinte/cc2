@@ -7,6 +7,7 @@ import settings
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 from controller import Controller
+from notifypy import Notify
         
 class Watcher: 
     
@@ -14,19 +15,14 @@ class Watcher:
         cc2 Watcher
     '''
 
-    path = "testordner/"
-
   
     def __init__(self): 
         super().__init__()
         self.observer = Observer() 
-        #self.logger = logger
-        #self.myfunction = myfunction
-        
   
     def run(self): 
         event_handler = Event() 
-        self.observer.schedule(event_handler, self.path, recursive = True) 
+        self.observer.schedule(event_handler, settings.path, recursive = True) 
         self.observer.start() 
         try: 
             while True: 
@@ -46,15 +42,8 @@ class Event(LoggingEventHandler):
     '''
 
     def __init__(self): 
-        # pass
         self.c = Controller() 
-        self.counter= 0
-    
-    #basic logger
-    #logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-    
-    #def on_modified(self, event):
-                       
+        self.counter= 0                       
                 
     def on_deleted(self, event):
         print("gelöscht")
@@ -67,8 +56,6 @@ class Event(LoggingEventHandler):
             file_path, original_file_name = os.path.split(event.src_path)
             extension = os.path.splitext(original_file_name)[1]
             file_name = os.path.splitext(original_file_name)[0]
-                    
-            
             
             splitted_file = re.split(marker, file_name)
             file_name_without_arguments = splitted_file[0]
@@ -92,12 +79,7 @@ class Event(LoggingEventHandler):
     
         else:
             print(f'No supported file extension')
-         
+
         
     def on_moved(self, event):
-        print("verschoben") #umbennen
-        
-        
-# if __name__ == '__main__': 
-#     watch = Watcher() 
-#     watch.run() 
+        print("verschoben") #umbennen        
