@@ -13,7 +13,7 @@ class Watcher:
         cc2 Watcher
     '''
 
-    path = "/Users/tom/Downloads/"
+    path = "testordner/"
 
   
     def __init__(self): 
@@ -59,18 +59,22 @@ class Event(LoggingEventHandler):
         
         valid_argument_types = [".txt", ".mp4", ".webm", ".ogv"]
         valid_argument_compressions = ["low", "medium", "high"]
-        
-        file_path, original_file_name = os.path.split(event.src_path)
-        extension = os.path.splitext(original_file_name)[1]
-        file_name = os.path.splitext(original_file_name)[0]
-                
         marker = "--"  
-        
-        splitted_file = re.split(marker, file_name)
-        file_name_without_arguments = splitted_file[0]
-        file_name_without_arguments_extension = splitted_file[0]+extension
-        cropped_file_extension = extension.split(".")[1]
-        
+
+        try:
+            file_path, original_file_name = os.path.split(event.src_path)
+            extension = os.path.splitext(original_file_name)[1]
+            file_name = os.path.splitext(original_file_name)[0]
+                    
+            
+            
+            splitted_file = re.split(marker, file_name)
+            file_name_without_arguments = splitted_file[0]
+            file_name_without_arguments_extension = splitted_file[0]+extension
+            cropped_file_extension = extension.split(".")[1]
+        except:
+            print("Error")
+            return 0  
         
         if extension in valid_argument_types:
             
