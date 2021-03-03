@@ -23,12 +23,17 @@ class Controller:
         
         self.dir.make_dir(settings.path,file_name,0o777)
 
+        # Only for testing 
+        # ToDo: make sure Directory is created before moving the file
         time.sleep(5)
         #self.convert_videos(verified_arguments_compression,verified_arguments_typ, original_filetyp)
-        #
+        
 
         self.dir.move_files(original_file_path,file_name,file_name)
 
+
+        # Only for testing 
+        # ToDo: make sure the file has finished moving before starting to convert
         time.sleep(2)
 
         self.conv.convert_mp4_webm(settings.path+file_name+original_file_name,file_name,file_name,1,1)
