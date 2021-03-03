@@ -3,6 +3,7 @@ import time
 import os
 import logging   
 import re
+import settings
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 from controller import Controller
@@ -17,7 +18,10 @@ class Watcher:
 
   
     def __init__(self): 
+        super().__init__()
         self.observer = Observer() 
+        #self.logger = logger
+        #self.myfunction = myfunction
         
   
     def run(self): 
@@ -57,8 +61,6 @@ class Event(LoggingEventHandler):
         
     def on_created(self, event):       
         
-        valid_argument_types = [".txt", ".mp4", ".webm", ".ogv"]
-        valid_argument_compressions = ["low", "medium", "high"]
         marker = "--"  
 
         try:
@@ -76,11 +78,11 @@ class Event(LoggingEventHandler):
             print("Error")
             return 0  
         
-        if extension in valid_argument_types:
+        if extension in settings.valid_arguments_typ:
             
             print(f'is valid')
             
-            for desired_argument in valid_argument_compressions:
+            for desired_argument in settings.valid_arguments_compression:
                 if desired_argument in splitted_file:
                     print (f'desired argument found')                    
                     #self.c.process(bucky,arguments,event.src_path,file_name+extension)                    

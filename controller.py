@@ -2,13 +2,12 @@ from convert import Converter
 from directory import Directory
 import time
 import threading
+import settings
 #from cc2 import Watchdog
 
 
 class Controller:
 
-    valid_arguments_compression = ["low", "medium", "high"]
-    valid_arguments_typ = ["mp4", "webm", "ogv"]
     verified_arguments = []
 
     
@@ -49,7 +48,7 @@ class Controller:
         try:
             # Check Compression Arguments
             for param in arguments:
-                if param in Controller.valid_arguments_compression:
+                if param in settings.valid_arguments_compression:
                     print("Valid Compression Argument")
                     valid_arguments.append(param)
                 else:
@@ -66,7 +65,7 @@ class Controller:
         try:
             # Check Compression Arguments
             for param in arguments:
-                if param in Controller.valid_arguments_typ:
+                if param in settings.valid_arguments_typ:
                     print("Valid Typ Argument")
                     valid_arguments.append(param)
                 else:
