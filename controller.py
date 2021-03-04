@@ -14,14 +14,14 @@ class Controller:
         self.dir = Directory()
         self.conv = Converter()
 
-    
+    def process(self,file_name_without_arguments,arguments,original_file_path,file_name_without_arguments_extension,cropped_file_extension,original_file_name):
 
-    def process(self,file_name,arguments,original_file_path,original_file_name,original_filetyp):
         verified_arguments_compression = self.verify_arguments_compression(arguments)
         verified_arguments_typ = self.verify_arguments_typ(arguments)
 
-        
-        self.dir.make_dir(settings.path,file_name,0o777)
+        print(verified_arguments_compression)
+        print(verified_arguments_typ)
+        self.dir.make_dir(settings.path,file_name_without_arguments,0o777)
 
         # Only for testing 
         # ToDo: make sure Directory is created before moving the file
@@ -29,14 +29,14 @@ class Controller:
         #self.convert_videos(verified_arguments_compression,verified_arguments_typ, original_filetyp)
         
 
-        self.dir.move_files(original_file_path,file_name,file_name)
+        self.dir.move_files(original_file_name,settings.path,file_name_without_arguments)
 
 
         # Only for testing 
         # ToDo: make sure the file has finished moving before starting to convert
         time.sleep(2)
 
-        self.conv.convert_mp4_webm(settings.path+file_name+original_file_name,file_name,file_name,1,1)
+        self.conv.convert_mp4_webm(settings.path+file_name_without_arguments+"/"+original_file_name,settings.path+file_name_without_arguments,8)
             
 
         

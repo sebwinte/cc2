@@ -26,13 +26,11 @@ class Directory:
 
 
 
-    def move_files(self,originalPath,path, file_name):
-        original = originalPath
-        target = 'testordner/'+file_name
-        
+    def move_files(self,originalPath,folder_path, file_name):
+        original = folder_path + originalPath
+        target = folder_path + file_name
+
         try:
-            print(original)
-            print(target)
             shutil.move(original,target)
         except OSError:
             print (f'Error during move')

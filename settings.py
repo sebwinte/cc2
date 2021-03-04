@@ -6,3 +6,4 @@ def init():
 
     global path 
     path = "testordner/"
+
