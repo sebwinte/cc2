@@ -1,5 +1,10 @@
 import os
 import shutil
+import threading
+import time
+import os.path
+from os import path
+
 
 class Directory:
     
@@ -21,8 +26,10 @@ class Directory:
             os.mkdir(path+file_name, access_rights)
         except OSError:
             print ("Creation of the directory %s failed" % path+file_name)
+            return 0 
         else:
             print ("Successfully created the directory %s" % path+file_name)
+            return 1
 
 
 
@@ -30,10 +37,10 @@ class Directory:
         original = folder_path + originalPath
         target = folder_path + file_name
 
-        try:
-            shutil.move(original,target)
-        except OSError:
-            print (f'Error during move')
-        else:
-            print (f'File successfully moved')
-    
+      
+        if shutil.move(original,target):
+            print (f'------------ Move File ------------')
+            return 1
+
+       
+

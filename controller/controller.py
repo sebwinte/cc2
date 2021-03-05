@@ -1,8 +1,10 @@
-from convert import Converter
-from directory import Directory
+from helper.convert import Converter
+from helper.directory import Directory
 import time
 import threading
-import settings
+import helper.settings as settings
+import os.path
+from os import path
 #from cc2 import Watchdog
 
 
@@ -21,25 +23,15 @@ class Controller:
 
         print(verified_arguments_compression)
         print(verified_arguments_typ)
-        self.dir.make_dir(settings.path,file_name_without_arguments,0o777)
 
-        # Only for testing 
-        # ToDo: make sure Directory is created before moving the file
-        time.sleep(5)
-        #self.convert_videos(verified_arguments_compression,verified_arguments_typ, original_filetyp)
-        
+        if self.dir.make_dir(settings.path,file_name_without_arguments,0o777):
 
-        self.dir.move_files(original_file_name,settings.path,file_name_without_arguments)
+            # Anpassen
+            self.conv.convert_mp4_webm(settings.path+"/"+original_file_name,settings.path+file_name_without_arguments,8)
+           
 
-
-        # Only for testing 
-        # ToDo: make sure the file has finished moving before starting to convert
-        time.sleep(2)
-
-        self.conv.convert_mp4_webm(settings.path+file_name_without_arguments+"/"+original_file_name,settings.path+file_name_without_arguments,8)
-            
-
-        
+            if self.dir.move_files(original_file_name,settings.path,file_name_without_arguments):
+                return 0
 
 
 
@@ -74,25 +66,6 @@ class Controller:
             return valid_arguments
         except:
             return 0    
-
-
-
-    def create_directory(self,directory_name):
-        #Create Directory
-        #When created call next function copy video
-        return directory_name
-
-
-
-
-    def copy_video(self,file_name,directory):
-        #Copy Original video to new location
-         return 0
-    
-
-    def create_log(self,status,file_name,directory):
-        #Create File in directory and write status 
-         return 0
 
 
     def convert_videos(self, verified_arguments_compression , verified_arguments_typ , original_filetyp):

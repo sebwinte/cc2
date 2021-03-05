@@ -7,3 +7,5 @@ def init():
     global path 
     path = "testordner/"
 
+    global marker
+    marker = "--" 

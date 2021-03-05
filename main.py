@@ -1,7 +1,7 @@
 import time 
 import sys
-import settings
-from watcher import Watcher
+import helper.settings as settings
+from helper.watcher import Watcher
 
 
 if __name__ == '__main__': 
