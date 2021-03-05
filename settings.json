@@ -1,0 +1,16 @@
+{
+    "compression":[
+        {
+            "small":3,
+            "medium": 6,
+            "high": 9
+        }
+    ],
+    "format":[
+        {
+            "mp4": 0,
+            "webm": 1,
+            "ogv": 2
+        }
+    ]
+}
