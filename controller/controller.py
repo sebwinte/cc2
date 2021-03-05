@@ -5,7 +5,6 @@ import threading
 import helper.settings as settings
 import os.path
 from os import path
-#from cc2 import Watchdog
 
 
 class Controller:
@@ -21,20 +20,17 @@ class Controller:
         verified_arguments_compression = self.verify_arguments_compression(arguments)
         verified_arguments_typ = self.verify_arguments_typ(arguments)
 
-        print(verified_arguments_compression)
-        print(verified_arguments_typ)
-
         if self.dir.make_dir(settings.path,file_name_without_arguments,0o777):
-
-            # Anpassen
+            #To do
+            # Aufräumen/Sauber 
             self.conv.convert_mp4_webm(settings.path+"/"+original_file_name,settings.path+file_name_without_arguments,8)
            
 
-            if self.dir.move_files(original_file_name,settings.path,file_name_without_arguments):
-                return 0
+            self.dir.move_files(original_file_name,settings.path,file_name_without_arguments)
+            
 
-
-
+    #To do
+    # Zusammenfassen zu einer Funktion mit _typ
     def verify_arguments_compression(self,arguments):
         # Only except valid arguments
         valid_arguments = []
@@ -73,6 +69,5 @@ class Controller:
         try:
             for typ in verified_arguments_typ:
                 self.conv.convert_+'mp4_webm'+(settings.path+file_name+original_file_name,file_name,file_name,10,10)
-
         except:
             print("ERROR")

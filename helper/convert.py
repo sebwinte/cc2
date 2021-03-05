@@ -11,13 +11,9 @@ class Converter:
 
     def convert_mp4_webm(self,file_path,path,videoCompression):
         try:
-            print('Start convert')
-            
+            print('Start converting Video')
             command = 'ffmpeg -i '+ str(file_path) +' -c:v libvpx-vp9 -crf '+ str(videoCompression) + ' -b:v 0 -b:a 128k -c:a libopus '+ str(path) + '/tester.webm'
-
-            print(command)
             subprocess.run(command)
-            print('WINISH convert')
         except:
             print('Error')
 

@@ -37,10 +37,8 @@ class Directory:
         original = folder_path + originalPath
         target = folder_path + file_name
 
-      
-        if shutil.move(original,target):
-            print (f'------------ Move File ------------')
-            return 1
+        shutil.move(original,target)
+       
 
        
 
