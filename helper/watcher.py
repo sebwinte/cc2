@@ -29,9 +29,14 @@ class Watcher:
         try: 
             while True: 
                 time.sleep(5)
-                if len(event_handler.moved_files) != 0:
-                    self.own_observer(event_handler.queue.pop(0))
-                print(event_handler.moved_files)
+                if event_handler.queue:
+
+                    #To do 
+                    #Sollte eine Datei wieder gelöscht werden die bereits in der Queue ist 
+                    #muss diese wieder gelöscht werden 
+                    #zudem muss der fehler abgefangen werden da er momentan noch zu einem Absturz führt
+                    self.own_observer(event_handler.queue.pop())
+                print(event_handler.queue)
         except: 
             self.observer.stop() 
             print("Observer Stopped") 
