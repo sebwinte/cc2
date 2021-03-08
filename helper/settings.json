@@ -12,5 +12,11 @@
             "webm": 1,
             "ogv": 2
         }
+    ],
+    "settings":[
+        {
+            "notification": "True"
+            
+        }
     ]
 }

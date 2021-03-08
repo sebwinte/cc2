@@ -4,6 +4,7 @@ import os
 import logging   
 import threading
 import re
+from pathlib import Path
 import helper.settings as settings
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
@@ -30,13 +31,12 @@ class Watcher:
             while True: 
                 time.sleep(5)
                 if event_handler.queue:
-
-                    #To do 
-                    #Sollte eine Datei wieder gelöscht werden die bereits in der Queue ist 
-                    #muss diese wieder gelöscht werden 
-                    #zudem muss der fehler abgefangen werden da er momentan noch zu einem Absturz führt
-                    self.own_observer(event_handler.queue.pop())
-                print(event_handler.queue)
+                    print(event_handler.queue)
+                    #Get the latest file path from the queue and remove it
+                    file_path = Path(event_handler.queue.pop())
+                    #Check if file is still there or has been removed in the meantime
+                    if file_path.exists():
+                        self.own_observer(file_path)
         except: 
             self.observer.stop() 
             print("Observer Stopped") 
@@ -90,7 +90,9 @@ class Event(LoggingEventHandler):
 
     def on_modified(self, event):
 
-        if self.on_modified_path == event.src_path and  self.on_created_path == self.on_modified_path:
+        #If the file path exists twice => the file has finished copying. If it has also triggerd the on_create event
+        # it is added to the queue. 
+        if self.on_modified_path == event.src_path and  self.on_created_path == self.on_modified_path and not event.is_directory :
             self.queue.append(self.on_modified_path)
         else:
             self.on_modified_path = event.src_path

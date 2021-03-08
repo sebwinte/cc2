@@ -5,6 +5,7 @@ import threading
 import helper.settings as settings
 import os.path
 from os import path
+from notifypy import Notify
 
 
 class Controller:
@@ -14,6 +15,10 @@ class Controller:
     def __init__(self):
         self.dir = Directory()
         self.conv = Converter()
+        self.notification = Notify(
+             default_notification_icon="doc/logo.png"
+        )
+
 
     def process(self,file_name_without_arguments,arguments,original_file_path,file_name_without_arguments_extension,cropped_file_extension,original_file_name):
 
@@ -21,12 +26,17 @@ class Controller:
         verified_arguments_typ = self.verify_arguments_typ(arguments)
 
         if self.dir.make_dir(settings.path,file_name_without_arguments,0o777):
-            #To do
-            # Aufräumen/Sauber 
-            self.conv.convert_mp4_webm(settings.path+"/"+original_file_name,settings.path+file_name_without_arguments,8)
-           
 
+            self.conv.manage_videos(verified_arguments_compression,verified_arguments_typ,file_name_without_arguments,original_file_name)
+           
             self.dir.move_files(original_file_name,settings.path,file_name_without_arguments)
+
+
+            self.notification.title = "cc2-Finished"
+            self.notification.message = file_name_without_arguments + " is ready."
+            self.notification.send()
+
+
             
 
     #To do
@@ -38,10 +48,7 @@ class Controller:
             # Check Compression Arguments
             for param in arguments:
                 if param in settings.valid_arguments_compression:
-                    print("Valid Compression Argument")
                     valid_arguments.append(param)
-                else:
-                    print('Invalid Argument')
             return valid_arguments
         except:
             return 0    
@@ -55,19 +62,11 @@ class Controller:
             # Check Compression Arguments
             for param in arguments:
                 if param in settings.valid_arguments_typ:
-                    print("Valid Typ Argument")
                     valid_arguments.append(param)
-                else:
-                    print('Invalid Argument')
             return valid_arguments
         except:
             return 0    
 
 
-    def convert_videos(self, verified_arguments_compression , verified_arguments_typ , original_filetyp):
 
-        try:
-            for typ in verified_arguments_typ:
-                self.conv.convert_+'mp4_webm'+(settings.path+file_name+original_file_name,file_name,file_name,10,10)
-        except:
-            print("ERROR")
+
