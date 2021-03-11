@@ -5,7 +5,7 @@ import logging
 import threading
 import re
 from pathlib import Path
-import helper.settings as settings
+from helper.helper import Helper
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 from controller.controller import Controller
@@ -22,7 +22,7 @@ class Watcher:
   
     def run(self): 
         event_handler = Event() 
-        self.observer.schedule(event_handler, settings.path, recursive = False) 
+        self.observer.schedule(event_handler, Helper.path, recursive = False) 
         self.observer.start() 
         self.c = Controller() 
 
@@ -51,7 +51,7 @@ class Watcher:
             extension = os.path.splitext(original_file_name)[1]
             file_name = os.path.splitext(original_file_name)[0]
 
-            splitted_file = re.split(settings.marker, file_name)
+            splitted_file = re.split(Helper.marker, file_name)
             file_name_without_arguments = splitted_file[0]
             file_name_without_arguments_extension = splitted_file[0]+extension
             cropped_file_extension = extension.split(".")[1]
@@ -59,8 +59,8 @@ class Watcher:
         except:
             return 0  
         
-        if cropped_file_extension in settings.valid_arguments_typ:
-            for desired_argument in settings.valid_arguments_compression:
+        if cropped_file_extension in Helper.valid_arguments_typ:
+            for desired_argument in Helper.valid_arguments_compression:
                 if desired_argument in splitted_file:
                     self.c.process(file_name_without_arguments,splitted_file,file_path,file_name_without_arguments_extension,cropped_file_extension,original_file_name)                  
                 else:

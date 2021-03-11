@@ -1,9 +1,9 @@
 {
     "compression":[
         {
-            "small":3,
-            "medium": 6,
-            "high": 9
+            "low":30,
+            "medium": 60,
+            "high": 90
         }
     ],
     "format":[
@@ -15,7 +15,8 @@
     ],
     "settings":[
         {
-            "notification": "True"
+            "notification": 0,
+            "cc2_folder" : "testordner/"
             
         }
     ]

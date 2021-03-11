@@ -2,9 +2,10 @@ from helper.convert import Converter
 from helper.directory import Directory
 import time
 import threading
-import helper.settings as settings
+from helper.helper import Helper
 import os.path
 from os import path
+from pathlib import Path
 from notifypy import Notify
 
 
@@ -16,7 +17,7 @@ class Controller:
         self.dir = Directory()
         self.conv = Converter()
         self.notification = Notify(
-             default_notification_icon="doc/logo.png"
+            default_notification_icon = Path("doc/logo.png")
         )
 
 
@@ -25,11 +26,11 @@ class Controller:
         verified_arguments_compression = self.verify_arguments_compression(arguments)
         verified_arguments_typ = self.verify_arguments_typ(arguments)
 
-        if self.dir.make_dir(settings.path,file_name_without_arguments,0o777):
+        if self.dir.make_dir(Helper.path,file_name_without_arguments,0o777):
 
             self.conv.manage_videos(verified_arguments_compression,verified_arguments_typ,file_name_without_arguments,original_file_name)
            
-            self.dir.move_files(original_file_name,settings.path,file_name_without_arguments)
+            self.dir.move_files(original_file_name,Helper.path,file_name_without_arguments)
 
 
             self.notification.title = "cc2-Finished"
@@ -47,7 +48,7 @@ class Controller:
         try:
             # Check Compression Arguments
             for param in arguments:
-                if param in settings.valid_arguments_compression:
+                if param in Helper.valid_arguments_compression:
                     valid_arguments.append(param)
             return valid_arguments
         except:
@@ -61,7 +62,7 @@ class Controller:
         try:
             # Check Compression Arguments
             for param in arguments:
-                if param in settings.valid_arguments_typ:
+                if param in Helper.valid_arguments_typ:
                     valid_arguments.append(param)
             return valid_arguments
         except:

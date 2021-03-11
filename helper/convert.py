@@ -1,7 +1,8 @@
 import sys
 import time
 import subprocess
-import helper.settings as settings
+from helper.helper import Helper
+
 
 
 
@@ -9,7 +10,8 @@ class Converter:
 
     
     def __init__(self):
-        pass
+        self.h = Helper()
+        self.h.load_settings()
     
     #ToDo
     #Funktionsname muss geändert werden 
@@ -22,7 +24,8 @@ class Converter:
 
     def to_webm(self,verified_arguments_compression,file_name_without_arguments,original_file_name):
         print("webm")
-        command = 'ffmpeg -i '+ str(settings.path + original_file_name) + ' '+ str(settings.path + file_name_without_arguments +"/"+ file_name_without_arguments) + '.webm'
+        compression = self.h.convert_compression_value(str(verified_arguments_compression[0]),"webm")
+        command = 'ffmpeg -i '+ str(Helper.path + original_file_name) + ' '+ str(Helper.path + file_name_without_arguments +"/"+ file_name_without_arguments) + '.webm'
         print(command)
         subprocess.run(command)
         return 0
@@ -30,7 +33,8 @@ class Converter:
 
     def to_mp4(self,verified_arguments_compression,file_name_without_arguments,original_file_name):
         print("mp4")
-        command = 'ffmpeg -i '+ str(settings.path + original_file_name) + ' '+ str(settings.path + file_name_without_arguments +"/"+ file_name_without_arguments) + '.mp4'
+        compression = self.h.convert_compression_value(str(verified_arguments_compression[0]),"mp4")
+        command = 'ffmpeg -i '+ str(Helper.path + original_file_name) + ' '+ str(Helper.path + file_name_without_arguments +"/"+ file_name_without_arguments) + '.mp4'
         print(command)
         subprocess.run(command)
         return 0
@@ -38,7 +42,9 @@ class Converter:
 
     def to_ogv(self,verified_arguments_compression,file_name_without_arguments,original_file_name):
         print("ogv")
-        command = 'ffmpeg -i '+ str(settings.path + original_file_name) + ' '+ str(settings.path + file_name_without_arguments +"/"+ file_name_without_arguments) + '.ogv'
+        compression = self.h.convert_compression_value(str(verified_arguments_compression[0]),"ogv")
+        print(compression)
+        command = 'ffmpeg -i '+ str(Helper.path + original_file_name) + ' '+ str(Helper.path + file_name_without_arguments +"/"+ file_name_without_arguments) + '.ogv'
         print(command)
         subprocess.run(command)
         return 0

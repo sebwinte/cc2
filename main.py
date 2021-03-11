@@ -1,13 +1,14 @@
 import time 
 import sys
-import helper.settings as settings
+from helper.helper import Helper
 from helper.watcher import Watcher
-from helper.loader import Loader
 
 
 if __name__ == '__main__': 
-    settings.init()   
-    Loader.init()  
+    h = Helper() 
+    #h.load_settings()
 
+    #print(h.convert_compression_value("low","webm"))
+    #print("-----------------------------------------")
     w = Watcher()
     w.run()
