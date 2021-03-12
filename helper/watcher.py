@@ -42,7 +42,8 @@ class Watcher:
             print("Observer Stopped") 
   
         self.observer.join() 
-    
+
+ 
 
     def own_observer(self,src):
 
@@ -68,6 +69,10 @@ class Watcher:
         else:
             print(f'No supported file extension')
 
+       
+    
+
+
         
         
 class Event(LoggingEventHandler):
@@ -85,14 +90,30 @@ class Event(LoggingEventHandler):
 
 
     def on_created(self, event): 
-        self.on_created_path=event.src_path
+        if not event.is_directory:
+            file_porcess_thread = threading.Thread(target=self.file_porcess, args=(event.src_path,))
+            file_porcess_thread.start()
 
 
-    def on_modified(self, event):
+    def file_porcess(self,file_path):
 
-        #If the file path exists twice => the file has finished copying. If it has also triggerd the on_create event
-        # it is added to the queue. 
-        if self.on_modified_path == event.src_path and  self.on_created_path == self.on_modified_path and not event.is_directory :
-            self.queue.append(self.on_modified_path)
-        else:
-            self.on_modified_path = event.src_path
+        self.last_modified = os.stat(file_path).st_mtime
+        self.file_open = True
+
+        while self.file_open:
+            time.sleep(1)
+            self.check_last_modified = os.stat(file_path).st_mtime
+            print( self.check_last_modified)
+            self.check_mark =  self.check_last_modified - self.last_modified
+            print(self.check_mark)
+
+            if self.check_mark != 0.0:
+                print("file modified")
+            else:
+                time.sleep(1)
+                self.file_open = False
+                print("finished copying")
+                self.queue.append(file_path)
+
+            self.last_modified = self.check_last_modified
+        
