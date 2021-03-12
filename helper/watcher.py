@@ -56,7 +56,6 @@ class Watcher:
             file_name_without_arguments = splitted_file[0]
             file_name_without_arguments_extension = splitted_file[0]+extension
             cropped_file_extension = extension.split(".")[1]
-
         except:
             return 0  
         
@@ -107,13 +106,11 @@ class Event(LoggingEventHandler):
             self.check_mark =  self.check_last_modified - self.last_modified
             print(self.check_mark)
 
-            if self.check_mark != 0.0:
-                print("file modified")
-            else:
+            if self.check_mark == 0.0:
                 time.sleep(1)
                 self.file_open = False
                 print("finished copying")
-                self.queue.append(file_path)
+                self.queue.append(file_path) 
 
             self.last_modified = self.check_last_modified
         

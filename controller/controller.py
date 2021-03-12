@@ -11,6 +11,11 @@ from notifypy import Notify
 
 class Controller:
 
+    '''
+        cc2 Controller
+    '''
+
+
     verified_arguments = []
 
     def __init__(self):
@@ -27,18 +32,12 @@ class Controller:
         verified_arguments_typ = self.verify_arguments_typ(arguments)
 
         if self.dir.make_dir(Helper.path,file_name_without_arguments,0o777):
-
-            self.conv.manage_videos(verified_arguments_compression,verified_arguments_typ,file_name_without_arguments,original_file_name)
-           
-            self.dir.move_files(original_file_name,Helper.path,file_name_without_arguments)
-
-
-            self.notification.title = "cc2-Finished"
-            self.notification.message = file_name_without_arguments + " is ready."
-            self.notification.send()
-
-
-            
+            if self.conv.manage_videos(verified_arguments_compression,verified_arguments_typ,file_name_without_arguments,original_file_name):
+                if self.dir.move_files(original_file_name,Helper.path,file_name_without_arguments):
+                    self.message("CC2","Your video has been successfully converted")
+                else: return   
+            else: return   
+        else: return                
 
     #To do
     # Zusammenfassen zu einer Funktion mit _typ
@@ -70,4 +69,8 @@ class Controller:
 
 
 
+    def message(self,title,message):
+        self.notification.title = title
+        self.notification.message = message
+        self.notification.send()
 

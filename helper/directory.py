@@ -34,11 +34,13 @@ class Directory:
 
 
     def move_files(self,originalPath,folder_path, file_name):
-        original = folder_path + originalPath
-        target = folder_path + file_name
-
-        shutil.move(original,target)
-       
+        try:
+            original = folder_path + originalPath
+            target = folder_path + file_name
+            shutil.move(original,target)
+            return True
+        except:
+            return False
 
        
 
