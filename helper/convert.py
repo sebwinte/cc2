@@ -25,18 +25,18 @@ class Converter:
     def to_webm(self,verified_arguments_compression,file_name_without_arguments,original_file_name):
         print("webm")
         compression = self.h.convert_compression_value(str(verified_arguments_compression[0]),"webm")
-        command = 'ffmpeg -i '+ str(Helper.path + original_file_name) + ' '+ str(Helper.path + file_name_without_arguments +"/"+ file_name_without_arguments) + '.webm'
+        command = 'ffmpeg -i '+ str(Helper.path)+'/'+ str(original_file_name) + ' '+ str(Helper.path) +'/'+ str(file_name_without_arguments) +'/'+ str(file_name_without_arguments) + '.webm'
         print(command)
-        subprocess.run(command)
+        subprocess.run(command, shell=True)
         return 0
 
 
     def to_mp4(self,verified_arguments_compression,file_name_without_arguments,original_file_name):
         print("mp4")
         compression = self.h.convert_compression_value(str(verified_arguments_compression[0]),"mp4")
-        command = 'ffmpeg -i '+ str(Helper.path + original_file_name) + ' '+ str(Helper.path + file_name_without_arguments +"/"+ file_name_without_arguments) + '.mp4'
+        command = 'ffmpeg -i '+ str(Helper.path)+'/'+ str(original_file_name) + ' '+ str(Helper.path) +'/'+ str(file_name_without_arguments) +'/'+ str(file_name_without_arguments) + '.webm'
         print(command)
-        subprocess.run(command)
+        subprocess.run(command, shell=True)
         return 0
 
 
@@ -44,8 +44,7 @@ class Converter:
         print("ogv")
         compression = self.h.convert_compression_value(str(verified_arguments_compression[0]),"ogv")
         print(compression)
-        command = 'ffmpeg -i '+ str(Helper.path + original_file_name) + ' '+ str(Helper.path + file_name_without_arguments +"/"+ file_name_without_arguments) + '.ogv'
+        command = 'ffmpeg -i '+ str(Helper.path)+'/'+ str(original_file_name) + ' '+ str(Helper.path) +'/'+ str(file_name_without_arguments) +'/'+ str(file_name_without_arguments) + '.webm'
         print(command)
-        subprocess.run(command)
+        subprocess.run(command, shell=True)
         return 0
-
