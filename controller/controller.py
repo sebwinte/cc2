@@ -39,6 +39,7 @@ class Controller:
             else: return   
         else: return                
 
+
     #To do
     # Zusammenfassen zu einer Funktion mit _typ
     def verify_arguments_compression(self,arguments):

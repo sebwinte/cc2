@@ -1,4 +1,5 @@
 import sys
+import os
 import json
 from pathlib import Path
 
@@ -18,9 +19,9 @@ class Helper():
         Helper.valid_arguments_compression = ["low", "medium", "high"]
         Helper.valid_arguments_typ = ["mp4", "webm", "ogv"]
         Helper.path = "testordner/"
-        Helper.marker = "--" 
+        Helper.marker = "--"
+        Helper.os = os.name
         self.settings_data = []
-
 
     def load_settings(self):
         try:
