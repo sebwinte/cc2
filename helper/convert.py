@@ -23,16 +23,16 @@ class Converter:
             method = getattr(self, method_name)
             if method(verified_arguments_compression,file_name_without_arguments,original_file_name): status = True
             else:
-                continue
+                status = False
+                break
         return status
 
 
     def to_webm(self,verified_arguments_compression,file_name_without_arguments,original_file_name):
         try:
-            working_dir = r"FFMPEG"
             compression = self.h.convert_compression_value(str(verified_arguments_compression[0]),"webm")
-            command = 'ffmpeg -i ../'+ str(Helper.path) + str(original_file_name) + ' ../'+ str(Helper.path) + str(file_name_without_arguments) +'/'+ str(file_name_without_arguments) + '.webm -loglevel quiet'
-            subprocess.run(command, shell=True ,cwd=working_dir)
+            command = 'ffmpeg -i '+ str(Helper.path) + str(original_file_name) + ' '+ str(Helper.path) + str(file_name_without_arguments) +'/'+ str(file_name_without_arguments) + '.webm -loglevel quiet'
+            subprocess.run(command, shell=True)
             return True
         except:
             return False
@@ -40,10 +40,9 @@ class Converter:
 
     def to_mp4(self,verified_arguments_compression,file_name_without_arguments,original_file_name):
         try:
-            working_dir = r"FFMPEG"
             compression = self.h.convert_compression_value(str(verified_arguments_compression[0]),"mp4")
-            command = 'ffmpeg -i ../'+ str(Helper.path) + str(original_file_name) + ' ../'+ str(Helper.path) + str(file_name_without_arguments) +'/'+ str(file_name_without_arguments) + '.mp4 -loglevel quiet'
-            subprocess.run(command, shell=True ,cwd=working_dir)
+            command = 'ffmpeg -i '+ str(Helper.path) + str(original_file_name) + ' '+ str(Helper.path) + str(file_name_without_arguments) +'/'+ str(file_name_without_arguments) + '.mp4 -loglevel quiet'
+            subprocess.run(command, shell=True)
             return True
         except:
             return False
@@ -52,10 +51,9 @@ class Converter:
 
     def to_ogv(self,verified_arguments_compression,file_name_without_arguments,original_file_name):
         try:
-            working_dir = r"FFMPEG"
             compression = self.h.convert_compression_value(str(verified_arguments_compression[0]),"ogv")
-            command = 'ffmpeg -i ../'+ str(Helper.path) + str(original_file_name) + ' ../'+ str(Helper.path) + str(file_name_without_arguments) +'/'+ str(file_name_without_arguments) + '.ogv -loglevel quiet'
-            subprocess.run(command, shell=True,cwd=working_dir)
+            command = 'ffmpeg -i '+ str(Helper.path) + str(original_file_name) + ' '+ str(Helper.path) + str(file_name_without_arguments) +'/'+ str(file_name_without_arguments) + '.ogv -loglevel quiet'
+            subprocess.run(command, shell=True)
             return True
         except:
             return False
