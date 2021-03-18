@@ -2,6 +2,7 @@ import os
 import shutil
 import threading
 import time
+from uuid import uuid4
 import os.path
 from os import path
 
@@ -22,21 +23,26 @@ class Directory:
 
     
     def make_dir(self, path, file_name, access_rights):
+        uniq_id = ''
         try:
-            os.mkdir(path+file_name, access_rights)
+            if os.path.exists(path+file_name):
+                uniq_id = str(uuid4())
+                os.mkdir(path + file_name + uniq_id, access_rights)
+            else:
+                 os.mkdir(path+file_name, access_rights)
         except OSError:
             print ("Creation of the directory %s failed" % path+file_name)
             return 0 
         else:
             print ("Successfully created the directory %s" % path+file_name)
-            return 1
+            return uniq_id
 
 
 
-    def move_files(self,originalPath,folder_path, file_name):
+    def move_files(self,originalPath,folder_path, file_name ,uniq_id):
         try:
             original = folder_path + originalPath
-            target = folder_path + file_name
+            target = folder_path + file_name + uniq_id
             shutil.move(original,target)
             return True
         except:
