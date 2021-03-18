@@ -19,6 +19,7 @@ class Watcher:
   
     def __init__(self): 
         self.observer = Observer() 
+
   
     def run(self): 
         event_handler = Event() 
@@ -56,6 +57,8 @@ class Watcher:
             file_name_without_arguments = splitted_file[0]
             file_name_without_arguments_extension = splitted_file[0]+extension
             cropped_file_extension = extension.split(".")[1]
+
+            print(splitted_file)
         except:
             return 0  
         
@@ -63,9 +66,7 @@ class Watcher:
             for desired_argument in Helper.valid_arguments_compression:
                 if desired_argument in splitted_file:
                     self.c.process(file_name_without_arguments,splitted_file,file_path,file_name_without_arguments_extension,cropped_file_extension,original_file_name)                  
-                else:
-                    return 0
-        else:
+        else: 
             print(f'No supported file extension')
 
        

@@ -30,7 +30,6 @@ class Controller:
 
         verified_arguments_compression = self.verify_arguments_compression(arguments)
         verified_arguments_typ = self.verify_arguments_typ(arguments)
-
         if self.dir.make_dir(Helper.path,file_name_without_arguments,0o777):
             if self.conv.manage_videos(verified_arguments_compression,verified_arguments_typ,file_name_without_arguments,original_file_name):
                 if self.dir.move_files(original_file_name,Helper.path,file_name_without_arguments):

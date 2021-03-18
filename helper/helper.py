@@ -33,17 +33,24 @@ class Helper():
         except:
             print("Error")
 
+    '''
+    H.264 (libx264) The range of the CRF scale is 0–51, where 0 is lossless, 23 is the default, and 51 is worst quality possible
+
+    VP9 (libvpx-vp9) No default value. The CRF value can be from 0–63. Lower values mean better quality. Recommended values range from 15–35, with 31 being recommended for 1080p HD video.
+    
+    Libtheora (libtheora) For libtheora, it's the opposite - higher values are better. Range is 0-10.'''
+
     # Convert "--small,--medium,--high" into the according value based on the range of the export file_typ
     def convert_compression_value(self,compression_tag,file_typ):
 
         compression_value = self.settings_data['compression'][0][compression_tag]
 
         if(file_typ == "mp4"):
-            return (int(compression_value / 9)) 
+            return (int( (51 / 100) * (100 - compression_value) ) ) 
 
         if(file_typ == "webm"):
-            return (int(compression_value / 32)*10) 
+            return (int( (63 / 100) * (100 - compression_value) ) ) 
 
         if(file_typ == "ogv"):
-            return (int(compression_value / 50)*10) 
+            return (int( (10 / 100) * compression_value ) ) 
         

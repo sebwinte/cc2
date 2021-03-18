@@ -6,13 +6,6 @@
             "high": 90
         }
     ],
-    "format":[
-        {
-            "mp4": 0,
-            "webm": 1,
-            "ogv": 2
-        }
-    ],
     "settings":[
         {
             "notification": 0,
