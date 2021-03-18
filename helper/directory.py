@@ -10,11 +10,10 @@ from os import path
 class Directory:
     
     '''
-        cc2 Create directories
-        Attributes
+        cc2 Directory
         ----------
-        path: name of the directory to be created 
-        access_rights: define the access rights
+        Create Folder
+        Move Files
     '''
     
     def __init__(self):
@@ -23,11 +22,11 @@ class Directory:
 
     
     def make_dir(self, path, file_name, access_rights):
-        uniq_id = ''
+        uniq_folder_id = '' #Uniq Folder-ID if Folder already exists
         try:
             if os.path.exists(path+file_name):
-                uniq_id = str(uuid4())
-                os.mkdir(path + file_name + uniq_id, access_rights)
+                uniq_folder_id = str(uuid4())
+                os.mkdir(path + file_name + uniq_folder_id, access_rights)
             else:
                  os.mkdir(path+file_name, access_rights)
         except OSError:
@@ -35,16 +34,19 @@ class Directory:
             return 0 
         else:
             print ("Successfully created the directory %s" % path+file_name)
-            return uniq_id
+            return uniq_folder_id
 
 
 
-    def move_files(self,originalPath,folder_path, file_name ,uniq_id):
+    def move_files(self,originalPath,folder_path, file_name ,uniq_folder_id):
         try:
-            original = folder_path + originalPath
-            target = folder_path + file_name + uniq_id
-            shutil.move(original,target)
-            return True
+            if os.path.exists(folder_path + originalPath):
+                original = folder_path + originalPath
+                target = folder_path + file_name + uniq_folder_id
+                shutil.move(original,target)
+                return True
+            else:
+                return False
         except:
             return False
 
