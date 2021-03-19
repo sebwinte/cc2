@@ -16,16 +16,22 @@ class Watcher:
         cc2 Watcher
     '''
 
+
   
     def __init__(self): 
         self.observer = Observer() 
+        self.h = Helper() 
 
   
     def run(self): 
-        event_handler = Event() 
-        self.observer.schedule(event_handler, Helper.path, recursive = False) 
-        self.observer.start() 
-        self.c = Controller() 
+        try:
+            event_handler = Event() 
+            self.observer.schedule(event_handler, Helper.path, recursive = False) 
+            self.observer.start() 
+            self.c = Controller() 
+        except:
+            self.h.message("CC2","Error directory: "+ Helper.path + " not found" )
+            sys.exit(1)
 
 
         try: 

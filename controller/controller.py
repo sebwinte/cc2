@@ -6,7 +6,7 @@ from helper.helper import Helper
 import os.path
 from os import path
 from pathlib import Path
-from notifypy import Notify
+
 
 
 class Controller:
@@ -16,14 +16,11 @@ class Controller:
     '''
 
 
-    verified_arguments = []
 
     def __init__(self):
         self.dir = Directory()
         self.conv = Converter()
-        self.notification = Notify(
-            default_notification_icon = Path("doc/logo.png")
-        )
+        self.h = Helper()
 
 
     def process(self,file_name_without_arguments,arguments,original_file_path,file_name_without_arguments_extension,cropped_file_extension,original_file_name):
@@ -34,7 +31,7 @@ class Controller:
         uniq_folder_id = self.dir.make_dir(Helper.path,file_name_without_arguments,0o777)
         if self.conv.manage_videos(verified_arguments_compression,verified_arguments_typ,file_name_without_arguments,original_file_name,uniq_folder_id):
             if self.dir.move_files(original_file_name,Helper.path,file_name_without_arguments,uniq_folder_id):
-                self.message("CC2","Your video has been successfully converted")
+                self.h.message("CC2","Your video has been successfully converted")
             else: return   
         else: return   
 
@@ -54,7 +51,6 @@ class Controller:
             return 0    
 
 
-
     def verify_arguments_typ(self,arguments):
         # Only except valid arguments
         valid_arguments = []
@@ -68,9 +64,5 @@ class Controller:
             return 0    
 
 
-
-    def message(self,title,message):
-        self.notification.title = title
-        self.notification.message = message
-        self.notification.send()
+    
 

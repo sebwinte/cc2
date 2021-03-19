@@ -43,11 +43,11 @@ Download FFmpeg [@GitHub](https://github.com/FFmpeg/FFmpeg) or [@FFmpeg](https:/
 
 Params
 
-| param             | default        |
+| param             | default       |
 | -------------     |:-------------:|
-| low               | 30% | 
-| medium            | 60%     |   
-| high              | 90%    |   
+| low               | 30%           | 
+| medium            | 60%           |   
+| high              | 90%           |   
 
 Feel free to change 
 
