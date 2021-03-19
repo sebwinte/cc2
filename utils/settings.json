@@ -8,7 +8,7 @@
     ],
     "settings":[
         {
-            "notification": 1,
+            "notification": false,
             "cc2_folder" : "testordner/"
         }
     ]

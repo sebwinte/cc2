@@ -5,7 +5,7 @@ import logging
 import threading
 import re
 from pathlib import Path
-from helper.helper import Helper
+from utils.helper import Helper
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 from controller.controller import Controller

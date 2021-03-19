@@ -1,7 +1,7 @@
 import sys
 import time
 import subprocess
-from helper.helper import Helper
+from utils.helper import Helper
 
 
 class Converter:
@@ -33,7 +33,7 @@ class Converter:
         try:
             compression = self.convert_compression_value(str(verified_arguments_compression[0]),"webm")
             print('WEBM @' , compression)
-            command = 'ffmpeg -i '+ str(Helper.path) + str(original_file_name) + '  -c:v libvpx-vp9 -crf '+ str(compression) +' ' + str(Helper.path) + str(file_name_without_arguments) + uniq_folder_id +'/'+ str(file_name_without_arguments) + '.webm -loglevel quiet'
+            command = self.build_command(original_file_name,compression,file_name_without_arguments,uniq_folder_id," -c:v libvpx-vp9 -crf ",'.webm')
             subprocess.run(command, shell=True)
             return True
         except:
@@ -45,7 +45,7 @@ class Converter:
         try:
             compression = self.convert_compression_value(str(verified_arguments_compression[0]),"mp4")
             print('MP4 @' , compression)
-            command = 'ffmpeg -i '+ str(Helper.path) + str(original_file_name) + '  -c:v libx264 -crf '+ str(compression) +' ' + str(Helper.path) + str(file_name_without_arguments) + uniq_folder_id +'/'+ str(file_name_without_arguments) + '.mp4 -loglevel quiet'
+            command = self.build_command(original_file_name,compression,file_name_without_arguments,uniq_folder_id,' -c:v libx264 -crf ','.mp4')
             subprocess.run(command, shell=True)
             return True
         except:
@@ -57,7 +57,7 @@ class Converter:
         try:
             compression = self.convert_compression_value(str(verified_arguments_compression[0]),"ogv")
             print('OGV @' , compression)
-            command = 'ffmpeg -i '+ str(Helper.path) + str(original_file_name) + '  -c:v libtheora -q:v '+ str(compression) +' ' + str(Helper.path) + str(file_name_without_arguments) + uniq_folder_id +'/'+ str(file_name_without_arguments) + '.ogv -loglevel quiet'
+            command = self.build_command(original_file_name,compression,file_name_without_arguments,uniq_folder_id,' -c:v libtheora -q:v ','.ogv')
             subprocess.run(command, shell=True)
             return True
         except:
@@ -78,3 +78,12 @@ class Converter:
         if(file_typ == "ogv"):
             return (int( (10 / 100) * compression_value ) ) 
         
+
+    def build_command(self,original_file_name,compression,file_name_without_arguments,uniq_folder_id,codec,export_extension):
+        command = 'ffmpeg -i '
+        input_file = str(Helper.path) + str(original_file_name)
+        compression_value = str(compression).ljust(3)
+        output_file = str(Helper.path) + str(file_name_without_arguments) + str(uniq_folder_id) +'/'+ str(file_name_without_arguments) + str(export_extension)
+        log = ' -loglevel quiet'
+        return command+input_file+codec+compression_value+output_file+log
+   
