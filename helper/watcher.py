@@ -39,7 +39,7 @@ class Watcher:
                 time.sleep(5)
                 if event_handler.queue:
                     print(event_handler.queue)
-                    #Get the latest file path from the queue and remove it
+                    #Get the last file-path from the queue and remove it
                     file_path = Path(event_handler.queue.pop())
                     #Check if file is still there or has been removed in the meantime
                     if file_path.exists():
@@ -53,18 +53,14 @@ class Watcher:
  
 
     def own_observer(self,src):
-
         try:
             file_path, original_file_name = os.path.split(src)
             extension = os.path.splitext(original_file_name)[1]
             file_name = os.path.splitext(original_file_name)[0]
-
             splitted_file = re.split(Helper.marker, file_name)
             file_name_without_arguments = splitted_file[0]
             file_name_without_arguments_extension = splitted_file[0]+extension
             cropped_file_extension = extension.split(".")[1]
-
-            print(splitted_file)
         except:
             return 0  
         
@@ -77,10 +73,7 @@ class Watcher:
 
        
     
-
-
-        
-        
+    
 class Event(LoggingEventHandler):
     
     '''
@@ -102,16 +95,13 @@ class Event(LoggingEventHandler):
 
 
     def file_porcess(self,file_path):
-
         self.last_modified = os.stat(file_path).st_mtime
         self.file_open = True
 
         while self.file_open:
             time.sleep(1)
             self.check_last_modified = os.stat(file_path).st_mtime
-            print( self.check_last_modified)
             self.check_mark =  self.check_last_modified - self.last_modified
-            print(self.check_mark)
 
             if self.check_mark == 0.0:
                 time.sleep(1)

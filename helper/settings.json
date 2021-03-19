@@ -8,9 +8,8 @@
     ],
     "settings":[
         {
-            "notification": 0,
+            "notification": 1,
             "cc2_folder" : "testordner/"
-            
         }
     ]
 }

@@ -14,7 +14,6 @@ class Converter:
     
     def __init__(self):
         self.h = Helper()
-        self.h.load_settings()
     
 
     #ToDo
@@ -69,7 +68,7 @@ class Converter:
     # Convert "--small,--medium,--high" into the according value based on the range of the export file_typ
     def convert_compression_value(self,compression_tag,file_typ):
         compression_value = self.h.settings_data['compression'][0][compression_tag]
-
+        
         if(file_typ == "mp4"):
             return (int( (51 / 100) * (100 - compression_value) ) ) 
 

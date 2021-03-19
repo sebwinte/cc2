@@ -17,12 +17,11 @@ class Directory:
     '''
     
 
-    
+
     def __init__(self):
-        pass
+        self.uniq_folder_id = ''
     
 
-    
     def make_dir(self, path, file_name, access_rights):
         uniq_folder_id = '' #Uniq Folder-ID if Folder already exists
         try:
@@ -36,8 +35,11 @@ class Directory:
             return 0 
         else:
             print ("Successfully created the directory %s" % path+file_name)
-            return uniq_folder_id
+            return self.uniq_folder_id
 
+
+    def get_folder_id(self):
+        return self.uniq_folder_id
 
 
     def move_files(self,originalPath,folder_path, file_name ,uniq_folder_id):
