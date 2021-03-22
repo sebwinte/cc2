@@ -31,6 +31,7 @@ class Watcher:
             self.c = Controller() 
         except:
             self.h.message("CC2","Error directory: "+ Helper.path + " not found" )
+            self.h.message("CC2","Stopping cc2")
             sys.exit(1)
 
 

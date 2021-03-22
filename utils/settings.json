@@ -2,13 +2,13 @@
     "compression":[
         {
             "low":30,
-            "medium": 60,
+            "medium": 160,
             "high": 90
         }
     ],
     "settings":[
         {
-            "notification": false,
+            "notification": true,
             "cc2_folder" : "testordner/"
         }
     ]

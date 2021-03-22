@@ -84,14 +84,17 @@ class Converter:
 
     # Convert "--small,--medium,--high" into the according value based on the range of the export file_typ
     def convert_compression_value(self,compression_tag,file_typ):
-        compression_value = self.h.settings_data['compression'][0][compression_tag]
-        
-        if(file_typ == "mp4"):
-            return (int( (51 / 100) * (100 - compression_value) ) ) 
+        compression_value= self.h.settings_data['compression'][0][compression_tag]
 
-        if(file_typ == "webm"):
-            return (int( (63 / 100) * (100 - compression_value) ) ) 
+        if 0 < compression_value < 100:
+            if(file_typ == "mp4"):
+                return (int( (51 / 100) * (100 - compression_value) ) ) 
 
-        if(file_typ == "ogv"):
-            return (int( (10 / 100) * compression_value ) ) 
-        
+            if(file_typ == "webm"):
+                return (int( (63 / 100) * (100 - compression_value) ) ) 
+
+            if(file_typ == "ogv"):
+                return (int( (10 / 100) * compression_value ) ) 
+        else:
+            self.h.message("CC2","No valid compression value")
+            sys.exit(1)
