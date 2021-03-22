@@ -1,4 +1,4 @@
-![cc2 !](https://miro.medium.com/max/1400/1*yKEke4YjMCd7ZJ4FutNlcQ.gif)
+![cc2 !](http://pfuscha.cool:3000/)
 
 # cc2 — drop it like it's hot  
 cc2 is the latest shit 
