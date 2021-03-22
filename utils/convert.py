@@ -2,7 +2,7 @@ import sys
 import time
 import subprocess
 from utils.helper import Helper
-
+import ffmpeg
 
 class Converter:
 
@@ -31,10 +31,16 @@ class Converter:
 
     def to_webm(self,verified_arguments_compression,file_name_without_arguments,original_file_name,uniq_folder_id):
         try:
+
+            ffmpeg_input = ffmpeg.input(str(Helper.path) + str(original_file_name))
+            ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) + str(uniq_folder_id) +'/'+ str(file_name_without_arguments) + '.webm'
             compression = self.convert_compression_value(str(verified_arguments_compression[0]),"webm")
+    
+            ffmpeg.output(ffmpeg_input,ffmpeg_output,
+                **{'c:v': 'libvpx-vp9','crf': compression, 'f': 'webm'}
+                ).overwrite_output().run()
+
             print('WEBM @' , compression)
-            command = self.build_command(original_file_name,compression,file_name_without_arguments,uniq_folder_id," -c:v libvpx-vp9 -crf ",'.webm')
-            subprocess.run(command, shell=True)
             return True
         except:
             self.h.message("CC2","Failed to convert -> webm")
@@ -43,10 +49,16 @@ class Converter:
 
     def to_mp4(self,verified_arguments_compression,file_name_without_arguments,original_file_name,uniq_folder_id):
         try:
+
+            ffmpeg_input = ffmpeg.input(str(Helper.path) + str(original_file_name))
+            ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) + str(uniq_folder_id) +'/'+ str(file_name_without_arguments) + '.mp4'
             compression = self.convert_compression_value(str(verified_arguments_compression[0]),"mp4")
+    
+            ffmpeg.output(ffmpeg_input,ffmpeg_output,
+                **{'c:v': 'libx264','crf': compression, 'f': 'mp4'}
+                ).overwrite_output().run()
+
             print('MP4 @' , compression)
-            command = self.build_command(original_file_name,compression,file_name_without_arguments,uniq_folder_id,' -c:v libx264 -crf ','.mp4')
-            subprocess.run(command, shell=True)
             return True
         except:
             self.h.message("CC2","Failed to convert -> mp4")
@@ -55,10 +67,15 @@ class Converter:
 
     def to_ogv(self,verified_arguments_compression,file_name_without_arguments,original_file_name,uniq_folder_id):
         try:
+            ffmpeg_input = ffmpeg.input(str(Helper.path) + str(original_file_name))
+            ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) + str(uniq_folder_id) +'/'+ str(file_name_without_arguments) + '.ogv'
             compression = self.convert_compression_value(str(verified_arguments_compression[0]),"ogv")
+    
+            ffmpeg.output(ffmpeg_input,ffmpeg_output,
+                **{'c:v': 'libtheora','q:v': compression, 'f': 'ogv'}
+                ).overwrite_output().run()
+
             print('OGV @' , compression)
-            command = self.build_command(original_file_name,compression,file_name_without_arguments,uniq_folder_id,' -c:v libtheora -q:v ','.ogv')
-            subprocess.run(command, shell=True)
             return True
         except:
             self.h.message("CC2","Failed to convert -> ogv")
@@ -78,12 +95,3 @@ class Converter:
         if(file_typ == "ogv"):
             return (int( (10 / 100) * compression_value ) ) 
         
-
-    def build_command(self,original_file_name,compression,file_name_without_arguments,uniq_folder_id,codec,export_extension):
-        command = 'ffmpeg -i '
-        input_file = str(Helper.path) + str(original_file_name)
-        compression_value = str(compression).ljust(3)
-        output_file = str(Helper.path) + str(file_name_without_arguments) + str(uniq_folder_id) +'/'+ str(file_name_without_arguments) + str(export_extension)
-        log = ' -loglevel quiet'
-        return command+input_file+codec+compression_value+output_file+log
-   
