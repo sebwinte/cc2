@@ -16,8 +16,15 @@ pip install requirements.txt
 ```
 
 
-#### FFmpeg:
+## FFmpeg:
 FFmpeg is required
+
+### Installing FFmpeg Windows
+Windows
+
+
+### Installing FFmpeg in OS X
+Mac
 
 Download FFmpeg [@GitHub](https://github.com/FFmpeg/FFmpeg) or [@FFmpeg](https://www.ffmpeg.org/)
 
@@ -50,6 +57,9 @@ Params
 | high              | 90%           |   
 
 Feel free to change 
+
+* Notification: 0/1 Turn the notifications on or off.
+* cc2_folder: Declare the folder you want to be watched over .. 
 
 
 
