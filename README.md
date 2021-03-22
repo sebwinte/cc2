@@ -1,4 +1,3 @@
-![cc2 !](http://pfuscha.cool:3000/)
 <img src="http://pfuscha.cool:3000/" width="200" />
 
 # cc2 — drop it like it's hot  
