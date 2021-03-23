@@ -22,11 +22,17 @@ FFmpeg is required
 ### Installing FFmpeg Windows
 Windows
 
+Download FFmpeg [@GitHub](https://github.com/FFmpeg/FFmpeg) or [@FFmpeg](https://www.ffmpeg.org/)
+
+You can follow the Guide from Alejandro de Cabo Garcia on [Medium](https://medium.com/@alejandro.decabo/how-to-record-your-screen-using-ffmpeg-in-windows-10-silently-b82b95f24fc)
 
 ### Installing FFmpeg in OS X
-Mac
+The easiest way to install FFmpeg is with the help of [Homebrew](https://brew.sh/)
 
-Download FFmpeg [@GitHub](https://github.com/FFmpeg/FFmpeg) or [@FFmpeg](https://www.ffmpeg.org/)
+```
+brew install ffmpeg
+```
+
 
 ### Settings:
 
