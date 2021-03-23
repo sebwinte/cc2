@@ -16,9 +16,11 @@ class Converter:
         self.h = Helper()
     
 
-    #ToDo
-    #Funktionsname muss geändert werden 
-    def manage_videos(self,verified_arguments_compression,verified_arguments_typ,file_name_without_arguments,original_file_name,uniq_folder_id):
+    '''
+    
+        Call the correct compression function based on the argument typ    
+    '''
+    def manage_video_compression(self,verified_arguments_compression,verified_arguments_typ,file_name_without_arguments,original_file_name,uniq_folder_id):
         for typ in verified_arguments_typ:
             method_name = 'to_' + str(typ)
             method = getattr(self, method_name)
@@ -82,7 +84,10 @@ class Converter:
             return False
 
 
-    # Convert "--small,--medium,--high" into the according value based on the range of the export file_typ
+    '''
+    Convert arguments
+        Convert "--small,--medium,--high" into values that ffmpeg can process
+    '''
     def convert_compression_value(self,compression_tag,file_typ):
         compression_value= self.h.settings_data['compression'][0][compression_tag]
 

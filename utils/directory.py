@@ -11,9 +11,6 @@ class Directory:
     
     '''
         cc2 Directory
-        ----------
-        Create Folder
-        Move Files
     '''
     
 
@@ -22,6 +19,11 @@ class Directory:
         self.uniq_folder_id = ''
     
 
+    '''
+    Create a new Directory
+        If the Directory already exists, add a uniq id at the end of the name
+        The Directory is named after the video file
+    '''
     def make_dir(self, path, file_name, access_rights):
         uniq_folder_id = '' #Uniq Folder-ID if Folder already exists
         try:
@@ -42,6 +44,11 @@ class Directory:
         return self.uniq_folder_id
 
 
+    '''
+    Move the video file
+        After the videos have been sucessfully converted, the original video file is moved 
+        into the newly created directory
+    '''
     def move_files(self,originalPath,folder_path, file_name ,uniq_folder_id):
         try:
             if os.path.exists(folder_path + originalPath):

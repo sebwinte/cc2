@@ -12,7 +12,7 @@ class Helper():
 
     
 
-    global valid_arguments_compression
+    global valid_arguments_compression 
     global valid_arguments_typ 
     global path
     global marker

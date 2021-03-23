@@ -39,12 +39,12 @@ class Watcher:
             while True: 
                 time.sleep(5)
                 if event_handler.queue:
-                    print(event_handler.queue)
+                    print('Queue: ', event_handler.queue)
                     #Get the last file-path from the queue and remove it
                     file_path = Path(event_handler.queue.pop())
                     #Check if file is still there or has been removed in the meantime
                     if file_path.exists():
-                        self.own_observer(file_path)
+                        self.strip_filename(file_path)
         except: 
             self.observer.stop() 
             print("Observer Stopped") 
@@ -52,20 +52,21 @@ class Watcher:
         self.observer.join() 
 
  
-
-    def own_observer(self,src):
+    def strip_filename(self,src):
         try:
             file_path, original_file_name = os.path.split(src)
             extension = os.path.splitext(original_file_name)[1]
             file_name = os.path.splitext(original_file_name)[0]
-            splitted_file = re.split(Helper.marker, file_name)
+            splitted_file = re.split(Helper.marker, file_name.lower())
             file_name_without_arguments = splitted_file[0]
             file_name_without_arguments_extension = splitted_file[0]+extension
             cropped_file_extension = extension.split(".")[1]
         except:
-            return 0  
+            return False  
         
-        if cropped_file_extension in Helper.valid_arguments_typ:
+        
+        #Check if videoformat is supported
+        if cropped_file_extension.lower() in Helper.valid_arguments_typ:
             for desired_argument in Helper.valid_arguments_compression:
                 if desired_argument in splitted_file:
                     self.c.process(file_name_without_arguments,splitted_file,file_path,file_name_without_arguments_extension,cropped_file_extension,original_file_name)                  

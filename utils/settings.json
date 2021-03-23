@@ -2,7 +2,7 @@
     "compression":[
         {
             "low":30,
-            "medium": 160,
+            "medium": 60,
             "high": 90
         }
     ],
