@@ -1,4 +1,4 @@
-<img src="http://pfuscha.cool:3000/" width="140" />
+<img src="http://pfuscha.cool:3000/" width="120" />
 
 # cc2 — drop it like it's hot  
 cc2 is the latest shit 
