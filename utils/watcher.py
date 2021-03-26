@@ -30,7 +30,7 @@ class Watcher:
             self.observer.start() 
             self.c = Controller() 
         except:
-            self.h.message("CC2","Error directory: "+ Helper.path + " not found" )
+            self.h.message("CC2","Maybe the directory: "+ Helper.path + " is not correct" )
             self.h.message("CC2","Stopping cc2")
             sys.exit(1)
 
@@ -43,24 +43,18 @@ class Watcher:
                     print("moin")
                     
                     for video in event_handler.queue_list:
-                        self.file_path=video.get_path()
-                        print("File-Path: ", self.file_path)
-                        #Check if file is still there or has been removed in the meantime
-                        '''
-                        if file_path.exists():
-                            print("File is there")
-                            #video.strip_filename()
-                            if(video.validate()):
-                                print("valid")
-                                #self.c.process(video)
-                        else:
-                            print("file is gone")
-                        '''
+                        print("path:",video.get_path())
+                        #if video.get_path().exists():
+                        video.strip_filename()
+                        if(video.validate()):
+                            print("valid")
+                            self.c.process(video)
         except: 
             self.observer.stop() 
             print("Observer Stopped") 
 
         self.observer.join() 
+
 
 
 
@@ -75,7 +69,6 @@ class Event(LoggingEventHandler):
         super().__init__()
         self.on_modified_path=""  
         self.on_created_path=""
-        self.queue = Queue()
         self.queue_list = [] 
 
 
@@ -109,7 +102,11 @@ class Event(LoggingEventHandler):
                 time.sleep(1)
                 self.file_open = False
                 print("finished copying")
+
+                #Create new object and add video to queue_list
+                self.queue = Queue()
                 self.queue.set_path(file_path) 
+                self.queue.set_status(True)
                 self.queue_list.append(self.queue)
 
             self.last_modified = self.check_last_modified
@@ -132,10 +129,14 @@ class Queue:
 
         self.extension = ''
         self.file_name = ''
-        self.splitted_file = ''
+        self.splitted_file = []
         self.file_name_without_arguments = ''
         self.file_name_without_arguments_extension = ''
         self.cropped_file_extension = ''
+
+        self.verified_arguments_compression = []
+        self.verified_arguments_typ = []
+
     
 
     def set_path(self,path):
@@ -151,18 +152,41 @@ class Queue:
 
 
     def strip_filename(self):
-        file_path, original_file_name = os.path.split(self.path)
-        self.extension = os.path.splitext(original_file_name)[1]
-        self.file_name = os.path.splitext(original_file_name)[0]
+        self.file_path, self.original_file_name = os.path.split(self.path)
+        self.extension = os.path.splitext(self.original_file_name)[1]
+        self.file_name = os.path.splitext(self.original_file_name)[0]
         self.splitted_file = re.split(Helper.marker, self.file_name.lower())
         self.file_name_without_arguments = self.splitted_file[0]
-        self.file_name_without_arguments_extension = self.splitted_file[0]+extension
+        self.file_name_without_arguments_extension = self.splitted_file[0]+self.extension
         self.cropped_file_extension = self.extension.split(".")[1]
+
 
     def validate(self):
         if self.cropped_file_extension.lower() in Helper.valid_arguments_typ:
             for desired_argument in Helper.valid_arguments_compression:
+                print(desired_argument)
                 if desired_argument in self.splitted_file:
-                    return True                 
+                    self.verify_arguments_compression  
+                    self.verify_arguments_typ
+                    return True
+                    break            
                 else:
                     return False
+
+
+    def verify_arguments_compression(self):
+        try:
+            for param in self.splitted_file:
+                if param.lower() in Helper.valid_arguments_compression:
+                    self.verified_arguments_compression.append(param.lower())
+        except:
+            return False    
+
+
+    def verify_arguments_typ(self):
+        try:
+            for param in self.splitted_file:
+                if param.lower() in Helper.valid_arguments_typ:
+                    self.verified_arguments_typ.append(param.lower())
+        except:
+            return False   
