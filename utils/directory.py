@@ -7,29 +7,30 @@ import os.path
 from os import path
 
 
+
 class Directory:
     
     '''
         cc2 Directory
+        ----------
+        This class creates a new directory for every video and
+        moves all files into it.
     '''
     
 
 
     def __init__(self):
-        self.uniq_folder_id = ''
+        self.unique_folder_id = ''
     
 
-    '''
-    Create a new Directory
-        If the Directory already exists, add a uniq id at the end of the name
-        The Directory is named after the video file
-    '''
-    def make_dir(self, path, file_name, access_rights):
-        uniq_folder_id = '' #Uniq Folder-ID if Folder already exists
+    # make_dir creates a new directory based on the filename
+    # If the directory already exists, a unique id is added  
+
+    def make_dir(self,path,file_name,access_rights):
         try:
             if os.path.exists(path+file_name):
-                uniq_folder_id = str(uuid4())
-                os.mkdir(path + file_name + uniq_folder_id, access_rights)
+                self.unique_folder_id = str(uuid4())
+                os.mkdir(path + file_name + self.unique_folder_id, access_rights)
             else:
                  os.mkdir(path+file_name, access_rights)
         except OSError:
@@ -37,23 +38,16 @@ class Directory:
             return 0 
         else:
             print ("Successfully created the directory %s" % path+file_name)
-            return self.uniq_folder_id
+            return self.unique_folder_id
 
 
-    def get_folder_id(self):
-        return self.uniq_folder_id
+    # move_files cuts out the original video and moves it into the according directory
 
-
-    '''
-    Move the video file
-        After the videos have been sucessfully converted, the original video file is moved 
-        into the newly created directory
-    '''
-    def move_files(self,originalPath,folder_path, file_name ,uniq_folder_id):
+    def move_files(self,original_path,folder_path,file_name,unique_folder_id):
         try:
-            if os.path.exists(folder_path + originalPath):
-                original = folder_path + originalPath
-                target = folder_path + file_name + uniq_folder_id
+            if os.path.exists(folder_path + original_path):
+                original = folder_path + original_path
+                target = folder_path + file_name + unique_folder_id
                 shutil.move(original,target)
                 return True
             else:

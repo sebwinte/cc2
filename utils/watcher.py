@@ -9,11 +9,15 @@ from utils.helper import Helper
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 from controller.controller import Controller
-        
+
+
+
 class Watcher: 
     
     '''
         cc2 Watcher
+        ----------
+        This class monitors all activities in the defined directory.
     '''
 
 
@@ -22,7 +26,9 @@ class Watcher:
         self.observer = Observer() 
         self.h = Helper() 
 
-  
+
+    # run starts the observer
+
     def run(self): 
         try:
             event_handler = Event() 
@@ -30,8 +36,8 @@ class Watcher:
             self.observer.start() 
             self.c = Controller() 
         except:
-            self.h.message("CC2","Error directory: "+ Helper.path + " not found" )
-            self.h.message("CC2","Stopping cc2")
+            self.h.notification_message("CC2","Error directory: "+ Helper.path + " not found" )
+            self.h.notification_message("CC2","Stopping cc2")
             sys.exit(1)
 
 
@@ -51,7 +57,10 @@ class Watcher:
   
         self.observer.join() 
 
- 
+
+    # strip_filename seperates the filepath into file_name, extension ... 
+    # and validates if the filetype is supported 
+
     def strip_filename(self,src):
         try:
             file_path, original_file_name = os.path.split(src)
@@ -65,8 +74,8 @@ class Watcher:
             return False  
         
         
-        #Check if videoformat is supported
-        if cropped_file_extension.lower() in Helper.valid_arguments_typ:
+        #Check if filetype is supported
+        if cropped_file_extension.lower() in Helper.valid_arguments_type:
             for desired_argument in Helper.valid_arguments_compression:
                 if desired_argument in splitted_file:
                     self.c.process(file_name_without_arguments,splitted_file,file_path,file_name_without_arguments_extension,cropped_file_extension,original_file_name)                  
@@ -80,6 +89,8 @@ class Event(LoggingEventHandler):
     
     '''
         cc2 Eventhandler
+        ----------
+        See Watcher() for more details
     '''
 
 
@@ -90,13 +101,18 @@ class Event(LoggingEventHandler):
         self.queue=[]      
 
 
+    # on_created is triggerd if an new file/directory is created/copied
+
     def on_created(self, event): 
         if not event.is_directory:
-            file_porcess_thread = threading.Thread(target=self.file_porcess, args=(event.src_path,))
+            file_porcess_thread = threading.Thread(target=self.file_status, args=(event.src_path,))
             file_porcess_thread.start()
 
 
-    def file_porcess(self,file_path):
+    # file_status monitors the file copying process and appends 
+    # it to the queue after it is completed 
+
+    def file_status(self,file_path):
         self.last_modified = os.stat(file_path).st_mtime
         self.file_open = True
 

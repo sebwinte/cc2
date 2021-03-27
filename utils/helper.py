@@ -4,16 +4,21 @@ import json
 from notifypy import Notify
 from pathlib import Path
 
+
+
 class Helper():
 
     '''
         cc2 Helper
+        ----------
+        This class loads the "settings.json", defines global variables 
+        and manages notifications
     '''
 
     
 
     global valid_arguments_compression 
-    global valid_arguments_typ 
+    global valid_arguments_type 
     global path
     global marker
     global settings_data
@@ -21,7 +26,7 @@ class Helper():
 
     def __init__(self):
         Helper.valid_arguments_compression = ["low", "medium", "high"]
-        Helper.valid_arguments_typ = ["mp4", "webm", "ogv"]
+        Helper.valid_arguments_type = ["mp4", "webm", "ogv"]
         Helper.marker = "--"
         Helper.os = os.name
         self.notification = Notify(
@@ -47,7 +52,7 @@ class Helper():
             print("Error @load_settings")
 
 
-    def message(self,title,message):
+    def notification_message(self,title,message):
         if(Helper.notification):
             self.notification.title = title
             self.notification.message = message

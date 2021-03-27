@@ -13,6 +13,8 @@ class Controller:
 
     '''
         cc2 Controller
+        ----------
+        This class initiates the converting process.  
     '''
 
 
@@ -23,28 +25,24 @@ class Controller:
         self.h = Helper()
 
 
-    '''
-    Process
-        
-    '''
+    # process 
+
     def process(self,file_name_without_arguments,arguments,original_file_path,file_name_without_arguments_extension,cropped_file_extension,original_file_name):
 
         verified_arguments_compression = self.verify_arguments_compression(arguments)
-        verified_arguments_typ = self.verify_arguments_typ(arguments)
+        verified_arguments_type = self.verify_arguments_type(arguments)
         
-        uniq_folder_id = self.dir.make_dir(Helper.path,file_name_without_arguments,0o777)
-
-        if self.conv.manage_video_compression(verified_arguments_compression,verified_arguments_typ,file_name_without_arguments,original_file_name,uniq_folder_id):
-            if self.dir.move_files(original_file_name,Helper.path,file_name_without_arguments,uniq_folder_id):
-                self.h.message("CC2","Your video has been successfully converted")
+        unique_folder_id = self.dir.make_dir(Helper.path,file_name_without_arguments,0o777)
+        print(unique_folder_id)
+        if self.conv.manage_filetype_compression(verified_arguments_compression,verified_arguments_type,file_name_without_arguments,original_file_name,unique_folder_id):
+            if self.dir.move_files(original_file_name,Helper.path,file_name_without_arguments,unique_folder_id):
+                self.h.notification_message("CC2","Your video has been successfully converted")
             else: return   
         else: return   
 
 
-    '''
-    Verify arguments
-        Return only valid arguments according to the Helper.valid_arguments_ list 
-    '''
+    # verify_arguments_compression return only valid arguments according to the Helper.valid_arguments_ list 
+
     def verify_arguments_compression(self,arguments):
         valid_arguments = []
         try:
@@ -56,11 +54,13 @@ class Controller:
             return False    
 
 
-    def verify_arguments_typ(self,arguments):
+    # verify_arguments_type return only valid arguments according to the Helper.valid_arguments_ list 
+
+    def verify_arguments_type(self,arguments):
         valid_arguments = []
         try:
             for param in arguments:
-                if param.lower() in Helper.valid_arguments_typ:
+                if param.lower() in Helper.valid_arguments_type:
                     valid_arguments.append(param.lower())
             return valid_arguments
         except:
