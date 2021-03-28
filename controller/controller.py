@@ -36,7 +36,7 @@ class Controller:
         print(unique_folder_id)
         if self.conv.manage_filetype_compression(verified_arguments_compression,verified_arguments_type,file_name_without_arguments,original_file_name,unique_folder_id):
             if self.dir.move_files(original_file_name,Helper.path,file_name_without_arguments,unique_folder_id):
-                self.h.notification_message("CC2","Your video has been successfully converted")
+                self.h.notification_message("cc2","Your video has been successfully converted")
             else: return   
         else: return   
 

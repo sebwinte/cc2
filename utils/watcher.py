@@ -36,8 +36,8 @@ class Watcher:
             self.observer.start() 
             self.c = Controller() 
         except:
-            self.h.notification_message("CC2","Error directory: "+ Helper.path + " not found" )
-            self.h.notification_message("CC2","Stopping cc2")
+            self.h.notification_message("cc2","Error directory: "+ Helper.path + " not found" )
+            self.h.notification_message("cc2","Stopping cc2")
             sys.exit(1)
 
 

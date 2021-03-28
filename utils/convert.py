@@ -19,13 +19,11 @@ class Converter:
     
     def __init__(self):
         self.h = Helper()
-        print("Convert")
     
 
     # manage_filetype_compression calls the corresponding convert function.
 
     def manage_filetype_compression(self,verified_arguments_compression,verified_arguments_type,file_name_without_arguments,original_file_name,unique_folder_id):
-        print("moin")
         for file_type in verified_arguments_type:
             method_name = 'to_' + str(file_type)
             method = getattr(self, method_name)
@@ -50,7 +48,7 @@ class Converter:
             print('WEBM @' , compression)
             return True
         except:
-            self.h.notification_message("CC2","Failed to convert -> webm")
+            self.h.notification_message("cc2","Failed to convert -> webm")
             return False
 
 
@@ -67,7 +65,7 @@ class Converter:
             print('MP4 @' , compression)
             return True
         except:
-            self.h.notification_message("CC2","Failed to convert -> mp4")
+            self.h.notification_message("cc2","Failed to convert -> mp4")
             return False
 
 
@@ -85,7 +83,7 @@ class Converter:
             print('OGV @' , compression)
             return True
         except:
-            self.h.notification_message("CC2","Failed to convert -> ogv")
+            self.h.notification_message("cc2","Failed to convert -> ogv")
             return False
 
 
@@ -106,5 +104,5 @@ class Converter:
             if(file_type == "ogv"):
                 return (int( (10 / 100) * compression_value ) ) 
         else:
-            self.h.notification_message("CC2","No valid compression value")
+            self.h.notification_message("cc2","No valid compression value")
             sys.exit(1)
