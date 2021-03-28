@@ -13,7 +13,7 @@ pip install requirements.txt
 > Note: cc2 uses the [@FFmpeg](https://www.ffmpeg.org/) framework to compress and convert the videos. So make sure ffmpeg is already installed on your system. 
 
 ### Preferences:
-Have a quick look into the ```settings.json``` 
+Have a quick look at the ```settings.json```. 
 
 ```json
 {   
@@ -32,17 +32,3 @@ Have a quick look into the ```settings.json```
     ]
 }
 ```
-
-
-Params
-
-| param             | default       |
-| -------------     |:-------------:|
-| low               | 30%           | 
-| medium            | 60%           |   
-| high              | 90%           |   
-
-Feel free to change 
-
-* Notification: 0/1 Turn the notifications on or off.
-* cc2_folder: Declare the folder you want to be watched over .. 
