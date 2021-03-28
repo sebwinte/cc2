@@ -6,10 +6,15 @@ You need your ```.mp4``` video as a ```.webm``` and ```.ogv``` or the other way 
 Just drag and drop your video into your predefined directory and see magic happens.
 
 ### How to start
-The easiest way to get started is to clone this repo and start with installing all requirements. For this simply run:
+The easiest way to get started is to clone this repo and to start with installing all requirements. For this simply run:
 ```python
 pip install requirements.txt
 ```
+> Note: cc2 uses the [@FFmpeg](https://www.ffmpeg.org/) framework to compress and convert the videos. So make sure ffmpeg is already installed on your system. 
+
+
+
+
 
 ### How to
 
