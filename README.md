@@ -3,9 +3,9 @@
 # cc2 — drag and drop it like it's hot.  
 cc2 is a easy to use video encoder for Windows and MacOS. The idea of this project is to make the daily work of every creative much easier.
 You need your ```.mp4``` video as a ```.webm``` and ```.ogv``` or the other way around? In a small file size, without quality loss? 
-Just drag and drop your video into your predefined directory and see magic happens.
+Just drag and drop your video into your predefined folder and see magic happens.
 
-### How to start
+### How to start:
 The easiest way to get started is to clone this repo and to start with installing all requirements. For this simply run:
 ```python
 pip install requirements.txt
