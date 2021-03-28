@@ -12,21 +12,10 @@ pip install requirements.txt
 ```
 > Note: cc2 uses the [@FFmpeg](https://www.ffmpeg.org/) framework to compress and convert the videos. So make sure ffmpeg is already installed on your system. 
 
+### Preferences:
+Have a quick look into the ```settings.json``` 
 
-
-
-
-### How to
-
-```
-YourVideo--low--webm--ogv.mp4
-```
-
-
-
-### Settings:
-
-```
+```json
 {   
     "compression":[
         {
@@ -37,12 +26,13 @@ YourVideo--low--webm--ogv.mp4
     ],
     "settings":[
         {
-            "notification": 0,
-            "cc2_folder" : "testordner/"
+            "notification": true,
+            "cc2_folder" : "your_folder_name/"
         }
     ]
 }
 ```
+
 
 Params
 
@@ -56,9 +46,3 @@ Feel free to change
 
 * Notification: 0/1 Turn the notifications on or off.
 * cc2_folder: Declare the folder you want to be watched over .. 
-
-
-
-#### Troubleshooting:
-Troubleshooting
-
