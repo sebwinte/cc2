@@ -1,7 +1,7 @@
 <img src="http://pfuscha.cool:3000/" width="120" />
 
-# cc2 — drop it like it's hot  
-cc2 is the latest shit 
+# cc2 — drag and drop it like it's hot.  
+cc2 is a easy to use video encoder for Windows and MacOS. This project is aimed primarily at
 
 ### How to
 
