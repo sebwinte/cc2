@@ -11,7 +11,7 @@ pip install -r requirements.txt
 > Note: cc2 uses the [@FFmpeg](https://www.ffmpeg.org/) framework to compress and convert the videos. So make sure ffmpeg is already installed on your system. 
 
 ### Preferences:
-Have a quick look at the ```settings.json```. 
+Have a quick look at the ```settings.json``` and make sure to define your 'cc2_folder'. Initially its named 'your_folder_name', but you can name it as you want, as long as you create the folder in the root directory before starting cc2. 
 
 ```json
 {   
