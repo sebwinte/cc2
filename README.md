@@ -4,8 +4,9 @@
 cc2 is a easy to use video encoder for Windows and MacOS. Let's say you need your ```.mp4``` video as a ```.webm``` and ```.ogv```? In a small file size, without quality loss? Just drag and drop your video into your predefined folder and see magic happens.
 
 ### Quick start:
+Just drag and drop your video into your predefined folder.
 ```
-Cool-Video--low--webm.mp4   
+Your video -> my-cool-video.mp4   
 ```
 
 ### Installation:
