@@ -8,7 +8,7 @@ Your video you want to convert:
 ```
 my-cool-video.mp4
 ```
-Just add a custom cc2-flag:
+For example add the ```--webm``` cc2-flag:
  
 ```
 my-cool-video--webm.mp4
