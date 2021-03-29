@@ -30,3 +30,17 @@ Have a quick look at the ```settings.json``` and make sure to define your 'cc2_f
     ]
 }
 ```
+
+### Custom flags:
+
+| flags             | crf value     |
+| -------------     |:-------------:|
+| low               | 30%           | 
+| medium            | 60%           |   
+| high              | 90%           |   
+
+| container         | codec         |
+| -------------     |:-------------:|
+| mp4               | libx264       | 
+| webm              | libvpx-vp9    |   
+| ogv               | libtheora     |   
