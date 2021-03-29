@@ -37,7 +37,7 @@ Have a quick look at the ```settings.json``` and define your 'cc2_folder'. Initi
 ```
 
 ### Supported container and codecs:
-cc2 is using 
+cc2 is focusing on container formats mostly used for the web.  
 
 | container         | codec         |
 | -------------     |:-------------:|
