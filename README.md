@@ -36,11 +36,15 @@ Have a quick look at the ```settings.json``` and define your 'cc2_folder'. Initi
 }
 ```
 ### cc2-flags:
-| container         | compression   |
-| -------------     |:-------------:|
-| --mp4             | --low         | 
-| --webm            | --medium      |   
-| --ogv             | --high        |   
+| flags             |
+| -------------     |
+| --mp4             | 
+| --webm            | 
+| --ogv             | 
+|:-------------:    |
+| --mp4             | 
+| --webm            | 
+| --ogv             | 
 
 ### Supported container and codecs:
 cc2 is focusing on container formats mostly used for the web.  
