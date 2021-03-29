@@ -8,10 +8,15 @@ Your video you want to convert:
 ```
 my-cool-video.mp4
 ```
-For example add the ```--webm``` cc2-flag:
+Add the ```--webm``` cc2-flag:
  
 ```
 my-cool-video--webm.mp4
+```
+Define a compression rate setting, for example ```--medium```:
+ 
+```
+my-cool-video--webm--medium.mp4
 ```
 
 ### Installation:
