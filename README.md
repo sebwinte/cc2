@@ -36,6 +36,7 @@ Have a quick look at the ```settings.json``` and define your 'cc2_folder'. Initi
 }
 ```
 ### cc2-flags:
+|                   |
 | -------------     |
 | --mp4             |
 | --webm            |    
