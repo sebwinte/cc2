@@ -18,6 +18,7 @@ Define a compression rate setting, for example ```--medium```:
 ```
 my-cool-video--webm--medium.mp4
 ```
+And, thanks to cc2, your .mp4 video is now a .webm video with a medium compression rate.
 
 ### Installation:
 The easiest way to get started is to clone this repo and to start with installing all requirements. For this simply run:
