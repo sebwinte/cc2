@@ -15,6 +15,7 @@ Add custom cc2-flags to your video and drag it into your cc2-folder:
 ```
 my-cool-video--webm--medium.mp4
 ```
+
 ### Preferences:
 Have a quick look at the ```settings.json``` and define your 'cc2_folder'. Initially its named 'your_folder_name', but you can name it as you want. You can either create a folder directly in the root directory or define an absolute path. During use, you're going to drag and drop your videos into this folder and automatically start the encoding process.
 
@@ -49,7 +50,7 @@ Have a quick look at the ```settings.json``` and define your 'cc2_folder'. Initi
 cc2 is focusing on container formats mostly used for the web.  
 
 | container         | codec         |
-| -------------     |:-------------:|
+| -------------     |-------------  |
 | mp4               | libx264       | 
 | webm              | libvpx-vp9    |   
 | ogv               | libtheora     |   
