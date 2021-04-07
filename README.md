@@ -16,7 +16,7 @@ Add custom cc2-flags to your video and drag it into your cc2-folder:
 my-cool-video--webm--medium.mp4
 ```
 ### cc2-flags:
-As shown in the quickstart example, cc2 works with custom flags which can be easily added to the videos filename. Each flag starts with double hyphen like ```--medium```:
+As shown in the quickstart example, cc2 works with custom flags which can be easily added to the videos filename. Each flag starts with double hyphen:
 
 | container         | flag          |
 | -------------     |-------------  |
@@ -50,8 +50,7 @@ Have a quick look at the ```settings.json``` and define your 'cc2_folder'. Initi
     ]
 }
 ```
-
-### Supported container and codecs:
+### Supported container formats and codecs:
 cc2 is focusing on container formats mostly used for the web.  
 
 | container         | codec         |
