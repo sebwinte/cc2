@@ -24,7 +24,7 @@ As shown in the quickstart example, cc2 works with custom flags which can be eas
 | webm              | --webm        |   
 | ogv               | --ogv         |   
 
-| compression       | flag          |
+| compression       |           
 | -------------     |-------------  |
 | low               | --low         | 
 | medium            | --medium      |   
