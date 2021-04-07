@@ -30,14 +30,15 @@ class Watcher:
     # run starts the observer
 
     def run(self): 
-        try:
+        if os.path.exists(Helper.path):
             event_handler = Event() 
             self.observer.schedule(event_handler, Helper.path, recursive = False) 
             self.observer.start() 
-            self.c = Controller() 
-        except:
+            self.c = Controller()
+        else:
             self.h.notification_message("cc2","Error directory: "+ Helper.path + " not found" )
-            self.h.notification_message("cc2","Stopping cc2")
+            self.h.notification_message("cc2","Check cc2_folder in settings.json")
+            print(sys.stderr, '\nStopping cc2.\n')
             sys.exit(1)
 
 
