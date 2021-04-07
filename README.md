@@ -1,6 +1,4 @@
-<img src="http://pfuscha.cool:3000/" width="120" />
-![alt text](http://pfuscha.cool:3000/ "Logo Title Text 1")
-
+<img src="http://pfuscha.cool:3000/" width="120"/>
 
 # cc2 — drag and drop it like it's hot.  
 cc2 is a easy to use video encoder for Windows and MacOS. Let's say you need your ```.mp4``` video as a ```.webm``` and ```.ogv```? In a small file size, without quality loss? Just drag and drop your video into your predefined folder and see magic happens.
@@ -17,6 +15,20 @@ Add custom cc2-flags to your video and drag it into your cc2-folder:
 ```
 my-cool-video--webm--medium.mp4
 ```
+### cc2-flags:
+As shown in the quickstart example, cc2 works with custom flags which can be easily added to the videos filename. Each flag starts with double hyphen like ```--medium```:
+
+| container         | flag          |
+| -------------     |-------------  |
+| mp4               | --mp4         | 
+| webm              | --webm        |   
+| ogv               | --ogv         |   
+
+| compression       | flag          |
+| -------------     |-------------  |
+| low               | --low         | 
+| medium            | --medium      |   
+| high              | --high        |   
 
 ### Preferences:
 Have a quick look at the ```settings.json``` and define your 'cc2_folder'. Initially its named 'your_folder_name', but you can name it as you want. You can either create a folder directly in the root directory or define an absolute path. During use, you're going to drag and drop your videos into this folder and automatically start the encoding process.
@@ -38,15 +50,6 @@ Have a quick look at the ```settings.json``` and define your 'cc2_folder'. Initi
     ]
 }
 ```
-### cc2-flags:
-| Available flags   |
-| -------------     |
-| --mp4             |
-| --webm            |    
-| --ogv             |  
-| --low             |
-| --medium          |    
-| --high            |  
 
 ### Supported container and codecs:
 cc2 is focusing on container formats mostly used for the web.  
@@ -58,3 +61,4 @@ cc2 is focusing on container formats mostly used for the web.
 | ogv               | libtheora     |   
 
 ### Troubleshooting:
+Before starting cc2, make sure your 'cc2_folder' exists and the path is correclty set .
