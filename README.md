@@ -18,17 +18,17 @@ my-cool-video--webm--medium.mp4
 ### cc2-flags:
 As shown in the quickstart example, cc2 works with custom flags which can be easily added to the videos filename. Each flag starts with double hyphen:
 
-| container         | flag          |
-| -------------     | ------------- |
-| mp4               | --mp4         | 
-| webm              | --webm        |   
-| ogv               | --ogv         |   
+| container         | flag              |
+| -------------     | -------------     |
+| mp4               | --mp4             | 
+| webm              | --webm            |   
+| ogv               | --ogv             |   
 
-| compression       | flag          |        
-| -------------     | ------------- |
-| low               | --low         | 
-| medium            | --medium      |   
-| high              | --high        |   
+| compression       | flag              |        
+| -------------     | -------------     |
+| low               | --low             | 
+| medium            | --medium          |   
+| high              | --high            |   
 
 ### Preferences:
 Have a quick look at the ```settings.json``` and define your 'cc2_folder'. Initially its named 'your_folder_name', but you can name it as you want. You can either create a folder directly in the root directory or define an absolute path. During use, you're going to drag and drop your videos into this folder and automatically start the encoding process.
