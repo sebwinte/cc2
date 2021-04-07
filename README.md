@@ -11,11 +11,11 @@ pip install -r requirements.txt
 > Note: cc2 uses the [@FFmpeg](https://www.ffmpeg.org/) framework to compress and convert the videos. So make sure ffmpeg is already installed on your system. 
 
 ### Quickstart:
-Add custom cc2-flags to your video and drag it into your cc2-folder:
+Add custom cc2-flags to your video and drag it into your 'cc2-folder':
 ```
 my-cool-video--webm--medium.mp4
 ```
-After a successfull process your .mp4 video is now a .webm video with a medium copression rate.
+After the process has finished, your .mp4 video is now available in .webm format with a medium compression rate.
 
 ### cc2-flags:
 As shown in the quickstart example, cc2 works with custom flags which can be easily added to the videos filename. Each flag starts with a double hyphen:
