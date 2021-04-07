@@ -33,10 +33,10 @@ class Controller:
         print(video)
 
         
-        uniq_folder_id = self.dir.make_dir(Helper.path,video.file_name_without_arguments,0o777)
+        self.dir.make_dir(video,0o777)
 
-        if self.conv.manage_video_compression(video.verified_arguments_compression,video.verified_arguments_typ,video.file_name_without_arguments,video.original_file_name,uniq_folder_id):
-            if self.dir.move_files(video.original_file_name,Helper.path,video.file_name_without_arguments,video.uniq_folder_id):
+        if self.conv.manage_video_compression(video):
+            if self.dir.move_files(video):
                 self.h.message("CC2","Your video has been successfully converted")
             else: return   
         else: return   

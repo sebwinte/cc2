@@ -2,7 +2,8 @@ import os
 import shutil
 import threading
 import time
-from uuid import uuid4
+from utils.helper import Helper
+
 import os.path
 from os import path
 
@@ -24,20 +25,18 @@ class Directory:
         If the Directory already exists, add a uniq id at the end of the name
         The Directory is named after the video file
     '''
-    def make_dir(self, path, file_name, access_rights):
-        uniq_folder_id = '' #Uniq Folder-ID if Folder already exists
+    def make_dir(self, video, access_rights):
         try:
-            if os.path.exists(path+file_name):
-                uniq_folder_id = str(uuid4())
-                os.mkdir(path + file_name + uniq_folder_id, access_rights)
+            if os.path.exists(video.path+video.file_name):
+                os.mkdir(Helper.path + video.file_name_without_arguments + video.uniq_id, access_rights)
             else:
-                 os.mkdir(path+file_name, access_rights)
+                 os.mkdir(Helper.path+video.file_name_without_arguments, access_rights)
         except OSError:
-            print ("Creation of the directory %s failed" % path+file_name)
+            print ("Creation of the directory %s failed" % video.path+video.file_name)
             return 0 
         else:
-            print ("Successfully created the directory %s" % path+file_name)
-            return self.uniq_folder_id
+            print ("Successfully created the directory %s" % video.path+video.file_name)
+            return 1
 
 
     def get_folder_id(self):
@@ -49,11 +48,11 @@ class Directory:
         After the videos have been sucessfully converted, the original video file is moved 
         into the newly created directory
     '''
-    def move_files(self,originalPath,folder_path, file_name ,uniq_folder_id):
+    def move_files(self,video):
         try:
-            if os.path.exists(folder_path + originalPath):
-                original = folder_path + originalPath
-                target = folder_path + file_name + uniq_folder_id
+            if os.path.exists(video.folder_path + video.originalPath):
+                original = video.folder_path + video.originalPath
+                target = video.folder_path + video.file_name + video.uniq_id
                 shutil.move(original,target)
                 return True
             else:

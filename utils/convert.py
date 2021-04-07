@@ -20,24 +20,28 @@ class Converter:
     
         Call the correct compression function based on the argument typ    
     '''
-    def manage_video_compression(self,verified_arguments_compression,verified_arguments_typ,file_name_without_arguments,original_file_name,uniq_folder_id):
-        for typ in verified_arguments_typ:
+    def manage_video_compression(self,video):
+        print(video.verified_arguments_typ)
+        for typ in video.verified_arguments_typ:
+            print("manage-typ", typ)
             method_name = 'to_' + str(typ)
+            print("manage-1")
             method = getattr(self, method_name)
-            if method(verified_arguments_compression,file_name_without_arguments,original_file_name,uniq_folder_id): status = True
+            
+            if method(video.verified_arguments_compression,video.file_name_without_arguments,video.original_file_name,video.uniq_id): status = True
             else:
                 status = False
-                break
+                #break
         return status
 
 
-    def to_webm(self,verified_arguments_compression,file_name_without_arguments,original_file_name,uniq_folder_id):
+    def to_webm(self,verified_arguments_compression,file_name_without_arguments,original_file_name,uniq_id):
+        print("to_webm")
         try:
-
             ffmpeg_input = ffmpeg.input(str(Helper.path) + str(original_file_name))
-            ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) + str(uniq_folder_id) +'/'+ str(file_name_without_arguments) + '.webm'
+            ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) +'/'+ str(file_name_without_arguments) + '.webm'
             compression = self.convert_compression_value(str(verified_arguments_compression[0]),"webm")
-    
+            
             ffmpeg.output(ffmpeg_input,ffmpeg_output,
                 **{'c:v': 'libvpx-vp9','crf': compression, 'f': 'webm'}
                 ).overwrite_output().run()
@@ -49,11 +53,10 @@ class Converter:
             return False
 
 
-    def to_mp4(self,verified_arguments_compression,file_name_without_arguments,original_file_name,uniq_folder_id):
+    def to_mp4(self,verified_arguments_compression,file_name_without_arguments,original_file_name,uniq_id):
         try:
-
             ffmpeg_input = ffmpeg.input(str(Helper.path) + str(original_file_name))
-            ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) + str(uniq_folder_id) +'/'+ str(file_name_without_arguments) + '.mp4'
+            ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) +'/'+ str(file_name_without_arguments) + '.mp4'
             compression = self.convert_compression_value(str(verified_arguments_compression[0]),"mp4")
     
             ffmpeg.output(ffmpeg_input,ffmpeg_output,
@@ -67,10 +70,10 @@ class Converter:
             return False
 
 
-    def to_ogv(self,verified_arguments_compression,file_name_without_arguments,original_file_name,uniq_folder_id):
+    def to_ogv(self,verified_arguments_compression,file_name_without_arguments,original_file_name,uniq_id):
         try:
             ffmpeg_input = ffmpeg.input(str(Helper.path) + str(original_file_name))
-            ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) + str(uniq_folder_id) +'/'+ str(file_name_without_arguments) + '.ogv'
+            ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) +'/'+ str(file_name_without_arguments) + '.ogv'
             compression = self.convert_compression_value(str(verified_arguments_compression[0]),"ogv")
     
             ffmpeg.output(ffmpeg_input,ffmpeg_output,

@@ -4,6 +4,7 @@ import os
 import logging   
 import threading
 import re
+from uuid import uuid4
 from pathlib import Path
 from utils.helper import Helper
 from watchdog.observers import Observer
@@ -39,16 +40,19 @@ class Watcher:
             while True: 
                 time.sleep(5)
                 print("EventHandlerQueue ", event_handler.queue_list)
+
                 if event_handler.queue_list:
-                    print("moin")
-                    
                     for video in event_handler.queue_list:
-                        print("path:",video.get_path())
-                        #if video.get_path().exists():
-                        video.strip_filename()
-                        if(video.validate()):
-                            print("valid")
-                            self.c.process(video)
+                        
+                        if os.path.exists(video.get_path()):
+                            video.strip_filename()
+                            if(video.validate()):
+                                self.c.process(video)
+                                event_handler.queue_list.remove(video)
+                        else:
+                            event_handler.queue_list.remove(video)
+
+                        
         except: 
             self.observer.stop() 
             print("Observer Stopped") 
@@ -76,6 +80,7 @@ class Event(LoggingEventHandler):
         if not event.is_directory:
             file_porcess_thread = threading.Thread(target=self.file_porcess, args=(event.src_path,))
             file_porcess_thread.start()
+            #file_porcess_thread.join()
 
 
     def on_moved(self, event):
@@ -90,6 +95,7 @@ class Event(LoggingEventHandler):
 
 
     def file_porcess(self,file_path):
+        print("############################################",file_path)
         self.last_modified = os.stat(file_path).st_mtime
         self.file_open = True
 
@@ -104,17 +110,17 @@ class Event(LoggingEventHandler):
                 print("finished copying")
 
                 #Create new object and add video to queue_list
-                self.queue = Queue()
-                self.queue.set_path(file_path) 
-                self.queue.set_status(True)
-                self.queue_list.append(self.queue)
+                self.video = Video()
+                self.video.set_path(file_path) 
+                self.video.set_status(True)
+                self.queue_list.append(self.video)
 
             self.last_modified = self.check_last_modified
         
 
 
 
-class Queue: 
+class Video: 
 
     '''
         cc2 compression queue
@@ -133,9 +139,12 @@ class Queue:
         self.file_name_without_arguments = ''
         self.file_name_without_arguments_extension = ''
         self.cropped_file_extension = ''
+        self.uniq_id = str(uuid4())
 
         self.verified_arguments_compression = []
         self.verified_arguments_typ = []
+
+        self.state = 0
 
     
 
@@ -151,11 +160,19 @@ class Queue:
         return self.path
 
 
+    def set_state(self,state):
+        self.state = state
+
+
+    def get_state(self):
+        return self.state
+
+
     def strip_filename(self):
         self.file_path, self.original_file_name = os.path.split(self.path)
         self.extension = os.path.splitext(self.original_file_name)[1]
         self.file_name = os.path.splitext(self.original_file_name)[0]
-        self.splitted_file = re.split(Helper.marker, self.file_name.lower())
+        self.splitted_file = re.split(Helper.marker, self.file_name)
         self.file_name_without_arguments = self.splitted_file[0]
         self.file_name_without_arguments_extension = self.splitted_file[0]+self.extension
         self.cropped_file_extension = self.extension.split(".")[1]
@@ -166,10 +183,10 @@ class Queue:
             for desired_argument in Helper.valid_arguments_compression:
                 print(desired_argument)
                 if desired_argument in self.splitted_file:
-                    self.verify_arguments_compression  
-                    self.verify_arguments_typ
+                    self.verify_arguments_compression() 
+                    self.verify_arguments_typ()
                     return True
-                    break            
+                    #break            
                 else:
                     return False
 
