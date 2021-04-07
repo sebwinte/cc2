@@ -1,5 +1,5 @@
 <img src="http://pfuscha.cool:3000/" width="120" />
-[logo]: http://pfuscha.cool:3000/ "cc2"
+![alt text](http://pfuscha.cool:3000/ =140x "Logo Title Text 1")
 
 
 # cc2 — drag and drop it like it's hot.  
