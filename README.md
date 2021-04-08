@@ -46,8 +46,8 @@ Have a quick look at the ```settings.json``` and define your 'cc2_folder'. Initi
     ],
     "settings":[
         {
-            "notification": true,
-            "cc2_folder" : "your_folder_name/"
+            "notification": true, #false for disableing noticifation
+            "cc2_folder" : "your_folder_name/" 
         }
     ]
 }
