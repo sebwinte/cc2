@@ -33,7 +33,7 @@ As shown in the quickstart example, cc2 works with custom flags which can be eas
 | high              | --high            |   
 
 ### Preferences:
-Have a quick look at the ```settings.json``` and define your 'cc2_folder'. Initially its named 'your_folder_name', but you can name it as you want. You can either create a folder directly in the root directory like ```your_folder_name``` or you can define an absolute path like ```C:\Documents\your_folder_name```. During use, you're going to drag and drop your videos into this folder and automatically start the encoding process.
+Have a quick look at the ```settings.json``` and define your 'cc2_folder'. Initially its named 'your_folder_name', but you can name it as you want. You can either create a folder directly in the root directory like ```your_folder_name``` or you can define an absolute path like ```C:\Users\Default\Documents\your_folder_name```. During use, you're going to drag and drop your videos into this folder and automatically start the encoding process.
 
 ```json
 {   
@@ -46,7 +46,7 @@ Have a quick look at the ```settings.json``` and define your 'cc2_folder'. Initi
     ],
     "settings":[
         {
-            "notification": true, #comment /*comment*/
+            "notification": true,
             "cc2_folder" : "your_folder_name/" 
         }
     ]
