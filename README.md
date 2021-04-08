@@ -15,7 +15,7 @@ Add custom 'cc2-flags' to your video and drag it into your 'cc2-folder'. By defa
 ```
 my-cool-video--webm--medium.mp4
 ```
-After the process has finished, your .mp4 video is now available in .webm format with a medium compression rate.
+After the process has finished, your .mp4 video is now available in a .webm format with a medium compression rate.
 
 ### cc2-flags:
 As shown in the quickstart example, cc2 works with custom flags which can be easily added to the videos filename. Each flag starts with a double hyphen:
