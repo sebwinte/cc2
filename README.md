@@ -14,6 +14,11 @@ pip install -r requirements.txt
 
 Quickstart
 ----------
+Open the ```cc2``` folder in your terminal and run:
+```
+python main.py
+```
+
 <img src="https://raw.githubusercontent.com/sebwinte/cc2/main/doc/cc2.gif" />
 
 Add custom 'cc2-flags' to your video and drag it into your 'cc2-folder'. By default this folder is named 'your_folder_name':
@@ -24,7 +29,7 @@ After the process has finished, your .mp4 video is now available in a .webm and 
 
 cc2-flags
 ---------
-As shown in the quickstart example, cc2 works with custom flags which can be easily added to the videos filename. Each flag starts with a double hyphen:
+As shown in the quickstart example, cc2 works with custom flags which can be easily added to the filename. Each flag starts with a double hyphen:
 
 | container         | flag              |
 | :------------     | :------------     |
