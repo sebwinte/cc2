@@ -14,6 +14,7 @@ pip install -r requirements.txt
 
 Quickstart
 ----------
+<img src="https://raw.githubusercontent.com/sebwinte/cc2/main/doc/cc2.gif"/>
 Add custom 'cc2-flags' to your video and drag it into your 'cc2-folder'. By default this folder is named 'your_folder_name':
 ```
 my-cool-video--webm--medium.mp4
