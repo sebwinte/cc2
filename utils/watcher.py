@@ -77,9 +77,10 @@ class Watcher:
         
         #Check if filetype is supported
         if cropped_file_extension.lower() in Helper.valid_arguments_type:
-            for desired_argument in Helper.valid_arguments_compression:
+            for desired_argument in Helper.valid_arguments_type:
                 if desired_argument in splitted_file:
-                    self.c.process(file_name_without_arguments,splitted_file,file_path,file_name_without_arguments_extension,cropped_file_extension,original_file_name)                  
+                    self.c.process(file_name_without_arguments,splitted_file,file_path,file_name_without_arguments_extension,cropped_file_extension,original_file_name)    
+                    break              
         else: 
             print(f'No supported file extension')
 

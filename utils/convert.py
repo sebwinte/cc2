@@ -27,7 +27,7 @@ class Converter:
         for file_type in verified_arguments_type:
             method_name = 'to_' + str(file_type)
             method = getattr(self, method_name)
-            print("mange_filetype " ,file_type)
+            print("manage_filetype_compression " ,file_type)
             if method(verified_arguments_compression,file_name_without_arguments,original_file_name,unique_folder_id): status = True
             else:
                 status = False

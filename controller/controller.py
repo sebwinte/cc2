@@ -49,9 +49,12 @@ class Controller:
             for param in arguments:
                 if param.lower() in Helper.valid_arguments_compression:
                     valid_arguments.append(param.lower())
+            # Default if no compression argument found 
+            if not valid_arguments:
+                valid_arguments =  ["high"]
             return valid_arguments
         except:
-            return False    
+            return False   
 
 
     # verify_arguments_type return only valid arguments according to the Helper.valid_arguments_ list 
