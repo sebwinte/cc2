@@ -39,7 +39,7 @@ class Helper():
         Helper.path = ""
         Helper.notification = 0
         try:
-            file_path = Path("utils/settings.json")
+            file_path = Path("./settings.json")
             with open(file_path) as f:
                 data = json.load(f)
             
