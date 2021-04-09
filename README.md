@@ -18,7 +18,7 @@ Quickstart
 
 Add custom 'cc2-flags' to your video and drag it into your 'cc2-folder'. By default this folder is named 'your_folder_name':
 ```
-my-cool-video--webm--medium.mp4
+my-cool-video--low--webm--ogv.mp4
 ```
 After the process has finished, your .mp4 video is now available in a .webm format with a medium compression rate.
 
