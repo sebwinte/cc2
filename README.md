@@ -71,7 +71,9 @@ Troubleshooting
 ---------------
 <details>
 <summary>"Error directory not found"</summary>
-<p>Make sure your 'cc2_folder' exists. Double check the path in the settings.json</p>
+<p>Make sure your 'cc2_folder' exists. Double check the path in the settings.json</p>  
+</details>
+<details>
 <summary>"Observer stopped"</summary>
-<p>...</p>    
+<p>...</p>
 </details>
