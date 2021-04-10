@@ -26,7 +26,7 @@ Add custom 'cc2-flags' to your video and drag it into your 'cc2-folder'. By defa
 ```
 my-cool-video--low--webm--ogv.mp4
 ```
-After the process has finished, your .mp4 video is now available in a .webm and .ovg format with a low compression rate. Choose at least one container flag in order to start the process. The default video compression then will be ```medium```.
+After the process has finished, your .mp4 video is now available in a .webm and .ovg format with a low compression rate. Choose at least one container flag in order to start the process. The default compression rate then will be medium.
 
 cc2-flags
 ---------
