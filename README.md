@@ -1,16 +1,18 @@
 <img src="http://pfuscha.cool:3000/" width="120"/>
 
 cc2 — drag and drop it like it's hot.
--------------
+-------------------------------------
 cc2 is a easy to use video encoder for Windows and MacOS. Let's say you need your ```.mp4``` video as a ```.webm``` and ```.ogv```? In a small file size, without quality loss? Just drag and drop your video into your predefined folder and see magic happens.
 
-Installation
-------------
-The easiest way to get started is to clone this repo and to start with installing all requirements. For this simply run:
+
+Installation and requirements
+-----------------------------
+Clone this repo and start installing all requirements. For this simply run:
 ```python
 pip install -r requirements.txt
 ```
-> Note: cc2 uses the [@FFmpeg](https://www.ffmpeg.org/) framework to compress and convert the videos. So make sure ffmpeg is already installed on your system. 
+> cc2 uses the [@FFmpeg](https://www.ffmpeg.org/) framework to compress and convert the videos. So make sure ffmpeg is already installed on your system. 
+> Python >= 3.6
 
 Quickstart
 ----------
@@ -29,7 +31,7 @@ After the process has finished, your .mp4 video is now available in a .webm and 
 
 cc2-flags
 ---------
-As shown in the quickstart example, cc2 works with custom flags which can be easily added to the filename. Each flag starts with a double hyphen:
+As shown in the quickstart example, cc2 works with custom flags which can be easily added to the filename. Each flag starts with a double hyphen. :
 
 | container         | flag              |
 | :------------     | :------------     |
@@ -79,8 +81,4 @@ Troubleshooting
 <details>
 <summary>"Error directory not found"</summary>
 <p>Make sure your 'cc2_folder' exists. Double check the path in the settings.json</p>  
-</details>
-<details>
-<summary>"Observer stopped"</summary>
-<p>...</p>
 </details>
