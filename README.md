@@ -11,8 +11,7 @@ Clone this repo and start installing all requirements. For this simply run:
 ```python
 pip install -r requirements.txt
 ```
-> cc2 uses the [@FFmpeg](https://www.ffmpeg.org/) framework to compress and convert the videos. So make sure ffmpeg is already installed on your system. 
-> Python >= 3.6
+> Note: cc2 uses the [@FFmpeg](https://www.ffmpeg.org/) framework to compress and convert the videos. So make sure ffmpeg is already installed on your system. 
 
 Quickstart
 ----------
@@ -27,7 +26,7 @@ Add custom 'cc2-flags' to your video and drag it into your 'cc2-folder'. By defa
 ```
 my-cool-video--low--webm--ogv.mp4
 ```
-After the process has finished, your .mp4 video is now available in a .webm and .ovg format with a low compression rate.
+After the process has finished, your .mp4 video is now available in a .webm and .ovg format with a low compression rate. Choose at least one container flag in order to start the process. The default video compression then will be ```medium```.
 
 cc2-flags
 ---------
@@ -81,4 +80,8 @@ Troubleshooting
 <details>
 <summary>"Error directory not found"</summary>
 <p>Make sure your 'cc2_folder' exists. Double check the path in the settings.json</p>  
+</details>
+<details>
+<summary>"ImportError: No module named utils.helper"</summary>
+<p>Python has to be at least version 3.6</p>  
 </details>
