@@ -75,6 +75,15 @@ cc2 is focusing on container formats mostly used for the web.
 | webm              | libvpx-vp9    |   
 | ogv               | libtheora     |   
 
+Autostart cc2
+-------------
+
+```bat
+"C:\Users\your\path\to\python.exe" "C:\Users\your\path\to\cc2\main.py"
+pause
+```
+
+
 Troubleshooting
 ---------------
 <details>
