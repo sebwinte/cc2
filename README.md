@@ -79,13 +79,13 @@ Autostart cc2
 -------------
 For a better experience during the use of cc2, you can easily create  a ```.bat``` file for Windows or a ```.command``` file if you're running cc2 on Mac.
 #### Windows:
-
+Save this file and move it into the 'startup' folder. 
 ```bat
 "C:\Users\your\path\to\python.exe" "C:\Users\your\path\to\cc2\main.py"
 pause
 ```
 #### MacOS:
-
+Save this file and make it executable with ```chmod +x filename.command```. 
 ```command
 #!/bin/bash
 python /Users/your/path/to/cc2/main.py
