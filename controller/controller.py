@@ -51,7 +51,7 @@ class Controller:
                     valid_arguments.append(param.lower())
             # Default if no compression argument found 
             if not valid_arguments:
-                valid_arguments =  ["high"]
+                valid_arguments =  ["medium"]
             return valid_arguments
         except:
             return False   
