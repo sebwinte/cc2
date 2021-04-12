@@ -82,7 +82,10 @@ Autostart cc2
 "C:\Users\your\path\to\python.exe" "C:\Users\your\path\to\cc2\main.py"
 pause
 ```
-
+```command
+#!/bin/bash
+python /Users/your/path/to/cc2/main.py
+```
 
 Troubleshooting
 ---------------
