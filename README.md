@@ -78,14 +78,14 @@ cc2 is focusing on container formats mostly used for the web.
 Autostart cc2
 -------------
 For a better experience during the use of cc2, you can easily create  a ```.bat``` file for Windows or a ```.command``` file if you're running cc2 on Mac.
-#### Windows:
+#### Windows (.bat):
 Save this file and move it into the 'startup' folder. 
 ```bat
 "C:\Users\your\path\to\python.exe" "C:\Users\your\path\to\cc2\main.py"
 pause
 ```
-#### MacOS:
-Save this file and make it executable with ```chmod +x filename.command```. 
+#### MacOS (.command):
+Save this file and make it executable with ```chmod +x filename.command```. Afterwards go to 'System Preferences' -> 'Users & Groups' -> 'Login Items' and add your file to the list.
 ```command
 #!/bin/bash
 python /Users/your/path/to/cc2/main.py
