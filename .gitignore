@@ -2,4 +2,4 @@ videos/
 __pycache__/
 .vscode/
 .drawio
-testordner/
+your_folder_name/*
