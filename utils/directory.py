@@ -38,6 +38,9 @@ class Directory:
             return 0 
         else:
             print ("Successfully created the directory %s" % path+file_name)
+            print ("####")
+            print (path+file_name)
+            print ("####")
             return self.unique_folder_id
 
 

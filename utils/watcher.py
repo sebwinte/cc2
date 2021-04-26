@@ -44,14 +44,19 @@ class Watcher:
 
         try: 
             while True: 
-                time.sleep(5)
+                print("Bin da")
+                time.sleep(2)
                 if event_handler.queue:
                     print('Queue: ', event_handler.queue)
                     #Get the last file-path from the queue and remove it
                     file_path = Path(event_handler.queue.pop())
-                    #Check if file is still there or has been removed in the meantime
+                    print("++++++++")
+                    print(file_path)
+                    print("++++++++")
+                    #Check if file is still there or has been removed in the meantime (e.g. during the copying process)
                     if file_path.exists():
                         self.strip_filename(file_path)
+
         except: 
             self.observer.stop() 
             print("Observer Stopped") 
