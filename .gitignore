@@ -2,3 +2,6 @@ videos/
 __pycache__/
 .vscode/
 your_folder_name/*
+.mp4
+.ogv
+.webm

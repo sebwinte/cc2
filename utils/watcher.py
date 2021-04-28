@@ -44,15 +44,11 @@ class Watcher:
 
         try: 
             while True: 
-                print("Bin da")
                 time.sleep(2)
                 if event_handler.queue:
                     print('Queue: ', event_handler.queue)
                     #Get the last file-path from the queue and remove it
                     file_path = Path(event_handler.queue.pop())
-                    print("++++++++")
-                    print(file_path)
-                    print("++++++++")
                     #Check if file is still there or has been removed in the meantime (e.g. during the copying process)
                     if file_path.exists():
                         self.strip_filename(file_path)
@@ -102,7 +98,8 @@ class Event(LoggingEventHandler):
         super().__init__()
         self.on_modified_path=""  
         self.on_created_path=""
-        self.queue=[]      
+        self.queue=[]    
+        self.h = Helper()   
 
 
     # on_created is triggerd if an new file/directory is created/copied
@@ -128,8 +125,14 @@ class Event(LoggingEventHandler):
             if self.check_mark == 0.0:
                 time.sleep(1)
                 self.file_open = False
-                print("finished copying")
-                self.queue.append(file_path) 
+                print("finished copying", file_path)
+  
+                # MacOS specific recursive fallback mechanism. Error caused by Watchdog API -> watchdog==2.0.2.
+                replaced_path = file_path.replace(self.h.path, '')
+                print("---->", replaced_path)
+                if "\\" in replaced_path:
+                    print("recursive fallback mechanism")
+                else:
+                    self.queue.append(file_path) 
 
-            self.last_modified = self.check_last_modified
-        
+            self.last_modified = self.check_last_modified       

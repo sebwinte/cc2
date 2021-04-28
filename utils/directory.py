@@ -32,15 +32,12 @@ class Directory:
                 self.unique_folder_id = str(uuid4())
                 os.mkdir(path + file_name + self.unique_folder_id, access_rights)
             else:
-                 os.mkdir(path+file_name, access_rights)
+                os.mkdir(path+file_name, access_rights)
         except OSError:
             print ("Creation of the directory %s failed" % path+file_name)
             return 0 
         else:
             print ("Successfully created the directory %s" % path+file_name)
-            print ("####")
-            print (path+file_name)
-            print ("####")
             return self.unique_folder_id
 
 
