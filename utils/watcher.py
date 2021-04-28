@@ -3,6 +3,7 @@ import time
 import os
 import logging   
 import threading
+import platform
 import re
 from pathlib import Path
 from utils.helper import Helper
@@ -126,13 +127,23 @@ class Event(LoggingEventHandler):
                 time.sleep(1)
                 self.file_open = False
                 print("finished copying", file_path)
-  
-                # MacOS specific recursive fallback mechanism. Error caused by Watchdog API -> watchdog==2.0.2.
+                print("self path", self.h.path)
+
+                # MacOS specific recursive fallback mechanism. Error caused by Watchdog API
+                # only works with an absolute path
                 replaced_path = file_path.replace(self.h.path, '')
-                print("---->", replaced_path)
-                if "\\" in replaced_path:
+                if platform.system() == "Darwin" and "/" in replaced_path:
+                    print("I am on MacOS")
+                    print("---->", replaced_path)
                     print("recursive fallback mechanism")
                 else:
                     self.queue.append(file_path) 
+                
+                # replaced_path = file_path.replace(self.h.path, file_path)
+                # print("---->", replaced_path)
+                # if "/" not in replaced_path:
+                #     print("recursive fallback mechanism")
+                # else:
+                #     self.queue.append(file_path) 
 
             self.last_modified = self.check_last_modified       
