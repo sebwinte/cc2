@@ -3,6 +3,7 @@ import time
 import os
 import logging   
 import threading
+import platform
 import re
 from pathlib import Path
 from utils.helper import Helper
@@ -44,14 +45,15 @@ class Watcher:
 
         try: 
             while True: 
-                time.sleep(5)
+                time.sleep(2)
                 if event_handler.queue:
                     print('Queue: ', event_handler.queue)
                     #Get the last file-path from the queue and remove it
                     file_path = Path(event_handler.queue.pop())
-                    #Check if file is still there or has been removed in the meantime
+                    #Check if file is still there or has been removed in the meantime (e.g. during the copying process)
                     if file_path.exists():
                         self.strip_filename(file_path)
+
         except: 
             self.observer.stop() 
             print("Observer Stopped") 
@@ -77,10 +79,7 @@ class Watcher:
         
         #Check if filetype is supported
         if cropped_file_extension.lower() in Helper.valid_arguments_type:
-            for desired_argument in Helper.valid_arguments_type:
-                if desired_argument in splitted_file:
-                    self.c.process(file_name_without_arguments,splitted_file,file_path,file_name_without_arguments_extension,cropped_file_extension,original_file_name)    
-                    break              
+            self.c.process(file_name_without_arguments,splitted_file,file_path,file_name_without_arguments_extension,cropped_file_extension,original_file_name)             
         else: 
             print(f'No supported file extension')
 
@@ -100,7 +99,8 @@ class Event(LoggingEventHandler):
         super().__init__()
         self.on_modified_path=""  
         self.on_created_path=""
-        self.queue=[]      
+        self.queue=[]    
+        self.h = Helper()   
 
 
     # on_created is triggerd if an new file/directory is created/copied
@@ -126,8 +126,16 @@ class Event(LoggingEventHandler):
             if self.check_mark == 0.0:
                 time.sleep(1)
                 self.file_open = False
-                print("finished copying")
-                self.queue.append(file_path) 
+                #print("finished copying", file_path)
+
+                # MacOS specific recursive fallback mechanism. Error caused by Watchdog API
+                # only works with an absolute path
+                replaced_path = file_path.replace(self.h.path, '')
+                if platform.system() == "Darwin" and "/" in replaced_path:
+                    print("I am on MacOS")
+                    print("---->", replaced_path)
+                    print("recursive fallback mechanism")
+                else:
+                    self.queue.append(file_path) 
 
             self.last_modified = self.check_last_modified
-        

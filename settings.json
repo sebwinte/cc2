@@ -9,7 +9,7 @@
     "settings":[
         {
             "notification": true,
-            "cc2_folder" : "your_folder_name/"
+            "cc2_folder" : "/Users/tom/Desktop/cc2/your_folder_name/"
         }
     ]
 }
