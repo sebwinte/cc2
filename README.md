@@ -7,7 +7,7 @@ cc2 is a easy to use video encoder for Windows and MacOS. Let's say you need you
 
 Installation and requirements
 -----------------------------
-Clone this repo and start installing all requirements. For this simply run:
+Clone this repo and install all requirements. For this simply run:
 ```python
 pip install -r requirements.txt
 ```
@@ -22,7 +22,7 @@ python main.py
 
 <img src="https://raw.githubusercontent.com/sebwinte/cc2/main/doc/cc2.gif" />
 
-Add custom 'cc2-flags' to your video and drag it into your 'cc2-folder'. By default this folder is named 'your_folder_name':
+Add custom 'cc2-flags' to your videos and drag it into your 'cc2-folder'. By default this folder is named 'your_folder_name':
 ```
 my-cool-video--low--webm--ogv.mp4
 ```
@@ -30,7 +30,7 @@ After the process has finished, your .mp4 video is now available in a .webm and 
 
 cc2-flags
 ---------
-As shown in the quickstart example, cc2 works with custom flags which can be easily added to the filename. Each flag starts with a double hyphen.
+As shown in the quickstart example, cc2 works with custom flags which can be easily added to your videos file name. Each flag starts with a double hyphen.
 
 | container         | flag              |
 | :------------     | :------------     |
@@ -46,7 +46,7 @@ As shown in the quickstart example, cc2 works with custom flags which can be eas
 
 Preferences
 -----------
-Have a quick look at the ```settings.json``` and define your 'cc2_folder'. Initially its named 'your_folder_name', but you can name it as you want. You can either create a folder directly in the root directory like ```"your_folder_name"``` or you can define an absolute path like ```"C:\\Users\\Default\\Documents\\your_folder_name\\"```. During use, you're going to drag and drop your videos into this folder and automatically start the encoding process.
+Have a quick look at the ```settings.json``` and define the path of your 'cc2_folder'. Initially this folder is named 'your_folder_name', but you can name it as you want. Make sure you're using an absolute path like ```"C:\\Users\\Your\\Path\\To\\your_folder_name\\"``` on Windows and ```"/Users/Your/Path/To/your_folder_name/"``` on MacOS. During use, you're going to drag and drop your videos into the folder and automatically start the encoding process.
 
 ```json
 {   
@@ -60,11 +60,27 @@ Have a quick look at the ```settings.json``` and define your 'cc2_folder'. Initi
     "settings":[
         {
             "notification": true,
-            "cc2_folder" : "C:\\Users\\Default\\Documents\\your_folder_name\\" 
+            "cc2_folder" : "C:\\Users\\Your\\Path\\To\\your_folder_name\\" 
         }
     ]
 }
 ```
+Useful cc2-flag combinations
+----------------------------
+cc2 offers different flag combinations. For example:
+#### compression only (container reamains the same):
+```
+my-cool-video--low--medium.ogv
+```
+#### container only (default compression):
+```
+my-cool-video--webm.webm
+```
+#### container and compression:
+```
+my-cool-video--low--medium--webm--ogv.mp4
+```
+
 Supported container formats and codecs
 --------------------------------------
 cc2 is focusing on container formats mostly used for the web.  
@@ -77,7 +93,7 @@ cc2 is focusing on container formats mostly used for the web.
 
 Autostart cc2
 -------------
-For a better experience during the use of cc2, you can easily create  a ```.bat``` file for Windows or a ```.command``` file if you're running cc2 on a Mac. By using this method, cc2 automatically starts after your system is booted.
+For a better experience during use of cc2, you can easily create  a ```.bat``` file for Windows or a ```.command``` file if you're running cc2 on a MacOS. By using this method, cc2 automatically starts after your system is booted.
 #### Windows (.bat):
 Save this file and move it into the Windows 'startup' folder. 
 ```bat
