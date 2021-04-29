@@ -37,7 +37,7 @@ class Converter:
         return status
 
 
-    def to_webm(self,compression_type, verified_arguments_compression,file_name_without_arguments,original_file_name,unique_folder_id):
+    def to_webm(self,compression_type,verified_arguments_compression,file_name_without_arguments,original_file_name,unique_folder_id):
         try:
             ffmpeg_input = ffmpeg.input(str(Helper.path) + str(original_file_name))
             ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) + str(unique_folder_id) +'/'+ str(file_name_without_arguments) + ('-' + str(compression_type) if len(verified_arguments_compression) > 1 else '') + '.webm'
@@ -54,7 +54,7 @@ class Converter:
             return False
 
 
-    def to_mp4(self, compression_type, verified_arguments_compression,file_name_without_arguments,original_file_name,unique_folder_id):
+    def to_mp4(self,compression_type,verified_arguments_compression,file_name_without_arguments,original_file_name,unique_folder_id):
         try:
             ffmpeg_input = ffmpeg.input(str(Helper.path) + str(original_file_name))
             ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) + str(unique_folder_id) +'/'+ str(file_name_without_arguments) + ('-' + str(compression_type) if len(verified_arguments_compression) > 1 else '') + '.mp4'

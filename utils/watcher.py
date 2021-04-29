@@ -126,8 +126,7 @@ class Event(LoggingEventHandler):
             if self.check_mark == 0.0:
                 time.sleep(1)
                 self.file_open = False
-                print("finished copying", file_path)
-                print("self path", self.h.path)
+                #print("finished copying", file_path)
 
                 # MacOS specific recursive fallback mechanism. Error caused by Watchdog API
                 # only works with an absolute path
@@ -138,12 +137,5 @@ class Event(LoggingEventHandler):
                     print("recursive fallback mechanism")
                 else:
                     self.queue.append(file_path) 
-                
-                # replaced_path = file_path.replace(self.h.path, file_path)
-                # print("---->", replaced_path)
-                # if "/" not in replaced_path:
-                #     print("recursive fallback mechanism")
-                # else:
-                #     self.queue.append(file_path) 
 
-            self.last_modified = self.check_last_modified       
+            self.last_modified = self.check_last_modified
