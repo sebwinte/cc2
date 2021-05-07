@@ -81,7 +81,10 @@ class Watcher:
         if cropped_file_extension.lower() in Helper.valid_arguments_type:
             self.c.process(file_name_without_arguments,splitted_file,file_path,file_name_without_arguments_extension,cropped_file_extension,original_file_name)             
         else: 
-            print(f'No supported file extension')
+            print(f'No supported file extension!')
+            if(self.h.extension_alert):
+                self.h.notification_message("cc2","No supported file extension!")
+                
 
        
     

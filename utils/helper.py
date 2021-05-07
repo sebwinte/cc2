@@ -46,6 +46,7 @@ class Helper():
             Helper.settings_data = data
             Helper.path = data['settings'][0]['cc2_folder']
             Helper.notification = data['settings'][0]['notification']
+            Helper.extension_alert = data['settings'][0]['extension_alert']
 
             print("Settings-Loaded")
         except:
