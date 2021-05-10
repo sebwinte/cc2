@@ -93,7 +93,7 @@ cc2 is focusing on container formats mostly used for the web.
 
 Autostart cc2
 -------------
-For a better experience during use of cc2, you can easily create  a ```.bat``` file for Windows or a ```.command``` file if you're running cc2 on a MacOS. By using this method, cc2 automatically starts after your system is booted.
+For a better experience during use of cc2, you can easily create  a ```.bat``` file for Windows or a ```.command``` file if you're running cc2 on a MacOS. By using this method, cc2 automatically starts after your system is booted. Don't forget to define an absolute path for the 'notification icon' and your 'settings.json'. See ```helper.py```
 #### Windows (.bat):
 Save this file and move it into the Windows 'startup' folder. 
 ```bat
