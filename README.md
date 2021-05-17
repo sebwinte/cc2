@@ -60,7 +60,8 @@ Have a quick look at the ```settings.json``` and define the path of your 'cc2_fo
     "settings":[
         {
             "notification": true,
-            "cc2_folder" : "C:\\Users\\Your\\Path\\To\\your_folder_name\\" 
+            "cc2_folder" : "C:\\Users\\Your\\Path\\To\\your_folder_name\\",
+            "extension_alert": true
         }
     ]
 }
