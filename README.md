@@ -77,7 +77,7 @@ my-cool-video--low--medium.ogv
 ```
 #### container only (default compression):
 ```
-my-cool-video--webm.webm
+my-cool-video--mp4.webm
 ```
 #### container and compression:
 ```
