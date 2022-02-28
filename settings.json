@@ -9,7 +9,7 @@
     "settings":[
         {
             "notification": true,
-            "cc2_folder" : "C:\\Users\\Your\\Path\\To\\your_folder_name\\"
+            "cc2_folder" : "C:\\Users\\Sebastian\\Desktop\\"
         }
     ]
 }

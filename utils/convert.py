@@ -23,70 +23,72 @@ class Converter:
 
     # manage_filetype_compression calls the corresponding convert function.
 
-    def manage_filetype_compression(self,verified_arguments_compression,verified_arguments_type,file_name_without_arguments,original_file_name,unique_folder_id):
-        for file_type in verified_arguments_type:
-            for compression_type in verified_arguments_compression:
+    # def manage_filetype_compression(self,verified_arguments_compression,verified_arguments_type,file_name_without_arguments,original_file_name,unique_folder_id):
+    def manage_filetype_compression(self,video):
+        print("VIDEO ARGUMENTS: " , video.get_compression_arguments())
+        for file_type in video.get_compression_arguments():
+            for compression_type in video.verified_arguments_compression:
 
                 method_name = 'to_' + str(file_type)
                 method = getattr(self, method_name)
                 
-                if method(compression_type, verified_arguments_compression,file_name_without_arguments,original_file_name,unique_folder_id): status = True
+                if method(compression_type, video.verified_arguments_compression,video.file_name_without_arguments,video.original_file_name,video.uniq_id): status = True
                 else:
                     status = False
                     break
         return status
 
 
-    def to_webm(self,compression_type,verified_arguments_compression,file_name_without_arguments,original_file_name,unique_folder_id):
-        try:
-            ffmpeg_input = ffmpeg.input(str(Helper.path) + str(original_file_name))
-            ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) + str(unique_folder_id) +'/'+ str(file_name_without_arguments) + ('-' + str(compression_type) if len(verified_arguments_compression) > 1 else '') + '.webm'
-            compression = self.convert_compression_value(str(compression_type),"webm")
+    # def to_webm(self,compression_type,verified_arguments_compression,file_name_without_arguments,original_file_name,unique_folder_id):
+    #     try:
+    #         ffmpeg_input = ffmpeg.input(str(Helper.path) + str(original_file_name))
+    #         ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) + str(unique_folder_id) +'/'+ str(file_name_without_arguments) + ('-' + str(compression_type) if len(verified_arguments_compression) > 1 else '') + '.webm'
+    #         compression = self.convert_compression_value(str(compression_type),"webm")
     
-            ffmpeg.output(ffmpeg_input,ffmpeg_output,
-                **{'c:v': 'libvpx-vp9','crf': compression, 'f': 'webm'}
-                ).overwrite_output().run()
+    #         ffmpeg.output(ffmpeg_input,ffmpeg_output,
+    #             **{'c:v': 'libvpx-vp9','crf': compression, 'f': 'webm'}
+    #             ).overwrite_output().run()
 
-            print('WEBM @' , compression)
-            return True
-        except:
-            self.h.notification_message("cc2","Failed to convert -> webm")
-            return False
+    #         print('WEBM @' , compression)
+    #         return True
+    #     except:
+    #         self.h.notification_message("cc2","Failed to convert -> webm")
+    #         return False
 
 
-    def to_mp4(self,compression_type,verified_arguments_compression,file_name_without_arguments,original_file_name,unique_folder_id):
-        try:
-            ffmpeg_input = ffmpeg.input(str(Helper.path) + str(original_file_name))
-            ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) + str(unique_folder_id) +'/'+ str(file_name_without_arguments) + ('-' + str(compression_type) if len(verified_arguments_compression) > 1 else '') + '.mp4'
-            compression = self.convert_compression_value(str(compression_type),"mp4")
+    # def to_mp4(self,compression_type,verified_arguments_compression,file_name_without_arguments,original_file_name,unique_folder_id):
+    #     try:
+    #         ffmpeg_input = ffmpeg.input(str(Helper.path) + str(original_file_name))
+    #         ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) + str(unique_folder_id) +'/'+ str(file_name_without_arguments) + ('-' + str(compression_type) if len(verified_arguments_compression) > 1 else '') + '.mp4'
+    #         compression = self.convert_compression_value(str(compression_type),"mp4")
 
-            ffmpeg.output(ffmpeg_input,ffmpeg_output,
-                **{'c:v': 'libx264','crf': compression, 'f': 'mp4'}
-                ).overwrite_output().run()
+    #         ffmpeg.output(ffmpeg_input,ffmpeg_output,
+    #             **{'c:v': 'libx264','crf': compression, 'f': 'mp4'}
+    #             ).overwrite_output().run()
 
-            print('MP4 @' , compression)
-            return True
-        except:
-            self.h.notification_message("cc2","Failed to convert -> mp4")
-            return False
+    #         print('MP4 @' , compression)
+    #         return True
+    #     except:
+    #         self.h.notification_message("cc2","Failed to convert -> mp4")
+    #         return False
 
     
-    def to_ogv(self,compression_type,verified_arguments_compression,file_name_without_arguments,original_file_name,unique_folder_id):
-        try:
-            print("ogv")
-            ffmpeg_input = ffmpeg.input(str(Helper.path) + str(original_file_name))
-            ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) + str(unique_folder_id) +'/'+ str(file_name_without_arguments) + ('-' + str(compression_type) if len(verified_arguments_compression) > 1 else '') + '.ogv'
-            compression = self.convert_compression_value(str(compression_type),"ogv")
+    # def to_ogv(self,compression_type,verified_arguments_compression,file_name_without_arguments,original_file_name,unique_folder_id):
+    #     try:
+    #         print("ogv")
+    #         ffmpeg_input = ffmpeg.input(str(Helper.path) + str(original_file_name))
+    #         ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) + str(unique_folder_id) +'/'+ str(file_name_without_arguments) + ('-' + str(compression_type) if len(verified_arguments_compression) > 1 else '') + '.ogv'
+    #         compression = self.convert_compression_value(str(compression_type),"ogv")
     
-            ffmpeg.output(ffmpeg_input,ffmpeg_output,
-                **{'c:v': 'libtheora','q:v': compression, 'f': 'ogv'}
-                ).overwrite_output().run()
+    #         ffmpeg.output(ffmpeg_input,ffmpeg_output,
+    #             **{'c:v': 'libtheora','q:v': compression, 'f': 'ogv'}
+    #             ).overwrite_output().run()
 
-            print('OGV @' , compression)
-            return True
-        except:
-            self.h.notification_message("cc2","Failed to convert -> ogv")
-            return False
+    #         print('OGV @' , compression)
+    #         return True
+    #     except:
+    #         self.h.notification_message("cc2","Failed to convert -> ogv")
+    #         return False
 
 
     # convert_compression_value converts the "--small,--medium,--high" arguments into

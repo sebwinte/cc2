@@ -10,6 +10,7 @@ from utils.helper import Helper
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 from controller.controller import Controller
+from utils.video import Video
 
 
 
@@ -47,44 +48,25 @@ class Watcher:
             while True: 
                 time.sleep(2)
                 if event_handler.queue:
-                    print('Queue: ', event_handler.queue)
+                    #print('Queue: ', event_handler.queue)
                     #Get the last file-path from the queue and remove it
                     file_path = Path(event_handler.queue.pop())
                     #Check if file is still there or has been removed in the meantime (e.g. during the copying process)
                     if file_path.exists():
-                        self.strip_filename(file_path)
+                        vid = Video(file_path)
+                        #print("VID: ", vid.get_verified_arguments_compression())
+                        self.c.process(vid)
+                        # self.strip_filename(file_path)
 
-        except: 
+
+        except Exception as e:
             self.observer.stop() 
             print("Observer Stopped") 
+            print(e)
   
         self.observer.join() 
 
-
-    # strip_filename seperates the filepath into file_name, extension ... 
-    # and validates if the filetype is supported 
-
-    def strip_filename(self,src):
-        try:
-            file_path, original_file_name = os.path.split(src)
-            extension = os.path.splitext(original_file_name)[1]
-            file_name = os.path.splitext(original_file_name)[0]
-            splitted_file = re.split(Helper.marker, file_name.lower())
-            file_name_without_arguments = splitted_file[0]
-            file_name_without_arguments_extension = splitted_file[0]+extension
-            cropped_file_extension = extension.split(".")[1]
-        except:
-            return False  
-        
-        
-        #Check if filetype is supported
-        if cropped_file_extension.lower() in Helper.valid_arguments_type:
-            self.c.process(file_name_without_arguments,splitted_file,file_path,file_name_without_arguments_extension,cropped_file_extension,original_file_name)             
-        else: 
-            print(f'No supported file extension')
-
-       
-    
+           
     
 class Event(LoggingEventHandler):
     
@@ -103,12 +85,20 @@ class Event(LoggingEventHandler):
         self.h = Helper()   
 
 
+    def on_any_event(self, event):
+        print(event)
+
+
     # on_created is triggerd if an new file/directory is created/copied
 
     def on_created(self, event): 
         if not event.is_directory:
             file_porcess_thread = threading.Thread(target=self.file_status, args=(event.src_path,))
             file_porcess_thread.start()
+
+            print(file_porcess_thread.stopped_event())
+
+
 
 
     # file_status monitors the file copying process and appends 

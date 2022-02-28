@@ -17,20 +17,20 @@ class Helper():
 
     
 
-    global valid_arguments_compression 
-    global valid_arguments_type 
+    global valid_compression_arguments 
+    global valid_file_formats 
     global path
     global marker
     global settings_data
 
 
     def __init__(self):
-        Helper.valid_arguments_compression = ["low", "medium", "high"]
-        Helper.valid_arguments_type = ["mp4", "webm", "ogv"]
+        Helper.valid_compression_arguments = ["low", "medium", "high"]
+        Helper.valid_file_formats = ["mp4", "webm", "ogv"]
         Helper.marker = "--"
         Helper.os = os.name
         self.notification = Notify(
-            default_notification_icon = Path("./doc/logo.png")
+            default_notification_icon = Path("C:\\Users\\Sebastian\\Documents\\cc2\\doc\\logo.png")
         )
 
 
@@ -39,7 +39,7 @@ class Helper():
         Helper.path = ""
         Helper.notification = 0
         try:
-            file_path = Path("./settings.json")
+            file_path = Path("C:\\Users\\Sebastian\\Documents\\cc2\\settings.json")
             with open(file_path) as f:
                 data = json.load(f)
             
