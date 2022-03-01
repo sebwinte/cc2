@@ -20,34 +20,38 @@ class Directory:
 
 
     def __init__(self):
-        self.unique_folder_id = ''
-    
+        self.folder_id = 1
+
 
     # make_dir creates a new directory based on the filename
     # If the directory already exists, a unique id is added  
 
-    def make_dir(self,path,file_name,access_rights):
+    def make_dir(self,video):
         try:
-            if os.path.exists(path+file_name):
-                self.unique_folder_id = str(uuid4())
-                os.mkdir(path + file_name + self.unique_folder_id, access_rights)
+            if os.path.exists(video.folder_path + video.file_name_without_arguments) == False :
+                os.mkdir(video.folder_path + video.file_name_without_arguments, 0o777)
             else:
-                os.mkdir(path+file_name, access_rights)
+                while os.path.exists(video.folder_path + video.file_name_without_arguments + "("+str(self.folder_id) + ")"):
+                    self.folder_id += 1
+                os.mkdir(video.folder_path + video.file_name_without_arguments + "("+str(self.folder_id) + ")", 0o777)
+                video.set_uniq_id(self.folder_id)
         except OSError:
-            print ("Creation of the directory %s failed" % path+file_name)
-            return 0 
+            print ("Creation of the directory failed")
+            return False
         else:
-            print ("Successfully created the directory %s" % path+file_name)
-            return self.unique_folder_id
+            print ("Successfully created the director")
+            return True
+
 
 
     # move_files cuts out the original video and moves it into the according directory
 
-    def move_files(self,original_path,folder_path,file_name,unique_folder_id):
+    #def move_files(self,original_path,folder_path,file_name,unique_folder_id):
+    def move_files(self,video):
         try:
-            if os.path.exists(folder_path + original_path):
-                original = folder_path + original_path
-                target = folder_path + file_name + unique_folder_id
+            if os.path.exists(video.path):
+                original = video.path
+                target = video.folder_path + video.file_name_without_arguments + video.uniq_id
                 shutil.move(original,target)
                 return True
             else:

@@ -30,7 +30,7 @@ class Helper():
         Helper.marker = "--"
         Helper.os = os.name
         self.notification = Notify(
-            default_notification_icon = Path("C:\\Users\\Sebastian\\Documents\\cc2\\doc\\logo.png")
+            default_notification_icon = Path("doc\\logo.png").absolute()
         )
 
 
@@ -38,8 +38,9 @@ class Helper():
         Helper.settings_data = []
         Helper.path = ""
         Helper.notification = 0
+
         try:
-            file_path = Path("C:\\Users\\Sebastian\\Documents\\cc2\\settings.json")
+            file_path = Path("settings.json").absolute()
             with open(file_path) as f:
                 data = json.load(f)
             

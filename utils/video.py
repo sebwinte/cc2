@@ -22,12 +22,13 @@ class Video:
   
     def __init__(self,path): 
         self.h = Helper() 
-        self.uniq_id = str(uuid4())
+        self.uniq_id = ""
         self.converted = False                      # compressed or not
-        self.valid_file = False                     # 
-
-        self.path = ''                              # C:USER\AASDA\
-        self.file_name = ''                         # myvideo--medium--mp4.webm
+        self.valid_file = False    
+                         # 
+        self.path = path                            # C:USER\AASDA\myvideo--medium--mp4.mp4
+        self.folder_path = ''                       # C:USER\AASDA\
+        self.file_name = ''                         # myvideo--medium--mp4
         self.compression_arguments = ''             # low,medium,high
         self.file_format = ''                       # mp4
         
@@ -43,7 +44,8 @@ class Video:
     
     def strip_filename(self,path):
         try:
-            self.path, self.file_name = os.path.split(path)
+            self.folder_path, self.file_name = os.path.split(path)
+            self.folder_path += "\\"
             self.file_format = os.path.splitext(self.file_name)[1].split(".")[1].lower()
             self.file_name = os.path.splitext(self.file_name)[0].lower()
             self.splitted_file_name = re.split(Helper.marker, self.file_name)
@@ -56,13 +58,13 @@ class Video:
 
     def validate(self):
         if self.file_format in Helper.valid_file_formats:
-            for argument in Helper.valid_compression_arguments:
-                if argument in self.splitted_file_name:
-                    self.verify_file_formats()
-                    self.verify_compression_arguments() 
-                    return True
-                else:
-                    return False
+            #for argument in Helper.valid_compression_arguments:
+                #if argument in self.splitted_file_name:
+            self.verify_file_formats()
+            self.verify_compression_arguments() 
+            return True
+        else:
+            return False
 
 
     # verify_compression_arguments return only valid arguments according to the Helper.valid_arguments_compression
@@ -83,7 +85,6 @@ class Video:
             for param in self.splitted_file_name:
                 if param.lower() in Helper.valid_file_formats:
                     self.verified_file_formats.append(param.lower())
-                    return True
         except Exception as e:
             print(e)
 
@@ -94,3 +95,7 @@ class Video:
     
     def get_file_format_arguments(self):
         return self.verified_file_formats
+
+
+    def set_uniq_id(self, id):
+        self.uniq_id= "("+ str(id) + ")"

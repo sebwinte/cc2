@@ -53,9 +53,10 @@ class Watcher:
                     file_path = Path(event_handler.queue.pop())
                     #Check if file is still there or has been removed in the meantime (e.g. during the copying process)
                     if file_path.exists():
-                        vid = Video(file_path)
+                        video = Video(file_path)
+                        #print("NEW FILE@",file_path)
                         #print("VID: ", vid.get_verified_arguments_compression())
-                        self.c.process(vid)
+                        self.c.process(video)
                         # self.strip_filename(file_path)
 
 
@@ -84,9 +85,10 @@ class Event(LoggingEventHandler):
         self.queue=[]    
         self.h = Helper()   
 
-
+    #DEBUG DELETE 
     def on_any_event(self, event):
-        print(event)
+        pass
+        #print(event)
 
 
     # on_created is triggerd if an new file/directory is created/copied
@@ -95,9 +97,6 @@ class Event(LoggingEventHandler):
         if not event.is_directory:
             file_porcess_thread = threading.Thread(target=self.file_status, args=(event.src_path,))
             file_porcess_thread.start()
-
-            print(file_porcess_thread.stopped_event())
-
 
 
 
