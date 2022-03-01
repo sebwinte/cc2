@@ -46,17 +46,17 @@ class Directory:
 
     # move_files cuts out the original video and moves it into the according directory
 
-    #def move_files(self,original_path,folder_path,file_name,unique_folder_id):
     def move_files(self,video):
         try:
             if os.path.exists(video.path):
-                original = video.path
-                target = video.folder_path + video.file_name_without_arguments + video.uniq_id
+                original = str(video.path)
+                target = str(video.folder_path + video.file_name_without_arguments + video.uniq_id)
                 shutil.move(original,target)
                 return True
             else:
                 return False
-        except:
+        except Exception as e:
+            print(e)
             return False
 
        
