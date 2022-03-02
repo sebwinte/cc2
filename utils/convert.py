@@ -24,7 +24,6 @@ class Converter:
     # manage_filetype_compression calls the corresponding convert function.
 
     def manage_filetype_compression(self,video):
-        
         for file_type in video.get_file_format_arguments():
             if(video.get_compression_arguments()):
                 for compression_type in video.get_compression_arguments():
@@ -32,11 +31,13 @@ class Converter:
                     else:
                         status = False
                         break
+
+            # No Argument -> try to use copy instead
             elif(not video.get_compression_arguments()):
-                #TODO:
-                #[]add copy flag if no argument is passed
-                print("NO ARGUMENT")
-                status = None
+                if(self.copy(file_type,video.path,video.folder_path,video.file_name_without_arguments,video.uniq_id)): status = True         
+                else:
+                    status = False
+                    break
 
         return status
 
@@ -50,15 +51,27 @@ class Converter:
             if(file_type=="webm"): params = {'c:v': 'libvpx-vp9','crf': compression, 'f': 'webm'}
             if(file_type=="mp4"): params = {'c:v': 'libx264','crf': compression, 'f': 'mp4'}
             if(file_type=="ogv"): params = {'c:v': 'libtheora','q:v': compression, 'f': 'ogv'}
-            
-            ffmpeg.output(ffmpeg_input,ffmpeg_output,
-                    **params
-                    ).overwrite_output().global_args('-loglevel', 'error',).run()
 
-            print(file_type, '@' , compression)
+            ffmpeg.output(ffmpeg_input,ffmpeg_output,
+                **params
+                ).overwrite_output().run()
+
+            print("Completed ->",file_type, '@' , compression)
             return True
         except:
-            self.h.notification_message("cc2","Failed to convert -> ogv")
+            self.h.notification_message("cc2","Failed to convert -> "+file_type)
+            return False
+
+    
+    def copy(self,file_type,path,folder_path,file_name_without_arguments,unique_folder_id):
+        try:
+            ffmpeg_input = ffmpeg.input(path)
+            ffmpeg_output = folder_path + str(file_name_without_arguments) + unique_folder_id +'\\'+ str(file_name_without_arguments) + "." + file_type 
+            ffmpeg.output(ffmpeg_input,ffmpeg_output, vcodec="copy").run()
+            print("Completed ->",file_type, '@' , "copy")
+            return True
+        except:
+            self.h.notification_message("cc2","Failed to copy the codec of your file might be wrong -> "+ file_type )
             return False
 
 

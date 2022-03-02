@@ -58,12 +58,15 @@ class Video:
 
     def validate(self):
         if self.file_format in Helper.valid_file_formats:
-            self.valid_file = True
-            self.verify_compression_arguments() 
-            self.verify_file_formats()
+            # Need at least one argument
+            if(self.verify_file_formats()):
+                self.valid_file = True
+                self.verify_compression_arguments() 
+            else:
+                self.valid_file = False
+            
         else:
             self.valid_file = False
-            print("INVALID FILE")
 
 
     # verify_compression_arguments return only valid arguments according to the Helper.valid_arguments_compression
@@ -81,9 +84,12 @@ class Video:
 
     def verify_file_formats(self):
         try:
+            valid = False
             for param in self.splitted_file_name:
                 if param.lower() in Helper.valid_file_formats:
                     self.verified_file_formats.append(param.lower())
+                    valid = True
+            return valid
         except Exception as e:
             print(e)
 
@@ -100,5 +106,5 @@ class Video:
         self.uniq_id= "("+ str(id) + ")"
 
     
-    def valid_file(self):
+    def get_validation(self):
         return self.valid_file

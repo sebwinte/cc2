@@ -48,22 +48,15 @@ class Watcher:
             while True: 
                 time.sleep(2)
                 if event_handler.queue:
-                    #print('Queue: ', event_handler.queue)
+                    print('Queue: ', event_handler.queue)
                     #Get the last file-path from the queue and remove it
                     file_path = Path(event_handler.queue.pop())
                     #Check if file is still there or has been removed in the meantime (e.g. during the copying process)
                     if file_path.exists():
                         video = Video(file_path)
-                        #print("NEW FILE@",file_path)
-                        #print("VID: ", vid.get_verified_arguments_compression())
-                        #print(video.valid_file())
-                        # if(video.valid_file()):
-                        #     print("VALID FILE")
-                        #     self.c.process(video)
-                        # else:
-                        #     print("NO VALID FILE")
-                        # self.strip_filename(file_path)
-
+                        # Only start if File is valid 
+                        if video.get_validation():
+                            self.c.process(video)
 
         except Exception as e:
             self.observer.stop() 
@@ -90,11 +83,6 @@ class Event(LoggingEventHandler):
         self.queue=[]    
         self.h = Helper()   
 
-    #DEBUG DELETE 
-    def on_any_event(self, event):
-        #pass
-        print(event)
-
 
     # on_created is triggerd if an new file/directory is created/copied
 
@@ -102,6 +90,14 @@ class Event(LoggingEventHandler):
         if not event.is_directory:
             file_porcess_thread = threading.Thread(target=self.file_status, args=(event.src_path,))
             file_porcess_thread.start()
+
+    
+    def on_moved(self, event): 
+        if not event.is_directory:
+            # If file is renamed inside the folder the path ist the same 
+            if( os.path.split(event.src_path)[0] == os.path.split(event.dest_path)[0] ):
+                file_porcess_thread = threading.Thread(target=self.file_status, args=(event.dest_path,))
+                file_porcess_thread.start()
 
 
 
