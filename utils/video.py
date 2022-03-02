@@ -24,7 +24,7 @@ class Video:
         self.h = Helper() 
         self.uniq_id = ""
         self.converted = False                      # compressed or not
-        self.valid_file = False    
+        self.valid_file = False                     # valid filetype
                          # 
         self.path = path                            # C:USER\AASDA\myvideo--medium--mp4.mp4
         self.folder_path = ''                       # C:USER\AASDA\
@@ -58,13 +58,12 @@ class Video:
 
     def validate(self):
         if self.file_format in Helper.valid_file_formats:
-            #for argument in Helper.valid_compression_arguments:
-                #if argument in self.splitted_file_name:
-            self.verify_file_formats()
+            self.valid_file = True
             self.verify_compression_arguments() 
-            return True
+            self.verify_file_formats()
         else:
-            return False
+            self.valid_file = False
+            print("INVALID FILE")
 
 
     # verify_compression_arguments return only valid arguments according to the Helper.valid_arguments_compression
@@ -99,3 +98,7 @@ class Video:
 
     def set_uniq_id(self, id):
         self.uniq_id= "("+ str(id) + ")"
+
+    
+    def valid_file(self):
+        return self.valid_file

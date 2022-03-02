@@ -56,7 +56,12 @@ class Watcher:
                         video = Video(file_path)
                         #print("NEW FILE@",file_path)
                         #print("VID: ", vid.get_verified_arguments_compression())
-                        self.c.process(video)
+                        #print(video.valid_file())
+                        # if(video.valid_file()):
+                        #     print("VALID FILE")
+                        #     self.c.process(video)
+                        # else:
+                        #     print("NO VALID FILE")
                         # self.strip_filename(file_path)
 
 
@@ -87,8 +92,8 @@ class Event(LoggingEventHandler):
 
     #DEBUG DELETE 
     def on_any_event(self, event):
-        pass
-        #print(event)
+        #pass
+        print(event)
 
 
     # on_created is triggerd if an new file/directory is created/copied

@@ -24,7 +24,7 @@ class Converter:
     # manage_filetype_compression calls the corresponding convert function.
 
     def manage_filetype_compression(self,video):
-        #status = None
+        
         for file_type in video.get_file_format_arguments():
             if(video.get_compression_arguments()):
                 for compression_type in video.get_compression_arguments():
@@ -32,6 +32,12 @@ class Converter:
                     else:
                         status = False
                         break
+            elif(not video.get_compression_arguments()):
+                #TODO:
+                #[]add copy flag if no argument is passed
+                print("NO ARGUMENT")
+                status = None
+
         return status
 
 
@@ -47,7 +53,7 @@ class Converter:
             
             ffmpeg.output(ffmpeg_input,ffmpeg_output,
                     **params
-                    ).overwrite_output().run()
+                    ).overwrite_output().global_args('-loglevel', 'error',).run()
 
             print(file_type, '@' , compression)
             return True
@@ -61,20 +67,17 @@ class Converter:
     # Values are based on the crf values of each encoder 
 
     def convert_compression_value(self,compression_tag,file_type):
-        if(compression_tag=="copy"):
-            return "copy"
+        compression_value= self.h.settings_data['compression'][0][compression_tag]
+
+        if 0 < compression_value < 100:
+            if(file_type == "mp4"):
+                return (int( (51 / 100) * (100 - compression_value) ) ) 
+
+            if(file_type == "webm"):
+                return (int( (63 / 100) * (100 - compression_value) ) ) 
+
+            if(file_type == "ogv"):
+                return (int( (10 / 100) * compression_value ) )
         else:
-            compression_value= self.h.settings_data['compression'][0][compression_tag]
-
-            if 0 < compression_value < 100:
-                if(file_type == "mp4"):
-                    return (int( (51 / 100) * (100 - compression_value) ) ) 
-
-                if(file_type == "webm"):
-                    return (int( (63 / 100) * (100 - compression_value) ) ) 
-
-                if(file_type == "ogv"):
-                    return (int( (10 / 100) * compression_value ) )
-            else:
-                self.h.notification_message("cc2","No valid compression value")
-                sys.exit(1)
+            self.h.notification_message("cc2","No valid compression value")
+            sys.exit(1)
