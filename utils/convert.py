@@ -51,6 +51,8 @@ class Converter:
             if(file_type=="webm"): params = {'c:v': 'libvpx-vp9','crf': compression, 'f': 'webm'}
             if(file_type=="mp4"): params = {'c:v': 'libx264','crf': compression, 'f': 'mp4'}
             if(file_type=="ogv"): params = {'c:v': 'libtheora','q:v': compression, 'f': 'ogv'}
+            if(file_type=="mov"): params = {'c:v': 'libx264','crf': compression, 'f': 'mov'}
+            if(file_type=="mkv"): params = {'c:v': 'libx264','crf': compression, 'f': 'matroska'}
 
             ffmpeg.output(ffmpeg_input,ffmpeg_output,
                 **params
@@ -83,7 +85,7 @@ class Converter:
         compression_value= self.h.settings_data['compression'][0][compression_tag]
 
         if 0 < compression_value < 100:
-            if(file_type == "mp4"):
+            if(file_type == "mp4" or file_type == "mkv"):
                 return (int( (51 / 100) * (100 - compression_value) ) ) 
 
             if(file_type == "webm"):
@@ -91,6 +93,10 @@ class Converter:
 
             if(file_type == "ogv"):
                 return (int( (10 / 100) * compression_value ) )
+
+            if(file_type == "mov"):
+                return (int( (51 / 100) * (100 - compression_value) ) ) 
+
         else:
             self.h.notification_message("cc2","No valid compression value")
             sys.exit(1)

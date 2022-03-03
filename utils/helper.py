@@ -26,7 +26,7 @@ class Helper():
 
     def __init__(self):
         Helper.valid_compression_arguments = ["low", "medium", "high"]
-        Helper.valid_file_formats = ["mp4", "webm", "ogv"]
+        Helper.valid_file_formats = ["mp4", "webm", "ogv", "mov", "mkv"]
         Helper.marker = "--"
         Helper.os = os.name
         self.notification = Notify(
