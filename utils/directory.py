@@ -59,5 +59,19 @@ class Directory:
             print(e)
             return False
 
+
+    def status_file(self,path,file_name,status):
+        try:
+            if os.path.exists(path):
+                if(status == "converting"):
+                    with open(path+status+"_"+file_name+".txt", 'w'): pass
+                elif(status == "finished"):
+                    os.rename(path+"converting_"+file_name+".txt" , path+"finished_"+file_name+".txt")
+                elif(status == "delete"):
+                    os.remove(path+"finished_"+file_name+".txt")
+       
+        except:
+            print("ERROR @ status_file()")
+
        
 

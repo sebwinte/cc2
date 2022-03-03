@@ -1,11 +1,12 @@
-import sys
+from msilib.schema import Directory
+from multiprocessing.connection import wait
 import os
-import logging   
-import platform
 import re
+import time
 from uuid import uuid4
 from pathlib import Path
 from utils.helper import Helper
+from utils.directory import Directory
 from controller.controller import Controller
 
 
@@ -22,9 +23,11 @@ class Video:
   
     def __init__(self,path): 
         self.h = Helper() 
+        self.dir = Directory()
         self.uniq_id = ""
         self.converted = False                      # compressed or not
         self.valid_file = False                     # valid filetype
+        self.state = ""                             # converting,finished,error
                          # 
         self.path = path                            # C:USER\AASDA\myvideo--medium--mp4.mp4
         self.folder_path = ''                       # C:USER\AASDA\
@@ -108,3 +111,12 @@ class Video:
     
     def get_validation(self):
         return self.valid_file
+
+
+    def update_status(self,status):
+        self.state=status
+        file_name = self.file_name_without_arguments+self.uniq_id
+        self.dir.status_file(self.folder_path,file_name,status)
+        # if(status=="finished"):
+        #     #time.sleep(3)
+        #     #self.dir.status_file(self.folder_path,self.file_name_without_arguments,"delete")

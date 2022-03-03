@@ -30,7 +30,7 @@ class Helper():
         Helper.marker = "--"
         Helper.os = os.name
         self.notification = Notify(
-            default_notification_icon = Path("doc\\logo.png").absolute()
+            default_notification_icon = Path("doc/logo.png").absolute()
         )
 
 
