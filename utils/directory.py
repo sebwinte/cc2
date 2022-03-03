@@ -34,6 +34,11 @@ class Directory:
                 while os.path.exists(video.folder_path + video.file_name_without_arguments + "("+str(self.folder_id) + ")"):
                     self.folder_id += 1
                 os.mkdir(video.folder_path + video.file_name_without_arguments + "("+str(self.folder_id) + ")", 0o777)
+                print("Creating Folder @", video.folder_path + video.file_name_without_arguments + "("+str(self.folder_id) + ")" )
+                print("folder_path",video.folder_path)
+                print("file_name",video.file_name_without_arguments)
+                print("folder_id",self.folder_id)
+                
                 video.set_uniq_id(self.folder_id)
         except OSError:
             print ("Creation of the directory failed")
