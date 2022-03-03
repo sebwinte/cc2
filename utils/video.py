@@ -1,5 +1,3 @@
-from msilib.schema import Directory
-from multiprocessing.connection import wait
 import os
 import re
 import time
