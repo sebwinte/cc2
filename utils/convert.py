@@ -27,14 +27,14 @@ class Converter:
         for file_type in video.get_file_format_arguments():
             if(video.get_compression_arguments()):
                 for compression_type in video.get_compression_arguments():
-                    if(self.convert(file_type,compression_type,video.path,video.folder_path, video.verified_compression_arguments,video.file_name_without_arguments,video.uniq_id)): status = True         
+                    if(self.convert(file_type,compression_type,video.path,video.folder_path, video.verified_compression_arguments,video.file_name_without_arguments,video.uniq_id,video.verified_audio_arguments[0])): status = True         
                     else:
                         status = False
                         break
 
             # No Argument -> try to use copy instead
             elif(not video.get_compression_arguments()):
-                if(self.copy(file_type,video.path,video.folder_path,video.file_name_without_arguments,video.uniq_id)): status = True         
+                if(self.copy(file_type,video.path,video.folder_path,video.file_name_without_arguments,video.uniq_id,video.video.verified_audio_arguments[0])): status = True         
                 else:
                     status = False
                     break
@@ -42,9 +42,12 @@ class Converter:
         return status
 
 
-    def convert(self,file_type,compression_type,path,folder_path, verified_arguments_compression,file_name_without_arguments,unique_folder_id):
+    def convert(self,file_type,compression_type,path,folder_path,verified_arguments_compression,file_name_without_arguments,unique_folder_id,mute):
         try:
-            ffmpeg_input = ffmpeg.input(path)
+            if(mute):
+                ffmpeg_input = ffmpeg.input(path,an=None)
+            else:
+                ffmpeg_input = ffmpeg.input(path)
             ffmpeg_output = folder_path + str(file_name_without_arguments) + unique_folder_id +'\\'+ str(file_name_without_arguments) + ('-' + str(compression_type) if len(verified_arguments_compression) > 1 else '') + "." + file_type 
             compression = self.convert_compression_value(str(compression_type), file_type)
 
@@ -65,15 +68,18 @@ class Converter:
             return False
 
     
-    def copy(self,file_type,path,folder_path,file_name_without_arguments,unique_folder_id):
+    def copy(self,file_type,path,folder_path,file_name_without_arguments,unique_folder_id,mute):
         try:
-            ffmpeg_input = ffmpeg.input(path)
+            if(mute):
+                ffmpeg_input = ffmpeg.input(path,an=None)
+            else:
+                ffmpeg_input = ffmpeg.input(path)
             ffmpeg_output = folder_path + str(file_name_without_arguments) + unique_folder_id +'\\'+ str(file_name_without_arguments) + "." + file_type 
             ffmpeg.output(ffmpeg_input,ffmpeg_output, vcodec="copy").run()
             print("Completed ->",file_type, '@' , "copy")
             return True
         except:
-            self.h.notification_message("cc2","Failed to copy the codec of your file might be wrong -> "+ file_type )
+            self.h.notification_message("cc2","Failed to use copy. The codec of your file might be wrong try a comopression argument like --low,--medium,--high instead" )
             return False
 
 
@@ -85,7 +91,7 @@ class Converter:
         compression_value= self.h.settings_data['compression'][0][compression_tag]
 
         if 0 < compression_value < 100:
-            if(file_type == "mp4" or file_type == "mkv"):
+            if(file_type == "mp4" or file_type == "mkv" or file_type == "mov"):
                 return (int( (51 / 100) * (100 - compression_value) ) ) 
 
             if(file_type == "webm"):
@@ -93,10 +99,6 @@ class Converter:
 
             if(file_type == "ogv"):
                 return (int( (10 / 100) * compression_value ) )
-
-            if(file_type == "mov"):
-                return (int( (51 / 100) * (100 - compression_value) ) ) 
-
         else:
             self.h.notification_message("cc2","No valid compression value")
             sys.exit(1)

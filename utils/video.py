@@ -39,6 +39,7 @@ class Video:
 
         self.verified_compression_arguments = []    #["low", ...]
         self.verified_file_formats = []             #["mp4", ...]
+        self.verified_audio_arguments = ['']          #["mute", ...]
 
         self.strip_filename(path)
 
@@ -63,6 +64,7 @@ class Video:
             if(self.verify_file_formats()):
                 self.valid_file = True
                 self.verify_compression_arguments() 
+                self.verify_audio_arguments()
             else:
                 self.valid_file = False
             
@@ -95,6 +97,18 @@ class Video:
             print(e)
 
 
+    def verify_audio_arguments(self):
+        try:
+            valid = False
+            for param in self.splitted_file_name:
+                if param.lower() in Helper.valid_audio_arguments:
+                    self.verified_audio_arguments.append(param.lower())
+                    valid = True
+            return valid
+        except Exception as e:
+            print(e)
+
+
     def get_compression_arguments(self):
         return self.verified_compression_arguments
 
@@ -112,9 +126,11 @@ class Video:
 
 
     def update_status(self,status):
-        self.state=status
-        file_name = self.file_name_without_arguments+self.uniq_id
-        self.dir.status_file(self.folder_path,file_name,status)
-        # if(status=="finished"):
-        #     #time.sleep(3)
-        #     #self.dir.status_file(self.folder_path,self.file_name_without_arguments,"delete")
+        if(Helper.file_status):
+            self.state=status
+            file_name = self.file_name_without_arguments+self.uniq_id
+            self.dir.status_file(self.folder_path,file_name,status)
+            # if(status=="finished"):
+            #     #time.sleep(3)
+            #     #self.dir.status_file(self.folder_path,self.file_name_without_arguments,"delete")
+        

@@ -19,6 +19,7 @@ class Helper():
 
     global valid_compression_arguments 
     global valid_file_formats 
+    global valid_audio_arguments
     global path
     global marker
     global settings_data
@@ -27,6 +28,7 @@ class Helper():
     def __init__(self):
         Helper.valid_compression_arguments = ["low", "medium", "high"]
         Helper.valid_file_formats = ["mp4", "webm", "ogv", "mov", "mkv"]
+        Helper.valid_audio_arguments = ["mute"]
         Helper.marker = "--"
         Helper.os = os.name
         self.notification = Notify(
@@ -36,8 +38,9 @@ class Helper():
 
     def load_settings(self):
         Helper.settings_data = []
-        Helper.path = ""
-        Helper.notification = 0
+        Helper.path = "your_folder_name"
+        Helper.notification = True
+        Helper.file_status = True
 
         try:
             file_path = Path("settings.json").absolute()
@@ -45,8 +48,9 @@ class Helper():
                 data = json.load(f)
             
             Helper.settings_data = data
-            Helper.path = data['settings'][0]['cc2_folder']
+            Helper.path = Path(data['settings'][0]['cc2_folder']).absolute()
             Helper.notification = data['settings'][0]['notification']
+            Helper.file_status = data['settings'][0]['file_status']
 
             print("Settings-Loaded")
         except:

@@ -26,7 +26,6 @@ class Controller:
 
 
     def process(self,video):
-        
         if(self.dir.make_dir(video)):
             video.update_status("converting")
             if(self.conv.manage_filetype_compression(video)):
