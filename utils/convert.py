@@ -35,7 +35,7 @@ class Converter:
 
             # No Argument -> try to use copy instead
             elif(not video.get_compression_arguments()):
-                if(self.copy(file_type,video.path,video.folder_path,video.file_name_without_arguments,video.uniq_id,video.video.verified_audio_arguments[0])): status = True         
+                if(self.copy(file_type,video.path,video.folder_path,video.file_name_without_arguments,video.uniq_id,video.verified_audio_arguments[0])): status = True         
                 else:
                     status = False
                     break

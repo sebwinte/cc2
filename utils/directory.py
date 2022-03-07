@@ -72,6 +72,8 @@ class Directory:
                     os.rename(Path(path,"converting_"+file_name+".txt") , Path(path,"finished_"+file_name+".txt"))
                 elif(status == "delete"):
                     os.remove(Path(path,"finished_"+file_name+".txt"))
+                elif(status == "error"):
+                    os.rename(Path(path,"converting_"+file_name+".txt") , Path(path,"ERROR_"+file_name+".txt"))
        
         except:
             print("ERROR @ status_file()")

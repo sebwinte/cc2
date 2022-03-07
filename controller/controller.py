@@ -32,5 +32,9 @@ class Controller:
                 video.update_status("finished")
                 if(self.dir.move_files(video)):
                     self.h.notification_message("cc2","Your video has been successfully converted")
+                else:
+                    video.update_status("error")
             else:
                 video.update_status("error")
+        else:
+            video.update_status("error")
