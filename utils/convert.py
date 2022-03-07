@@ -3,6 +3,7 @@ import time
 import subprocess
 from utils.helper import Helper
 import ffmpeg
+from pathlib import Path
 
 
 
@@ -48,7 +49,7 @@ class Converter:
                 ffmpeg_input = ffmpeg.input(path,an=None)
             else:
                 ffmpeg_input = ffmpeg.input(path)
-            ffmpeg_output = folder_path + str(file_name_without_arguments) + unique_folder_id +'\\'+ str(file_name_without_arguments) + ('-' + str(compression_type) if len(verified_arguments_compression) > 1 else '') + "." + file_type 
+            ffmpeg_output = Path(folder_path,file_name_without_arguments + unique_folder_id, file_name_without_arguments + ('-' + str(compression_type) if len(verified_arguments_compression) > 1 else '') + "." + file_type )
             compression = self.convert_compression_value(str(compression_type), file_type)
 
             if(file_type=="webm"): params = {'c:v': 'libvpx-vp9','crf': compression, 'f': 'webm'}
@@ -57,13 +58,16 @@ class Converter:
             if(file_type=="mov"): params = {'c:v': 'libx264','crf': compression, 'f': 'mov'}
             if(file_type=="mkv"): params = {'c:v': 'libx264','crf': compression, 'f': 'matroska'}
 
-            ffmpeg.output(ffmpeg_input,ffmpeg_output,
+            print(path)
+            print(ffmpeg_output)
+            ffmpeg.output(ffmpeg_input,str(ffmpeg_output),
                 **params
                 ).overwrite_output().run()
 
             print("Completed ->",file_type, '@' , compression)
             return True
-        except:
+        except Exception as e:
+            print(e)
             self.h.notification_message("cc2","Failed to convert -> "+file_type)
             return False
 
@@ -74,8 +78,8 @@ class Converter:
                 ffmpeg_input = ffmpeg.input(path,an=None)
             else:
                 ffmpeg_input = ffmpeg.input(path)
-            ffmpeg_output = folder_path + str(file_name_without_arguments) + unique_folder_id +'\\'+ str(file_name_without_arguments) + "." + file_type 
-            ffmpeg.output(ffmpeg_input,ffmpeg_output, vcodec="copy").run()
+            ffmpeg_output = Path(folder_path,file_name_without_arguments + unique_folder_id, file_name_without_arguments + "." + file_type )
+            ffmpeg.output(ffmpeg_input,str(ffmpeg_output), vcodec="copy").run()
             print("Completed ->",file_type, '@' , "copy")
             return True
         except:

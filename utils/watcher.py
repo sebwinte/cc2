@@ -120,12 +120,13 @@ class Event(LoggingEventHandler):
 
                 # MacOS specific recursive fallback mechanism. Error caused by Watchdog API
                 # only works with an absolute path
+          
                 replaced_path = file_path.replace(str(self.h.path), '')
-                if platform.system() == "Darwin" and "/" in replaced_path:
-                    print("I am on MacOS")
-                    print("---->", replaced_path)
-                    print("recursive fallback mechanism")
-                else:
-                    self.queue.append(file_path) 
+                # if platform.system() == "Darwin" and "/" in replaced_path:
+                #     print("I am on MacOS")
+                #     print("---->", replaced_path)
+                #     print("recursive fallback mechanism")
+                # else:
+                self.queue.append(file_path) 
 
             self.last_modified = self.check_last_modified

@@ -10,7 +10,7 @@
         {
             "notification" : true,
             "file_status" : true,
-            "cc2_folder" : "C:/Users/Seb/Desktop/"
+            "cc2_folder" : "/Users/t/Desktop/"
         }
     ]
 }

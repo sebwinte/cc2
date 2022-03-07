@@ -47,7 +47,6 @@ class Video:
     def strip_filename(self,path):
         try:
             self.folder_path, self.file_name = os.path.split(path)
-            self.folder_path += "\\"
             self.file_format = os.path.splitext(self.file_name)[1].split(".")[1].lower()
             self.file_name = os.path.splitext(self.file_name)[0].lower()
             self.splitted_file_name = re.split(Helper.marker, self.file_name)
