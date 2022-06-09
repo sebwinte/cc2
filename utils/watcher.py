@@ -1,10 +1,7 @@
 import sys
 import time
 import os
-import logging   
 import threading
-import platform
-import re
 from pathlib import Path
 from utils.helper import Helper
 from watchdog.observers import Observer
@@ -48,7 +45,6 @@ class Watcher:
             while True: 
                 time.sleep(2)
                 if event_handler.queue:
-                    print('Queue: ', event_handler.queue)
                     #Get the last file-path from the queue and remove it
                     file_path = Path(event_handler.queue.pop())
                     #Check if file is still there or has been removed in the meantime (e.g. during the copying process)
@@ -94,7 +90,7 @@ class Event(LoggingEventHandler):
     
     def on_moved(self, event): 
         if not event.is_directory:
-            # If file is renamed inside the folder the path ist the same 
+            # If file is renamed inside the folder the path is the same 
             if( os.path.split(event.src_path)[0] == os.path.split(event.dest_path)[0] ):
                 file_porcess_thread = threading.Thread(target=self.file_status, args=(event.dest_path,))
                 file_porcess_thread.start()
@@ -105,17 +101,16 @@ class Event(LoggingEventHandler):
     # it to the queue after it is completed 
 
     def file_status(self,file_path):
-        self.last_modified = os.stat(file_path).st_mtime
-        self.file_open = True
-
-        while self.file_open:
+        last_modified = os.stat(file_path).st_mtime
+        file_open = True
+        while file_open:
             time.sleep(1)
-            self.check_last_modified = os.stat(file_path).st_mtime
-            self.check_mark =  self.check_last_modified - self.last_modified
+            check_last_modified = os.stat(file_path).st_mtime
+            check_mark =  abs(check_last_modified) - abs(last_modified)
 
-            if self.check_mark == 0.0:
+            if check_mark == 0.0:
                 time.sleep(1)
-                self.file_open = False
+                file_open = False
                 #print("finished copying", file_path)
 
                 # MacOS specific recursive fallback mechanism. Error caused by Watchdog API
@@ -129,4 +124,4 @@ class Event(LoggingEventHandler):
                 # else:
                 self.queue.append(file_path) 
 
-            self.last_modified = self.check_last_modified
+            last_modified = check_last_modified

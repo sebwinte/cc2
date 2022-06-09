@@ -1,8 +1,5 @@
 import os
 import shutil
-import threading
-import time
-from uuid import uuid4
 import os.path
 from os import path
 from pathlib import Path
@@ -22,6 +19,7 @@ class Directory:
 
     def __init__(self):
         self.folder_id = 1
+        self.status = ""
 
 
     # make_dir creates a new directory based on the filename
@@ -54,7 +52,7 @@ class Directory:
             if os.path.exists(video.path):
                 original = video.path
                 target = Path(video.folder_path,video.file_name_without_arguments,video.uniq_id)
-                shutil.move(original,target)
+                shutil.move(str(original) , str(target))
                 return True
             else:
                 return False
@@ -62,6 +60,8 @@ class Directory:
             print(e)
             return False
 
+
+    # status_file creates a txt file that displays the current status in its filename
 
     def status_file(self,path,file_name,status):
         try:
@@ -71,9 +71,10 @@ class Directory:
                 elif(status == "finished"):
                     os.rename(Path(path,"converting_"+file_name+".txt") , Path(path,"finished_"+file_name+".txt"))
                 elif(status == "delete"):
-                    os.remove(Path(path,"finished_"+file_name+".txt"))
+                    os.remove(Path(path,self.status+"_"+file_name+".txt"))
                 elif(status == "error"):
-                    os.rename(Path(path,"converting_"+file_name+".txt") , Path(path,"ERROR_"+file_name+".txt"))
+                    os.rename(Path(path,self.status+"_"+file_name+".txt") , Path(path,"ERROR_"+file_name+".txt"))
+            self.status = status
        
         except:
             print("ERROR @ status_file()")
