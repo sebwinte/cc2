@@ -12,7 +12,3 @@ if __name__ == '__main__':
     t.run()
     w = Watcher()
     w.run()
-
-
-#TODO
-# Gucken nach Autostart für Windows / Mac evtl script was einstellungen übernimmt
