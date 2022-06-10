@@ -1,6 +1,4 @@
 import sys
-import time
-import subprocess
 from utils.helper import Helper
 import ffmpeg
 from pathlib import Path
@@ -28,14 +26,14 @@ class Converter:
         for file_type in video.get_file_format_arguments():
             if(video.get_compression_arguments()):
                 for compression_type in video.get_compression_arguments():
-                    if(self.convert(file_type,compression_type,video.path,video.folder_path, video.verified_compression_arguments,video.file_name_without_arguments,video.uniq_id,video.verified_audio_arguments[0])): status = True         
+                    if(self.convert(file_type,compression_type,video.path,video.folder_path, video.verified_compression_arguments,video.file_name_without_arguments,video.uniq_id,video.verified_audio_arguments)): status = True         
                     else:
                         status = False
                         break
 
             # No Argument -> try to use copy instead
             elif(not video.get_compression_arguments()):
-                if(self.copy(file_type,video.path,video.folder_path,video.file_name_without_arguments,video.uniq_id,video.verified_audio_arguments[0])): status = True         
+                if(self.copy(file_type,video.path,video.folder_path,video.file_name_without_arguments,video.uniq_id,video.verified_audio_arguments)): status = True         
                 else:
                     status = False
                     break

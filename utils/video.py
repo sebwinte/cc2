@@ -24,9 +24,9 @@ class Video:
         self.converted = False                      # compressed or not
         self.valid_file = False                     # valid filetype
         self.state = ""                             # converting,finished,error
-                         # 
-        self.path = path                            # C:USER\AASDA\myvideo--medium--mp4.mp4
-        self.folder_path = ''                       # C:USER\AASDA\
+                        
+        self.path = path                            # C:\USER\Videos\myvideo--medium--mp4.mp4
+        self.folder_path = ''                       # C:\USER\Videos\
         self.file_name = ''                         # myvideo--medium--mp4
         self.compression_arguments = ''             # low,medium,high
         self.file_format = ''                       # mp4
@@ -35,9 +35,9 @@ class Video:
         self.arguments = []
         self.file_name_without_arguments = ''       # myvideo
 
-        self.verified_compression_arguments = []    #["low", ...]
-        self.verified_file_formats = []             #["mp4", ...]
-        self.verified_audio_arguments = []        #["mute", ...]
+        self.verified_compression_arguments = []    # ["low", ...]
+        self.verified_file_formats = []             # ["mp4", ...]
+        self.verified_audio_arguments = ""          # mute
 
         self.strip_filename(path)
 
@@ -57,10 +57,14 @@ class Video:
 
     def validate(self):
         if self.file_format in Helper.valid_file_formats:
-            # Need at least one argument
-            if(self.verify_file_formats()):
+
+            # call here so the both verify functions get called once otherwise "or" might only call first
+            valid_file_format = self.verify_file_formats()
+            valid_compression_arguments = self.verify_compression_arguments()
+
+            # need at least one to be true -> no ca = "copy", no ff = same filetype as original
+            if(valid_file_format or valid_compression_arguments):
                 self.valid_file = True
-                self.verify_compression_arguments()
                 self.verify_audio_arguments()
             else:
                 self.valid_file = False
@@ -105,7 +109,7 @@ class Video:
             valid = False
             for param in self.splitted_file_name:
                 if param.lower() in Helper.valid_audio_arguments:
-                    self.verified_audio_arguments.append(param.lower())
+                    self.verified_audio_arguments = param.lower()
                     valid = True
             return valid
         except Exception as e:
@@ -123,7 +127,9 @@ class Video:
     def set_uniq_id(self, id):
         self.uniq_id= "("+ str(id) + ")"
 
-    
+    def get_uniq_id(self):
+        return self.uniq_id
+
     def get_validation(self):
         return self.valid_file
 

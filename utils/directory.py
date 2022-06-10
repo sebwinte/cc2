@@ -51,7 +51,7 @@ class Directory:
         try:
             if os.path.exists(video.path):
                 original = video.path
-                target = Path(video.folder_path,video.file_name_without_arguments,video.uniq_id)
+                target = Path(video.folder_path,video.file_name_without_arguments+video.get_uniq_id())
                 shutil.move(str(original) , str(target))
                 return True
             else:
