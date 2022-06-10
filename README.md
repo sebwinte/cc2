@@ -1,11 +1,11 @@
 <img src="http://pfuscha.cool:3000/" width="120"/>
 
-cc2 — drag and drop it like it's hot.
+cc2 — drag and drop, like it's hot.
 -------------------------------------
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
 
 
-cc2 is a easy to use video encoder for Windows and MacOS. Let's say you need your ```.mp4``` video as a ```.webm``` and ```.ogv```? In a small file size, without quality loss? Just drag and drop your video into your predefined folder and see magic happens.
+cc2 is a easy to use video encoder for Windows and macOS. Let's say you need your ```.mp4``` video as a ```.webm``` and ```.ogv```? In a small file size, without quality loss? Just drag and drop your video into your predefined folder and see magic happens.
 
 
 Installation and requirements
