@@ -1,15 +1,13 @@
 import sys
 import time
 import os
-import logging   
 import threading
-import platform
-import re
 from pathlib import Path
 from utils.helper import Helper
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 from controller.controller import Controller
+from utils.video import Video
 
 
 
@@ -47,44 +45,23 @@ class Watcher:
             while True: 
                 time.sleep(2)
                 if event_handler.queue:
-                    print('Queue: ', event_handler.queue)
                     #Get the last file-path from the queue and remove it
                     file_path = Path(event_handler.queue.pop())
                     #Check if file is still there or has been removed in the meantime (e.g. during the copying process)
                     if file_path.exists():
-                        self.strip_filename(file_path)
+                        video = Video(file_path)
+                        # Only start if File is valid 
+                        if video.get_validation():
+                            self.c.process(video)
 
-        except: 
+        except Exception as e:
             self.observer.stop() 
             print("Observer Stopped") 
+            print(e)
   
         self.observer.join() 
 
-
-    # strip_filename seperates the filepath into file_name, extension ... 
-    # and validates if the filetype is supported 
-
-    def strip_filename(self,src):
-        try:
-            file_path, original_file_name = os.path.split(src)
-            extension = os.path.splitext(original_file_name)[1]
-            file_name = os.path.splitext(original_file_name)[0]
-            splitted_file = re.split(Helper.marker, file_name.lower())
-            file_name_without_arguments = splitted_file[0]
-            file_name_without_arguments_extension = splitted_file[0]+extension
-            cropped_file_extension = extension.split(".")[1]
-        except:
-            return False  
-        
-        
-        #Check if filetype is supported
-        if cropped_file_extension.lower() in Helper.valid_arguments_type:
-            self.c.process(file_name_without_arguments,splitted_file,file_path,file_name_without_arguments_extension,cropped_file_extension,original_file_name)             
-        else: 
-            print(f'No supported file extension')
-
-       
-    
+           
     
 class Event(LoggingEventHandler):
     
@@ -110,32 +87,30 @@ class Event(LoggingEventHandler):
             file_porcess_thread = threading.Thread(target=self.file_status, args=(event.src_path,))
             file_porcess_thread.start()
 
+    
+    def on_moved(self, event): 
+        if not event.is_directory:
+            # If file is renamed inside the folder the path is the same 
+            if( os.path.split(event.src_path)[0] == os.path.split(event.dest_path)[0] ):
+                file_porcess_thread = threading.Thread(target=self.file_status, args=(event.dest_path,))
+                file_porcess_thread.start()
+
+
 
     # file_status monitors the file copying process and appends 
     # it to the queue after it is completed 
 
     def file_status(self,file_path):
-        self.last_modified = os.stat(file_path).st_mtime
-        self.file_open = True
-
-        while self.file_open:
+        last_modified = os.stat(file_path).st_mtime
+        file_open = True
+        while file_open:
             time.sleep(1)
-            self.check_last_modified = os.stat(file_path).st_mtime
-            self.check_mark =  self.check_last_modified - self.last_modified
+            check_last_modified = os.stat(file_path).st_mtime
+            check_mark =  abs(check_last_modified) - abs(last_modified)
 
-            if self.check_mark == 0.0:
+            if check_mark == 0.0:
                 time.sleep(1)
-                self.file_open = False
-                #print("finished copying", file_path)
+                file_open = False
+                self.queue.append(file_path) 
 
-                # MacOS specific recursive fallback mechanism. Error caused by Watchdog API
-                # only works with an absolute path
-                replaced_path = file_path.replace(self.h.path, '')
-                if platform.system() == "Darwin" and "/" in replaced_path:
-                    print("I am on MacOS")
-                    print("---->", replaced_path)
-                    print("recursive fallback mechanism")
-                else:
-                    self.queue.append(file_path) 
-
-            self.last_modified = self.check_last_modified
+            last_modified = check_last_modified

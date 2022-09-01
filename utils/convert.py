@@ -1,8 +1,7 @@
 import sys
-import time
-import subprocess
 from utils.helper import Helper
 import ffmpeg
+from pathlib import Path
 
 
 
@@ -23,69 +22,66 @@ class Converter:
 
     # manage_filetype_compression calls the corresponding convert function.
 
-    def manage_filetype_compression(self,verified_arguments_compression,verified_arguments_type,file_name_without_arguments,original_file_name,unique_folder_id):
-        for file_type in verified_arguments_type:
-            for compression_type in verified_arguments_compression:
+    def manage_filetype_compression(self,video):
+        for file_type in video.get_file_format_arguments():
+            if(video.get_compression_arguments()):
+                for compression_type in video.get_compression_arguments():
+                    if(self.convert(file_type,compression_type,video.path,video.folder_path, video.verified_compression_arguments,video.file_name_without_arguments,video.uniq_id,video.verified_audio_arguments)): status = True         
+                    else:
+                        status = False
+                        break
 
-                method_name = 'to_' + str(file_type)
-                method = getattr(self, method_name)
-                
-                if method(compression_type, verified_arguments_compression,file_name_without_arguments,original_file_name,unique_folder_id): status = True
+            # No Argument -> try to use copy instead
+            elif(not video.get_compression_arguments()):
+                if(self.copy(file_type,video.path,video.folder_path,video.file_name_without_arguments,video.uniq_id,video.verified_audio_arguments)): status = True         
                 else:
                     status = False
                     break
+
         return status
 
 
-    def to_webm(self,compression_type,verified_arguments_compression,file_name_without_arguments,original_file_name,unique_folder_id):
+    def convert(self,file_type,compression_type,path,folder_path,verified_arguments_compression,file_name_without_arguments,unique_folder_id,mute):
         try:
-            ffmpeg_input = ffmpeg.input(str(Helper.path) + str(original_file_name))
-            ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) + str(unique_folder_id) +'/'+ str(file_name_without_arguments) + ('-' + str(compression_type) if len(verified_arguments_compression) > 1 else '') + '.webm'
-            compression = self.convert_compression_value(str(compression_type),"webm")
-    
-            ffmpeg.output(ffmpeg_input,ffmpeg_output,
-                **{'c:v': 'libvpx-vp9','crf': compression, 'f': 'webm'}
+            if(mute):
+                ffmpeg_input = ffmpeg.input(path,an=None)
+            else:
+                ffmpeg_input = ffmpeg.input(path)
+            ffmpeg_output = Path(folder_path,file_name_without_arguments + unique_folder_id, file_name_without_arguments + ('-' + str(compression_type) if len(verified_arguments_compression) > 1 else '') + "." + file_type )
+            compression = self.convert_compression_value(str(compression_type), file_type)
+
+            if(file_type=="webm"): params = {'c:v': 'libvpx-vp9','crf': compression, 'f': 'webm'}
+            if(file_type=="mp4"): params = {'c:v': 'libx264','crf': compression, 'f': 'mp4'}
+            if(file_type=="ogv"): params = {'c:v': 'libtheora','q:v': compression, 'f': 'ogv'}
+            if(file_type=="mov"): params = {'c:v': 'libx264','crf': compression, 'f': 'mov'}
+            if(file_type=="mkv"): params = {'c:v': 'libx264','crf': compression, 'f': 'matroska'}
+
+            print(path)
+            print(ffmpeg_output)
+            ffmpeg.output(ffmpeg_input,str(ffmpeg_output),
+                **params
                 ).overwrite_output().run()
 
-            print('WEBM @' , compression)
+            print("Completed ->",file_type, '@' , compression)
             return True
-        except:
-            self.h.notification_message("cc2","Failed to convert -> webm")
-            return False
-
-
-    def to_mp4(self,compression_type,verified_arguments_compression,file_name_without_arguments,original_file_name,unique_folder_id):
-        try:
-            ffmpeg_input = ffmpeg.input(str(Helper.path) + str(original_file_name))
-            ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) + str(unique_folder_id) +'/'+ str(file_name_without_arguments) + ('-' + str(compression_type) if len(verified_arguments_compression) > 1 else '') + '.mp4'
-            compression = self.convert_compression_value(str(compression_type),"mp4")
-
-            ffmpeg.output(ffmpeg_input,ffmpeg_output,
-                **{'c:v': 'libx264','crf': compression, 'f': 'mp4'}
-                ).overwrite_output().run()
-
-            print('MP4 @' , compression)
-            return True
-        except:
-            self.h.notification_message("cc2","Failed to convert -> mp4")
+        except Exception as e:
+            print(e)
+            self.h.notification_message("cc2","Failed to convert -> "+file_type)
             return False
 
     
-    def to_ogv(self,compression_type,verified_arguments_compression,file_name_without_arguments,original_file_name,unique_folder_id):
+    def copy(self,file_type,path,folder_path,file_name_without_arguments,unique_folder_id,mute):
         try:
-            print("ogv")
-            ffmpeg_input = ffmpeg.input(str(Helper.path) + str(original_file_name))
-            ffmpeg_output = str(Helper.path) + str(file_name_without_arguments) + str(unique_folder_id) +'/'+ str(file_name_without_arguments) + ('-' + str(compression_type) if len(verified_arguments_compression) > 1 else '') + '.ogv'
-            compression = self.convert_compression_value(str(compression_type),"ogv")
-    
-            ffmpeg.output(ffmpeg_input,ffmpeg_output,
-                **{'c:v': 'libtheora','q:v': compression, 'f': 'ogv'}
-                ).overwrite_output().run()
-
-            print('OGV @' , compression)
+            if(mute):
+                ffmpeg_input = ffmpeg.input(path,an=None)
+            else:
+                ffmpeg_input = ffmpeg.input(path)
+            ffmpeg_output = Path(folder_path,file_name_without_arguments + unique_folder_id, file_name_without_arguments + "." + file_type )
+            ffmpeg.output(ffmpeg_input,str(ffmpeg_output), vcodec="copy").run()
+            print("Completed ->",file_type, '@' , "copy")
             return True
         except:
-            self.h.notification_message("cc2","Failed to convert -> ogv")
+            self.h.notification_message("cc2","Failed to use copy. The codec of your file might be wrong try a comopression argument like --low,--medium,--high instead" )
             return False
 
 
@@ -97,14 +93,14 @@ class Converter:
         compression_value= self.h.settings_data['compression'][0][compression_tag]
 
         if 0 < compression_value < 100:
-            if(file_type == "mp4"):
+            if(file_type == "mp4" or file_type == "mkv" or file_type == "mov"):
                 return (int( (51 / 100) * (100 - compression_value) ) ) 
 
             if(file_type == "webm"):
                 return (int( (63 / 100) * (100 - compression_value) ) ) 
 
             if(file_type == "ogv"):
-                return (int( (10 / 100) * compression_value ) ) 
+                return (int( (10 / 100) * compression_value ) )
         else:
             self.h.notification_message("cc2","No valid compression value")
             sys.exit(1)

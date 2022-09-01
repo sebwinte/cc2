@@ -1,10 +1,8 @@
 import os
 import shutil
-import threading
-import time
-from uuid import uuid4
 import os.path
 from os import path
+from pathlib import Path
 
 
 
@@ -20,40 +18,66 @@ class Directory:
 
 
     def __init__(self):
-        self.unique_folder_id = ''
-    
+        self.folder_id = 1
+        self.status = ""
+
 
     # make_dir creates a new directory based on the filename
     # If the directory already exists, a unique id is added  
 
-    def make_dir(self,path,file_name,access_rights):
+    def make_dir(self,video):
         try:
-            if os.path.exists(path+file_name):
-                self.unique_folder_id = str(uuid4())
-                os.mkdir(path + file_name + self.unique_folder_id, access_rights)
+            if os.path.exists(Path(video.folder_path,video.file_name_without_arguments)) == False :
+                os.mkdir(Path(video.folder_path,video.file_name_without_arguments), 0o777)
             else:
-                os.mkdir(path+file_name, access_rights)
+                while os.path.exists(Path(video.folder_path,video.file_name_without_arguments + "("+str(self.folder_id) + ")")):
+                    self.folder_id += 1
+                os.mkdir(Path(video.folder_path,video.file_name_without_arguments + "("+str(self.folder_id) + ")"), 0o777)
+              
+
+                video.set_uniq_id(self.folder_id)
         except OSError:
-            print ("Creation of the directory %s failed" % path+file_name)
-            return 0 
+            print ("Creation of the directory failed")
+            return False
         else:
-            print ("Successfully created the directory %s" % path+file_name)
-            return self.unique_folder_id
+            print ("Successfully created the director")
+            return True
+
 
 
     # move_files cuts out the original video and moves it into the according directory
 
-    def move_files(self,original_path,folder_path,file_name,unique_folder_id):
+    def move_files(self,video):
         try:
-            if os.path.exists(folder_path + original_path):
-                original = folder_path + original_path
-                target = folder_path + file_name + unique_folder_id
-                shutil.move(original,target)
+            if os.path.exists(video.path):
+                original = video.path
+                target = Path(video.folder_path,video.file_name_without_arguments+video.get_uniq_id())
+                shutil.move(str(original) , str(target))
                 return True
             else:
                 return False
-        except:
+        except Exception as e:
+            print(e)
             return False
+
+
+    # status_file creates a txt file that displays the current status in its filename
+
+    def status_file(self,path,file_name,status):
+        try:
+            if os.path.exists(path):
+                if(status == "converting"):
+                    with open(Path(path,status+"_"+file_name+".txt"), 'w'): pass
+                elif(status == "finished"):
+                    os.rename(Path(path,"converting_"+file_name+".txt") , Path(path,"finished_"+file_name+".txt"))
+                elif(status == "delete"):
+                    os.remove(Path(path,self.status+"_"+file_name+".txt"))
+                elif(status == "error"):
+                    os.rename(Path(path,self.status+"_"+file_name+".txt") , Path(path,"ERROR_"+file_name+".txt"))
+            self.status = status
+       
+        except:
+            print("ERROR @ status_file()")
 
        
 
