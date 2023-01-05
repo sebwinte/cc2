@@ -1,6 +1,4 @@
-![cc2 logo](http://pfuscha.cool:3000?)
-
-<img src="http://pfuscha.cool:3000" width="90px"/>
+<img src="http://pfuscha.cool:3000?" width="90px"/>
 
 cc2 — drag and drop, like it's hot.
 -------------------------------------
