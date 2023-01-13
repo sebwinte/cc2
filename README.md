@@ -39,17 +39,32 @@ As shown in the quickstart example, cc2 works with custom flags which can be eas
 | :------------     | :------------     |
 | mp4               | --mp4             | 
 | webm              | --webm            |   
-| ogv               | --ogv             |   
+| ogv               | --ogv             |  
+| mov               | --mov             |  
+| mkv               | --mkv             |  
+
+| audio             | flag              |        
+| :------------     | :------------     |
+| mute audio        | --mute            | 
 
 | compression       | flag              |        
 | :------------     | :------------     |
 | low               | --low             | 
 | medium            | --medium          |   
-| high              | --high            |   
+| high              | --high            |  
+
+Stream copy
+-----------
+With the ```--copy``` flag you set all codec operations to copy, i.e. video, audio, subtitles, data and attachments. FFmpeg must support muxing the targeted stream into the output container. If it does not, the command will fail.
+
+| mode              | flag              |
+| :------------     | :------------     |
+| copy              | --copy            | 
+
 
 Preferences
 -----------
-Have a quick look at the ```settings.json``` and define the path of your 'cc2_folder'. Initially this folder is named 'your_folder_name', but you can name it as you want. Make sure you're using an absolute path like ```"C:\\Users\\Your\\Path\\To\\your_folder_name\\"``` on Windows and ```"/Users/Your/Path/To/your_folder_name/"``` on MacOS. During use, you're going to drag and drop your videos into the folder and automatically start the encoding process.
+Have a quick look at the ```settings.json``` and define the path of your 'cc2_folder'. Initially this folder is named 'your_folder_name', but you can name it as you want. Make sure you're using an absolute path like ```"C:\\Users\\Your\\Path\\To\\your_folder_name\\"``` on Windows and ```"/Users/Your/Path/To/your_folder_name/"``` on MacOS. During use, you're going to drag and drop your videos into the folder and automatically start the encoding process. During the process, cc2 generates a status file which shows the encoding process and different status. All options can be easily turned on or off.
 
 ```json
 {   
@@ -62,8 +77,9 @@ Have a quick look at the ```settings.json``` and define the path of your 'cc2_fo
     ],
     "settings":[
         {
-            "notification": true,
-            "cc2_folder" : "C:\\Users\\Your\\Path\\To\\your_folder_name\\" 
+            "notification" : true,
+            "file_status" : true,
+            "cc2_folder" : "your_folder_name"
         }
     ]
 }
@@ -93,22 +109,6 @@ cc2 is focusing on container formats mostly used for the web.
 | mp4               | libx264       | 
 | webm              | libvpx-vp9    |   
 | ogv               | libtheora     |   
-
-Autostart cc2
--------------
-For a better experience during use of cc2, you can easily create  a ```.bat``` file for Windows or a ```.command``` file if you're running cc2 on a MacOS. By using this method, cc2 automatically starts after your system is booted. Don't forget to define an absolute path for the 'notification icon' and your 'settings.json'. See ```helper.py```
-#### Windows (.bat):
-Save this file and move it into the Windows 'startup' folder. 
-```bat
-"C:\Users\your\path\to\python.exe" "C:\Users\your\path\to\cc2\main.py"
-pause
-```
-#### MacOS (.command):
-Save this file and make it executable with ```chmod +x filename.command```. Afterwards go to 'System Preferences' -> 'Users & Groups' -> 'Login Items' and add your file to the list.
-```command
-#!/bin/bash
-python /Users/your/path/to/cc2/main.py
-```
 
 Troubleshooting
 ---------------
