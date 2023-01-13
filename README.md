@@ -55,7 +55,7 @@ As shown in the quickstart example, cc2 works with custom flags which can be eas
 
 Stream copy
 -----------
-With the ```--copy``` flag you set all codec operations to copy, i.e. video, audio, subtitles, data and attachments. FFmpeg must support muxing the targeted stream into the output container. If it does not, the command will fail.
+With the ```--copy``` flag you set all codec operations to copy, i.e. video, audio, subtitles, data and attachments. FFmpeg must support muxing the targeted stream into the output container. If it does not, the command will fail. This is very useful, if you only want to change the container format.
 
 | mode              | flag              |
 | :------------     | :------------     |
@@ -98,6 +98,10 @@ my-cool-video--mp4.webm
 #### container and compression:
 ```
 my-cool-video--low--medium--webm--ogv.mp4
+```
+#### stream copy and change container format:
+```
+my-cool-video--copy--mov.mp4
 ```
 
 Supported container formats and codecs
