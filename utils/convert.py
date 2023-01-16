@@ -81,7 +81,7 @@ class Converter:
             print("Completed ->",file_type, '@' , "copy")
             return True
         except:
-            self.h.notification_message("cc2","Failed to use copy. The codec of your file might be wrong try a comopression argument like --low,--medium,--high instead" )
+            self.h.notification_message("cc2","Failed to use copy. The codec of your file might be wrong, try a compression argument like --low,--medium,--high instead" )
             return False
 
 
