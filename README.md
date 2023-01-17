@@ -113,8 +113,7 @@ my-cool-video--copy--mov.mp4
 ```
 
 Supported container formats and codecs
---------------------------------------
-cc2 is focusing on container formats mostly used for the web.  
+-------------------------------------- 
 
 | container         | codec         |
 | :------------     |:------------  |
