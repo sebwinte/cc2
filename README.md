@@ -23,7 +23,7 @@ Open the ```cc2``` folder in your terminal and run:
 python main.py
 ```
 
-<img src="https://user-images.githubusercontent.com/38649555/212300119-fef30f06-38db-41b9-b852-0effec8fb651.gif"/>
+<img src="https://user-images.githubusercontent.com/38649555/212902163-fb677735-2a1e-4bf7-9da0-baf50c94d2ae.gif" width="820px"/>
 
 Add custom 'cc2-flags' to your videos and drag it into your 'cc2-folder'. By default this folder is named 'your_folder_name':
 ```
