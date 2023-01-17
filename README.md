@@ -7,7 +7,6 @@ cc2 — drag and drop, like it's hot.
 
 cc2 is a easy to use video encoder for Windows and macOS. Let's say you need your ```.mp4``` video as a ```.webm``` and ```.ogv```? In a small file size, without quality loss? Just drag and drop your video into your predefined folder and see magic happens.
 
-
 Update v1.1.0 :zap:
 -----------------------------
 - cc2 now supports container formats like: **mov**, **mkv**
