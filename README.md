@@ -12,7 +12,7 @@ Update v1.1.0 :zap:
 -----------------------------
 - cc2 now supports container formats like: **mov**, **mkv**
 - We implemented new features: mute audio, see the status of the converting process
-- Set the --copy flag to copy, i.e. video, audio, subtitles, data and attachments
+- Set the "--copy" flag to copy, i.e. video, audio, subtitles, data and attachments
 - Encoding and converting bug fixes
 
 Installation and requirements
