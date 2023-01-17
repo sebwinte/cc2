@@ -120,7 +120,8 @@ cc2 is focusing on container formats mostly used for the web.
 | :------------     |:------------  |
 | mp4               | libx264       | 
 | webm              | libvpx-vp9    |   
-| ogv               | libtheora     |   
+| ogv               | libtheora     | 
+| mkv, mov          | libx264       | 
 
 Troubleshooting
 ---------------
