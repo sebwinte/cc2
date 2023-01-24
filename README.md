@@ -9,9 +9,9 @@ cc2 is a easy to use video encoder for Windows and macOS. Let's say you need you
 
 Update v1.1.0 :zap:
 -----------------------------
-- [x] cc2 now supports container formats like: **mov**, **mkv**
-- [x] mute audio stream
-- [x] see the status of the converting process
+- [x] Container format support: **mov**, **mkv**
+- [x] Mute audio stream
+- [x] See the status of the converting process
 - [x] Set the "--copy" flag to copy, i.e. video, audio, subtitles, data and attachments
 - [x] Encoding and converting bug fixes
 
