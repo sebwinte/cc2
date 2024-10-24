@@ -1,4 +1,4 @@
-<img src="http://pfuscha.cool:3000?" width="90px"/>
+<img src="https://github.com/user-attachments/assets/ae8b978d-1c85-414c-927a-914dee28092e" width="250px"/>
 
 cc2 — drag and drop, like it's hot.
 -------------------------------------
